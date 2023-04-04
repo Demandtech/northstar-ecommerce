@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import heroBg from '../assets/images/about-hero-bg.png'
+import heroBg from '../assets/images/about-hero-bg.jpeg'
 
 const About = () => {
   return (

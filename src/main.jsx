@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import DefaultLayout from './layouts/DefaultLayout'
-import { Contact, Home, About } from './pages'
+import ProtectedLayout from './layouts/ProtectedLayout'
+import { Contact, Home, About, SingleProduct } from './pages'
 import { createGlobalStyle } from 'styled-components'
 
 const router = createBrowserRouter([
@@ -15,18 +16,30 @@ const router = createBrowserRouter([
         path: '/',
         element: <Home />,
       },
-      { 
-        path: '/about', 
-        element: <About /> 
+      {
+        path: '/about',
+        element: <About />,
       },
-      { path: '/Contact',
-       element: <Contact /> 
-      },
+      { path: '/Contact', element: <Contact /> },
     ],
+  },
+  {
+    path: '/',
+    element: <ProtectedLayout/>,
+    children:[
+      {
+        path: '/product/:id',
+        element: <SingleProduct />
+      }
+
+    ]
   },
 ])
 
 const GlobalStyle = createGlobalStyle`
+  html{
+    scroll-behavior: smooth;
+  }
   body{
     box-sizing: border-box;
     font-family: 'Arimo' , sans-serif;

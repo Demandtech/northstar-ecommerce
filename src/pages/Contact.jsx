@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import heroBg from '../assets/images/contact-hero-bg.png'
+import heroBg from '../assets/images/contact-hero-bg.jpeg'
 
 const Contact = () => {
   return (

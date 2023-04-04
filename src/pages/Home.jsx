@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import hero_bg from '../assets/images/hero-bg.png'
-import {NewArrivals} from '../components'
+import hero_bg from '../assets/images/hero-bg.jpeg'
+import {NewArrivals, Benefits, Promo} from '../components'
 
 const Home = () => {
   return (
@@ -12,10 +12,12 @@ const Home = () => {
             stylist picks beat <br />
             the heat
           </h1>
-          <a href='#'>Shop now</a>
+          <a href='#new_arrival'>Shop now</a>
         </div>
       </section>
       <NewArrivals />
+      <Benefits />
+      <Promo />
     </Wrapper>
   )
 }

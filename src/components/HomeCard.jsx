@@ -1,17 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
+import { Link } from 'react-router-dom'
 
-const HomeCard = ({ name, img, price }) => {
+const HomeCard = ({id, name, img, price }) => {
   return (
     <Card>
-      <div className='img-wrapper'>
-        <img src={img} alt='' />
-      </div>
-      <div className='info'>
-        <p>{name}</p>
-        <span>{formatPrice(price)}</span>
-      </div>
+      <Link to={`/product/${id}`}>
+        <div className='img-wrapper'>
+          <img src={img} alt='' />
+        </div>
+        <div className='info'>
+          <p>{name}</p>
+          <span>{formatPrice(price)}</span>
+        </div>
+      </Link>
     </Card>
   )
 }
@@ -42,6 +45,9 @@ const Card = styled.article`
       line-height: 19px;
       color: #024e82;
     }
+  }
+  a{
+    text-decoration: none;
   }
 `
 export default HomeCard
