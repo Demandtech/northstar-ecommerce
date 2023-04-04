@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import hero_bg from '../assets/images/hero-bg.png'
+import {NewArrivals} from '../components'
 
 const Home = () => {
   return (
@@ -15,6 +15,7 @@ const Home = () => {
           <a href='#'>Shop now</a>
         </div>
       </section>
+      <NewArrivals />
     </Wrapper>
   )
 }

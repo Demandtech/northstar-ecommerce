@@ -1,3 +1,5 @@
 import Navbar from "./Navbar";
+import NewArrivals from "./NewArrivals";
+import HomeCard from "./HomeCard";
 
-export {Navbar}
+export {Navbar, NewArrivals, HomeCard}
