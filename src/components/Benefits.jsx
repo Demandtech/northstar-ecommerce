@@ -25,8 +25,8 @@ const Benefits = () => {
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding: 1rem;
-  gap: 0 2rem;
+  padding: 1rem 0;
+  gap: 2rem;
   .card {
     display: flex;
     gap: 1.5rem;
@@ -55,13 +55,13 @@ const Wrapper = styled.div`
       }
     }
   }
-  @media screen and (min-width: 480px) {
-    padding: 0 2rem;
-  }
+  // @media screen and (min-width: 480px) {
+  //   padding: 0 2rem;
+  // }
 
-  @media screen and (min-width: 780px) {
-    padding: 0 4rem;
-  }
+  // @media screen and (min-width: 780px) {
+  //   padding: 0 4rem;
+  // }
 `
 
 export default Benefits

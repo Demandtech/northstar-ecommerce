@@ -37,7 +37,7 @@ const NewArrivals = () => {
 }
 
 const Wrapper = styled.section`
-  padding: 4rem  1rem;
+  // padding: 4rem  1rem;
 
   .newArrivals-header {
     text-align: center;
@@ -67,7 +67,7 @@ const Wrapper = styled.section`
     }
   }
   @media screen and (min-width: 480px) {
-    padding: 4rem  2rem;
+    // padding: 4rem  2rem;
 
     .arrival-wrappers {
       padding-top: 4rem;
@@ -79,7 +79,7 @@ const Wrapper = styled.section`
   }
 
   @media screen and (min-width: 780px) {
-    padding: 4rem;
+    padding: 4rem 0;
     .arrival-wrappers {
       padding-top: 4rem;
 

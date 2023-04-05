@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import hero_bg from '../assets/images/hero-bg.jpeg'
-import {NewArrivals, Benefits, Promo} from '../components'
+import { NewArrivals, Benefits, Promo, AncrButton } from '../components'
+// import AncrButton from '../components/AncrButton'
 
 const Home = () => {
   return (
@@ -12,18 +13,21 @@ const Home = () => {
             stylist picks beat <br />
             the heat
           </h1>
-          <a href='#new_arrival'>Shop now</a>
+          <AncrButton type='border' href='#new_arrival' label='shop now' />
         </div>
       </section>
-      <NewArrivals />
-      <Benefits />
-      <Promo />
+      <div className='sections'>
+        <NewArrivals />
+        <Benefits />
+        <Promo />
+      </div>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.main`
   margin-top: 70px;
+
   .hero {
     background: url(${hero_bg});
     background-size: cover;
@@ -45,15 +49,15 @@ const Wrapper = styled.main`
         color: #ffffff;
         margin-bottom: 3rem;
       }
-      a {
-        text-decoration: none;
-        border: 2px solid #ffffff;
-        color: #ffffff;
-        padding: 1rem 2rem;
-        font-weight: 700;
-        font-size: 21px;
-        line-height: 22px;
-      }
+    }
+  }
+
+  .sections {
+    padding: 4rem 1rem;
+  }
+  @media screen and (min-width: 480px) {
+    .section {
+      padding: 4rem 2rem;
     }
   }
 
@@ -67,6 +71,9 @@ const Wrapper = styled.main`
         }
         padding-right: 7rem;
       }
+    }
+    .sections {
+      padding: 4rem;
     }
   }
 `

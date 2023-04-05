@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import AncrButton from './AncrButton'
 
 const Promo = () => {
   return (
@@ -9,19 +10,23 @@ const Promo = () => {
           <div className='card-content'>
             <h3>peace of mind</h3>
             <p>
-              A one-stop platform for all your fashion needs, hassle-free. <br />Buy
-              with a peace of mind.
+              A one-stop platform for all your fashion needs, hassle-free.{' '}
+              <br />
+              Buy with a peace of mind.
             </p>
-            <a href='#new_arrival'>Buy now</a>
+            {/* <a href='#new_arrival'>Buy now</a> */}
+            <AncrButton href='#new_arrival' type='primary' label='buy now' />
           </div>
         </div>
         <div className='right card'>
           <div className='card-content'>
             <h3>Buy 2 Get 1 Free</h3>
             <p>
-              End of season sale. Buy any 2 items of your <br />choice and get 1 free.
+              End of season sale. Buy any 2 items of your <br />
+              choice and get 1 free.
             </p>
-            <a href='#new_arrival'>Buy now</a>
+            {/* <a href='#new_arrival'>Buy now</a> */}
+            <AncrButton href='#new_arrival' type='primary' label='buy now' />
           </div>
         </div>
       </div>
@@ -30,7 +35,7 @@ const Promo = () => {
 }
 
 const Wrapper = styled.section`
-  padding: 4rem 1rem;
+  padding: 4rem 0rem;
 
   .promo-wrapper {
     display: grid;
@@ -63,23 +68,23 @@ const Wrapper = styled.section`
           padding: 1.4rem 0;
         }
 
-        a {
-          background: #ffffff;
-          box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.04);
-          color: #024e82;
-          font-size: 14px;
-          text-decoration: none;
-          padding: 1rem 2rem;
-          display: inline-block;
-          font-weight: 500;
-          text-transform: uppercase;
-        }
+        // a {
+        //   background: #ffffff;
+        //   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.04);
+        //   color: #024e82;
+        //   font-size: 14px;
+        //   text-decoration: none;
+        //   padding: 1rem 2rem;
+        //   display: inline-block;
+        //   
+        //   text-transform: uppercase;
+        // }
       }
     }
   }
 
   @media screen and (min-width: 480px) {
-    padding: 4rem 2rem;
+    padding: 4rem 0rem;
 
     .promo-wrapper {
       grid-template-columns: 1fr 1fr;
@@ -87,7 +92,7 @@ const Wrapper = styled.section`
   }
 
   @media screen and (min-width: 780px) {
-    padding: 4rem;
+    padding: 4rem 0;
 
     .promo-wrapper {
       grid-template-columns: 1.5fr 1fr;
