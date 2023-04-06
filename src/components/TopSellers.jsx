@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { topseller } from '../utils/datas'
 import HomeCard from './HomeCard'
+import AncrButton from './AncrButton'
 
 const TopSellers = () => {
   console.log(topseller.length)
@@ -15,10 +16,13 @@ const TopSellers = () => {
         {topseller.map((seller, index) => {
           return (
             <div key={index}>
-              <HomeCard {...seller}/>
+              <HomeCard {...seller} />
             </div>
           )
         })}
+      </div>
+      <div className='btn-wrap'>
+        <AncrButton href='#new_arrival' label='shop now' type='primary' />
       </div>
     </Wrapper>
   )
@@ -41,10 +45,13 @@ const Wrapper = styled.section`
     }
   }
   .content-wrap {
-    padding-top: 4rem;
+    padding: 4rem 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 1.5rem;
+  }
+  .btn-wrap{
+    text-align: center;
   }
 `
 

@@ -27,13 +27,19 @@ const Navbar = () => {
       <ul ref={linksContainerRef}>
         <div className='nav_list' ref={linksRef}>
           <li>
-            <NavLink to={'/'}>Home</NavLink>
+            <NavLink onClick={() => setShowLinks(false)} to={'/'}>
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to={'/about'}>About</NavLink>
+            <NavLink onClick={() => setShowLinks(false)} to={'/about'}>
+              About
+            </NavLink>
           </li>
           <li>
-            <NavLink to={'Contact'}>Contact</NavLink>
+            <NavLink onClick={() => setShowLinks(false)} to={'Contact'}>
+              Contact
+            </NavLink>
           </li>
         </div>
       </ul>

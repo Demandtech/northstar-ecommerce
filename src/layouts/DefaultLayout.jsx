@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar} from '../components'
+import {Navbar, Footer} from '../components'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -8,6 +8,7 @@ const DefaultLayout = () => {
     <Container>
       <Navbar />
       <Outlet />
+      <Footer />
     </Container>
   )
 }

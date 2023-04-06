@@ -16,8 +16,8 @@ const BtnWrapper = styled.a`
   font-size: 1.5rem;
   line-height: 22px;
   text-transform: uppercase;
-  background: transparent;
   font-family: 'Lato', sans-serif;
+  
 
   ${(props) => {
     return (
@@ -26,6 +26,7 @@ const BtnWrapper = styled.a`
         border: 2px solid #ffffff;
         color: #ffffff;
         font-weight: 700;
+        background: transparent;
         background-position: 100%;
 
         &:hover {
@@ -73,6 +74,34 @@ const BtnWrapper = styled.a`
         &:hover {
           background-position: 100%;
           color: #ffffff;
+        }
+      `
+    )
+  }}
+
+  ${(props) => {
+    return (
+      props.type === 'primary' &&
+      css`
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        border: 2px solid #024e82;
+        background-image: -webkit-linear-gradient(
+          30deg,
+          #024e82 50%,
+          transparent 50%
+        );
+        background-image: linear-gradient(30deg, #024e82 50%, transparent 50%);
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position: 0%;
+        -webkit-transition: all 300ms ease-in-out;
+        transition: all color 300ms ease-in-out;
+
+        &:hover {
+          background-position: 100%;
+          color: #024e82;
         }
       `
     )
