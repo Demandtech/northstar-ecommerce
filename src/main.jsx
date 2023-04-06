@@ -4,7 +4,7 @@ import App from './App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import DefaultLayout from './layouts/DefaultLayout'
 import ProtectedLayout from './layouts/ProtectedLayout'
-import { Contact, Home, About, SingleProduct } from './pages'
+import { Contact, Home, About, SingleProduct, Categories } from './pages'
 import { createGlobalStyle } from 'styled-components'
 
 const router = createBrowserRouter([
@@ -30,8 +30,11 @@ const router = createBrowserRouter([
       {
         path: '/product/:id',
         element: <SingleProduct />
+      },
+      {
+        path: '/product/category',
+        element: <Categories />
       }
-
     ]
   },
 ])

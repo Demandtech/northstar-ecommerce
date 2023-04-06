@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import heroBg from '../assets/images/about-hero-bg.jpeg'
+import { Category, Founders } from '../components'
 
 const About = () => {
   return (
@@ -9,6 +10,10 @@ const About = () => {
         <div className='hero-content'>
           <h2>About Northstar</h2>
         </div>
+      </div>
+      <div className='sections'>
+        <Category />
+        <Founders />
       </div>
     </Wrapper>
   )
@@ -40,19 +45,31 @@ const Wrapper = styled.main`
       }
     }
   }
+  .sections {
+    padding: 4rem 1rem;
+  }
 
-  @media screen and (min-width: 780px) {
+  @media screen and (min-width: 480px) {
     .hero {
       .hero-content {
         padding-left: 2rem;
+        padding-bottom: 2rem;
       }
+    }
+    .sections {
+      padding: 4rem 2rem;
     }
   }
 
   @media screen and (min-width: 780px) {
     .hero {
-      justify-content: flex-start;
-      align-items: end;
+      .hero-content {
+        padding-left: 4rem;
+        padding-bottom: 2rem;
+      }
+    }
+    .sections {
+      padding: 4rem;
     }
   }
 `

@@ -17,7 +17,6 @@ const BtnWrapper = styled.a`
   line-height: 22px;
   text-transform: uppercase;
   font-family: 'Lato', sans-serif;
-  
 
   ${(props) => {
     return (
@@ -103,6 +102,15 @@ const BtnWrapper = styled.a`
           background-position: 100%;
           color: #024e82;
         }
+      `
+    )
+  }}
+
+  ${(props) => {
+    return (
+      props.type === 'rounded' &&
+      css`
+       
       `
     )
   }}
