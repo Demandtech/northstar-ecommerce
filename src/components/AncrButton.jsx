@@ -10,6 +10,7 @@ const AncrButton = (props) => {
 }
 
 const BtnWrapper = styled.a`
+  display: inline-block;
   text-decoration: none;
   padding: 1rem 2rem;
   font-size: 1.5rem;
@@ -25,18 +26,54 @@ const BtnWrapper = styled.a`
         border: 2px solid #ffffff;
         color: #ffffff;
         font-weight: 700;
+        background-position: 100%;
+
+        &:hover {
+          color: #024e82;
+          background-image: -webkit-linear-gradient(
+            30deg,
+            #ffffff 50%,
+            transparent 50%
+          );
+          background-image: linear-gradient(
+            30deg,
+            #ffffff 50%,
+            transparent 50%
+          );
+          background-size: 500px;
+          background-repeat: no-repeat;
+          background-position: 0%;
+          -webkit-transition: all 300ms ease-in-out;
+          transition: all color 300ms ease-in-out;
+        }
       `
     )
   }}
 
   ${(props) => {
     return (
-      props.type === 'primary' &&
+      props.type === 'secondary' &&
       css`
-        background: #ffffff;
         color: #024e82;
         font-size: 14px;
         font-weight: 500;
+        border: 2px solid #ffffff;
+        background-image: -webkit-linear-gradient(
+          30deg,
+          #ffffff 50%,
+          transparent 50%
+        );
+        background-image: linear-gradient(30deg, #ffffff 50%, transparent 50%);
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position: 0%;
+        -webkit-transition: all 300ms ease-in-out;
+        transition: all color 300ms ease-in-out;
+
+        &:hover {
+          background-position: 100%;
+          color: #ffffff;
+        }
       `
     )
   }}

@@ -15,7 +15,7 @@ const Promo = () => {
               Buy with a peace of mind.
             </p>
             {/* <a href='#new_arrival'>Buy now</a> */}
-            <AncrButton href='#new_arrival' type='primary' label='buy now' />
+            <AncrButton href='#new_arrival' type='secondary' label='buy now' />
           </div>
         </div>
         <div className='right card'>
@@ -26,7 +26,7 @@ const Promo = () => {
               choice and get 1 free.
             </p>
             {/* <a href='#new_arrival'>Buy now</a> */}
-            <AncrButton href='#new_arrival' type='primary' label='buy now' />
+            <AncrButton href='#new_arrival' type='secondary' label='buy now' />
           </div>
         </div>
       </div>
