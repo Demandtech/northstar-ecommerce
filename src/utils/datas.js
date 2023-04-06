@@ -14,6 +14,13 @@ import topseller1 from '../assets/images/topseller-1.jpeg'
 import topseller2 from '../assets/images/topseller-2.jpeg'
 import topseller3 from '../assets/images/topseller-3.jpeg'
 import topseller4 from '../assets/images/topseller-4.jpeg'
+import founder1 from '../assets/images/founder1.jpeg'
+import founder2 from '../assets/images/founder2.jpeg'
+import founder3 from '../assets/images/founder3.jpeg'
+import founder4 from '../assets/images/founder4.jpeg'
+import quote from '../assets/svgs/quote.svg'
+import testimony1 from '../assets/images/testimony1.jpeg'
+import testimony2 from '../assets/images/testimony2.jpeg'
 
 export const newArrival = [
   {
@@ -81,5 +88,45 @@ export const topseller = [
     img: topseller4,
     name: 'Pink Casual Shirt',
     price: 39
+  },
+]
+
+export const founders = [
+  {
+    img: founder1,
+    name: 'HM Jawad',
+  },
+  {
+    img: founder2,
+    name: 'Furqan Abid',
+  },
+  {
+    img: founder3,
+    name: 'Abdullah Ah',
+  },
+  {
+    img: founder4,
+    name: 'Abrar Khan',
+  },
+]
+
+export const testimonials = [
+  {
+    text: 'Once we ordered some accessories items and we got the products delivered in our doorstep, the customer support was super helpful and they answered all my queries.',
+    name: 'Stacy',
+    icon: quote,
+    img: testimony1
+  },
+  {
+    text: 'I ordered 5 shirts from them and received them in no time. The customer support was awesome!',
+    name: 'Tiffany',
+    icon: quote,
+    img: testimony2
+  },
+  {
+    text: 'I got a wrong shirt so I contacted them and they happily offered me a refund. I will surely shop from them again.',
+    name: 'James',
+    icon: quote,
+    img: poloplain,
   },
 ]

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { founders } from '../utils/datas'
 import FounderCard from './FounderCard'
 
 const Founders = () => {
@@ -10,7 +11,13 @@ const Founders = () => {
               <h2>The Founders</h2>
           </div>
           <div className="founders">
-             
+             {founders.map((founder, index)=>{
+               return (
+                 <div key={index}>
+                   <FounderCard {...founder} />
+                 </div>
+               )
+             })}
           </div>
       </div>
     </Wrapper>
@@ -18,7 +25,8 @@ const Founders = () => {
 }
 
 const Wrapper = styled.section`
-  padding: 4rem 0;
+  padding: 4rem 1rem;
+  background: #fbfbfb;
   .founder-header {
     text-align: center;
     padding-bottom: 3rem;
@@ -30,6 +38,19 @@ const Wrapper = styled.section`
       font-family: 'Arimo', sans-serif;
       color: #1d1d1d;
     }
+  }
+  .founders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 480px) {
+    padding: 4rem 2rem;
+  }
+
+  @media screen and (min-width: 780px) {
+    padding: 4rem;
   }
 `
 

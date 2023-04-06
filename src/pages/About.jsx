@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import heroBg from '../assets/images/about-hero-bg.jpeg'
-import { Category, Founders } from '../components'
+import { Category, Founders, Testimonials } from '../components'
 
 const About = () => {
   return (
@@ -13,7 +13,10 @@ const About = () => {
       </div>
       <div className='sections'>
         <Category />
-        <Founders />
+      </div>
+      <Founders />
+      <div className='sections'>
+        <Testimonials />
       </div>
     </Wrapper>
   )
@@ -46,7 +49,7 @@ const Wrapper = styled.main`
     }
   }
   .sections {
-    padding: 4rem 1rem;
+    padding: 4rem 1rem 0 1rem;
   }
 
   @media screen and (min-width: 480px) {
@@ -57,7 +60,7 @@ const Wrapper = styled.main`
       }
     }
     .sections {
-      padding: 4rem 2rem;
+      padding: 4rem 2rem 0 2rem;
     }
   }
 
@@ -69,7 +72,7 @@ const Wrapper = styled.main`
       }
     }
     .sections {
-      padding: 4rem;
+      padding: 4rem 4rem 0 4rem;
     }
   }
 `

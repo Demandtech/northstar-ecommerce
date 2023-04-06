@@ -28,6 +28,7 @@ const TopSellers = () => {
   )
 }
 const Wrapper = styled.section`
+  
   .topseller-header {
     text-align: center;
     h2 {

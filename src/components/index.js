@@ -8,6 +8,7 @@ import TopSellers from './TopSellers'
 import Footer from './Footer'
 import Category from './Category'
 import Founders from './Founders'
+import Testimonials from './Testimonials'
 
 export {
   Navbar,
@@ -20,4 +21,5 @@ export {
   Footer,
   Category,
   Founders,
+  Testimonials
 }
