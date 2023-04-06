@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import hero_bg from '../assets/images/hero-bg.jpeg'
-import { NewArrivals, Benefits, Promo, AncrButton } from '../components'
+import { NewArrivals, Benefits, Promo, AncrButton, TopSellers } from '../components'
 // import AncrButton from '../components/AncrButton'
 
 const Home = () => {
@@ -20,6 +20,7 @@ const Home = () => {
         <NewArrivals />
         <Benefits />
         <Promo />
+        <TopSellers />
       </div>
     </Wrapper>
   )

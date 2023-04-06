@@ -10,6 +10,10 @@ import shippingIcon from '../assets/svgs/shipping.svg'
 import supportIcon from '../assets/svgs/ubuntu.svg'
 import returnIcon from '../assets/svgs/return.svg'
 import secureIcon from '../assets/svgs/secure.svg'
+import topseller1 from '../assets/images/topseller-1.jpeg'
+import topseller2 from '../assets/images/topseller-2.jpeg'
+import topseller3 from '../assets/images/topseller-3.jpeg'
+import topseller4 from '../assets/images/topseller-4.jpeg'
 
 export const newArrival = [
   {
@@ -22,10 +26,10 @@ export const newArrival = [
   },
   {
     men: [
-      {id:5, name: 'Blue Plain Shirt', price: 49, img: blueplain },
-      {id:6, name: 'Dark Blue Shirt', price: 89 , img: darkblue},
-      {id:7, name: 'Outcast T Shirt', price: 19, img:outcast },
-      {id:8, name: 'Polo Plain Shirt', price: 29, img:poloplain },
+      { id: 5, name: 'Blue Plain Shirt', price: 49, img: blueplain },
+      { id: 6, name: 'Dark Blue Shirt', price: 89, img: darkblue },
+      { id: 7, name: 'Outcast T Shirt', price: 19, img: outcast },
+      { id: 8, name: 'Polo Plain Shirt', price: 29, img: poloplain },
     ],
   },
 ]
@@ -53,3 +57,29 @@ export const benefits = [
   },
 ]
 
+export const topseller = [
+  {
+    id: 9,
+    img: topseller1,
+    name: 'Gray Polo Shirt',
+    price: 49
+  },
+  {
+    id: 10,
+    img: topseller2,
+    name: 'Red Shirt',
+    price: 69
+  },
+  {
+    id: 11,
+    img: topseller3,
+    name: 'Polo White Shirt',
+    price: 29
+  },
+  {
+    id: 12,
+    img: topseller4,
+    name: 'Pink Casual Shirt',
+    price: 39
+  },
+]
