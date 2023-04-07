@@ -7,7 +7,7 @@ const ContactForm = () => {
   }
   return (
     <Wrapper>
-      <form  onClick={() => handleForm()}>
+      <form  onSubmit={handleForm}>
         <div className='inputs-control'>
           <div className='name'>
             <label htmlFor='name'>Name</label>
@@ -28,7 +28,7 @@ const ContactForm = () => {
   )
 }
 
-const Wrapper = styled.form`
+const Wrapper = styled.div`
   label {
     font-family: 'Lato', sans-serif;
     display: block;
