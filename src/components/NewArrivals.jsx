@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { HomeCard } from '../components'
-import { newArrival } from '../utils/datas'
+import {products} from '../utils/datas'
 
 const NewArrivals = () => {
-  const [women, men] = newArrival
-
+  let women = products.filter((product) => product.category === 'female')
+  let men = products.filter((product) => product.category === 'male')
+ 
   return (
     <Wrapper id='new_arrival'>
       <div className='newArrivals-header'>
@@ -14,22 +15,22 @@ const NewArrivals = () => {
       </div>
       <div className='arrival-wrappers'>
         <div className='wrap women'>
-          {women.women.map((wom, i) => {
+          {women.map((wom, i) => {
             return (
               <div key={i}>
                 <HomeCard {...wom} />
               </div>
             )
-          })}
+          }).slice(0, 4)}
         </div>
         <div className='wrap'>
-          {men.men.map((wom, i) => {
+          {men.map((wom, i) => {
             return (
               <div key={i}>
                 <HomeCard {...wom} />
               </div>
             )
-          })}
+          }).slice(0, 4)}
         </div>
       </div>
     </Wrapper>
@@ -37,8 +38,6 @@ const NewArrivals = () => {
 }
 
 const Wrapper = styled.section`
-  // padding: 4rem  1rem;
-
   .newArrivals-header {
     text-align: center;
     h2 {

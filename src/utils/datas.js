@@ -22,22 +22,127 @@ import quote from '../assets/svgs/quote.svg'
 import testimony1 from '../assets/images/testimony1.jpeg'
 import testimony2 from '../assets/images/testimony2.jpeg'
 
-export const newArrival = [
+export const products = [
   {
-    women: [
-      { id: 1, name: 'Plain White Shirt', price: 29, img: plainwhite },
-      { id: 2, name: 'Denim Jacket ', price: 69, img: denimjacket },
-      { id: 3, name: 'Black Polo Shirt', price: 49, img: blackPolo },
-      { id: 4, name: 'Blue Sweatshirt', price: 79, img: bluesweatshirt },
-    ],
+    id: 1,
+    name: 'Plain White Shirt',
+    price: 29,
+    img: plainwhite,
+    bonus: 24,
+    rating: 4.5,
+    category: 'female',
+    topseller: false,
   },
   {
-    men: [
-      { id: 5, name: 'Blue Plain Shirt', price: 49, img: blueplain },
-      { id: 6, name: 'Dark Blue Shirt', price: 89, img: darkblue },
-      { id: 7, name: 'Outcast T Shirt', price: 19, img: outcast },
-      { id: 8, name: 'Polo Plain Shirt', price: 29, img: poloplain },
-    ],
+    id: 2,
+    name: 'Denim Jacket ',
+    price: 69,
+    img: denimjacket,
+    bonus: 24,
+    rating: 4.5,
+    category: 'female',
+    topseller: false,
+  },
+  {
+    id: 3,
+    name: 'Black Polo Shirt',
+    price: 49,
+    img: blackPolo,
+    bonus: 24,
+    rating: 4.1,
+    category: 'female',
+    topseller: false,
+  },
+  {
+    id: 4,
+    name: 'Blue Sweatshirt',
+    price: 79,
+    img: bluesweatshirt,
+    bonus: 22,
+    rating: 5,
+    category: 'female',
+    topseller: false,
+  },
+
+  {
+    id: 5,
+    name: 'Blue Plain Shirt',
+    price: 49,
+    img: blueplain,
+    bonus: 21.5,
+    rating: 4.5,
+    category: 'male',
+    topseller: false,
+  },
+  {
+    id: 6,
+    name: 'Dark Blue Shirt',
+    price: 89,
+    img: darkblue,
+    bonus: 24,
+    rating: 5,
+    category: 'male',
+    topseller: false,
+  },
+  {
+    id: 7,
+    name: 'Outcast T Shirt',
+    price: 19,
+    img: outcast,
+    bonus: 15,
+    rating: 5,
+    category: 'male',
+    topseller: false,
+  },
+  {
+    id: 8,
+    name: 'Polo Plain Shirt',
+    price: 29,
+    img: poloplain,
+    bonus: 24,
+    rating: 4.5,
+    category: 'male',
+    topseller: false,
+  },
+  {
+    id: 9,
+    img: topseller1,
+    name: 'Gray Polo Shirt',
+    price: 49,
+    topseller: true,
+    bonus: 24,
+    rating: 4.5,
+    category: 'male',
+  },
+  {
+    id: 10,
+    img: topseller2,
+    name: 'Red Shirt',
+    price: 69,
+    topseller: true,
+    bonus: 24,
+    rating: 4.5,
+    category: 'female',
+  },
+  {
+    id: 11,
+    img: topseller3,
+    name: 'Polo White Shirt',
+    price: 29,
+    topseller: true,
+    bonus: 24,
+    rating: 4.5,
+    category: 'female',
+  },
+  {
+    id: 12,
+    img: topseller4,
+    name: 'Pink Casual Shirt',
+    price: 39,
+    topseller: true,
+    bonus: 24,
+    rating: 4.5,
+    category: 'female',
   },
 ]
 
@@ -61,33 +166,6 @@ export const benefits = [
     icon: secureIcon,
     title: '100% PAYMENT SECURE',
     text: 'Our payments are secured with 256 bit encryption',
-  },
-]
-
-export const topseller = [
-  {
-    id: 9,
-    img: topseller1,
-    name: 'Gray Polo Shirt',
-    price: 49
-  },
-  {
-    id: 10,
-    img: topseller2,
-    name: 'Red Shirt',
-    price: 69
-  },
-  {
-    id: 11,
-    img: topseller3,
-    name: 'Polo White Shirt',
-    price: 29
-  },
-  {
-    id: 12,
-    img: topseller4,
-    name: 'Pink Casual Shirt',
-    price: 39
   },
 ]
 
@@ -115,13 +193,13 @@ export const testimonials = [
     text: 'Once we ordered some accessories items and we got the products delivered in our doorstep, the customer support was super helpful and they answered all my queries.',
     name: 'Stacy',
     icon: quote,
-    img: testimony1
+    img: testimony1,
   },
   {
     text: 'I ordered 5 shirts from them and received them in no time. The customer support was awesome!',
     name: 'Tiffany',
     icon: quote,
-    img: testimony2
+    img: testimony2,
   },
   {
     text: 'I got a wrong shirt so I contacted them and they happily offered me a refund. I will surely shop from them again.',

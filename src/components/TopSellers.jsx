@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { topseller } from '../utils/datas'
 import HomeCard from './HomeCard'
 import AncrButton from './AncrButton'
+import { products } from '../utils/datas'
 
 const TopSellers = () => {
-  console.log(topseller.length)
+  let topseller = products.filter(product => product.topseller === true)
   return (
     <Wrapper>
       <div className='topseller-header'>
