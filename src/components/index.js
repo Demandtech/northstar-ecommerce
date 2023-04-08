@@ -10,6 +10,8 @@ import Category from './Category'
 import Founders from './Founders'
 import Testimonials from './Testimonials'
 import ContactForm from './ContactForm'
+import Stars from './Stars'
+import SelectSize from './SelectSize'
 
 export {
   Navbar,
@@ -23,5 +25,7 @@ export {
   Category,
   Founders,
   Testimonials,
-  ContactForm
+  ContactForm,
+  Stars,
+  SelectSize
 }

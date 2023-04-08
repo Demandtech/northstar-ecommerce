@@ -1,14 +1,21 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Navbar } from '../components'
+import { Navbar, Footer } from '../components'
+import styled from 'styled-components'
+
 
 const ProtectedLayout = () => {
   return (
-    <div>
+    <Container>
        <Navbar />
        <Outlet />
-    </div>
+       <Footer />
+    </Container>
   )
 }
 
+const Container = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`
 export default ProtectedLayout
