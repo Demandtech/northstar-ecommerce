@@ -6,6 +6,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import ProtectedLayout from './layouts/ProtectedLayout'
 import { Contact, Home, About, SingleProduct, Categories } from './pages'
 import { createGlobalStyle } from 'styled-components'
+import { ProductProvider } from './reducers/productsContext'
 
 const router = createBrowserRouter([
   {
@@ -25,17 +26,17 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <ProtectedLayout/>,
-    children:[
+    element: <ProtectedLayout />,
+    children: [
       {
         path: '/product/:id',
-        element: <SingleProduct />
+        element: <SingleProduct />,
       },
       {
         path: '/product/category',
-        element: <Categories />
-      }
-    ]
+        element: <Categories />,
+      },
+    ],
   },
 ])
 
@@ -57,7 +58,9 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GlobalStyle />
-    <RouterProvider router={router} />
+    <ProductProvider>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </ProductProvider>
   </React.StrictMode>
 )

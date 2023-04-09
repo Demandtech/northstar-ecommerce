@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import HomeCard from './HomeCard'
+import ProductCard from './ProductCard'
 import AncrButton from './AncrButton'
 import { products } from '../utils/datas'
 
 const TopSellers = () => {
-  let topseller = products.filter(product => product.topseller === true)
+  let topseller = products.filter((product) => product.topseller === true)
   return (
     <Wrapper>
       <div className='topseller-header'>
@@ -16,7 +16,7 @@ const TopSellers = () => {
         {topseller.map((seller, index) => {
           return (
             <div key={index}>
-              <HomeCard {...seller} />
+              <ProductCard {...seller} />
             </div>
           )
         })}
@@ -28,7 +28,6 @@ const TopSellers = () => {
   )
 }
 const Wrapper = styled.section`
-  
   .topseller-header {
     text-align: center;
     h2 {
@@ -51,7 +50,7 @@ const Wrapper = styled.section`
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 1.5rem;
   }
-  .btn-wrap{
+  .btn-wrap {
     text-align: center;
   }
 `

@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { HomeCard } from '../components'
+import { ProductCard } from '../components'
 import {products} from '../utils/datas'
+import { useProductsContext } from '../reducers/productsContext'
 
 const NewArrivals = () => {
-  let women = products.filter((product) => product.category === 'female')
-  let men = products.filter((product) => product.category === 'male')
+  const {males, females} = useProductsContext()
  
   return (
     <Wrapper id='new_arrival'>
@@ -15,19 +15,19 @@ const NewArrivals = () => {
       </div>
       <div className='arrival-wrappers'>
         <div className='wrap women'>
-          {women.map((wom, i) => {
+          {females.map((female, i) => {
             return (
               <div key={i}>
-                <HomeCard {...wom} />
+                <ProductCard {...female} />
               </div>
             )
           }).slice(0, 4)}
         </div>
         <div className='wrap'>
-          {men.map((wom, i) => {
+          {males.map((male, i) => {
             return (
               <div key={i}>
-                <HomeCard {...wom} />
+                <ProductCard {...male} />
               </div>
             )
           }).slice(0, 4)}

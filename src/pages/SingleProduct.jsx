@@ -4,15 +4,30 @@ import { products } from '../utils/datas'
 import styled from 'styled-components'
 import { Stars, SelectSize } from '../components'
 import { formatPrice } from '../utils/helpers'
+import { useProductsContext } from '../reducers/productsContext'
+import Socials from '../components/Socials'
 
 const SingleProduct = () => {
   const { id } = useParams()
-  let singleProduct = products.find((product) => product.id == id)
-  const { price, review, rating, category, name, thumbnails, bonus, desc } =
-    singleProduct
+  const {addToCart} = useProductsContext()
+  let singleProduct = products.find((product) => product.id === Number(id))
+
+  const {
+    type,
+    tags,
+    price,
+    review,
+    rating,
+    category,
+    name,
+    thumbnails,
+    bonus,
+    desc,
+  } = singleProduct
+
   const [imgIndex, setImgIndex] = useState(0)
   const [mainImg, setMainImg] = useState(thumbnails[imgIndex])
-  
+
   useEffect(() => {
     setMainImg(thumbnails[imgIndex])
   }, [imgIndex])
@@ -43,7 +58,7 @@ const SingleProduct = () => {
         <div className='right'>
           <div className='link'>
             <span>HOME</span>/<span>SHOP</span>/
-            <span>{category.toUpperCase()}</span>/<Link to={'/'}>SHOP</Link>
+            <span>{type.toUpperCase()}</span>/<Link to={'/'}>SHOP</Link>
           </div>
           <h4>{name}</h4>
           <Stars rating={rating} review={review} />
@@ -55,6 +70,24 @@ const SingleProduct = () => {
           </div>
           <p className='desc'>{desc}</p>
           <SelectSize />
+          <div className='add-to-cart'>
+            <button onClick={()=>addToCart(id)}>ADD TO CART</button>
+          </div>
+          <div className='cate_tags'>
+            <div className='category'>
+              <span className='title'>Category:</span>
+              {category.map((cat, ind) => (
+                <span key={ind}>{cat}, </span>
+              ))}
+            </div>
+            <div className='tags'>
+              <span className='title'>Tags:</span> 
+              {tags.map((tag, ind) => (
+                <span key={ind}>{tag}</span>
+              ))}
+            </div>
+          </div>
+          <Socials />
         </div>
       </div>
     </Wrapper>
@@ -126,53 +159,83 @@ const Wrapper = styled.main`
     .right {
       flex: 2;
       .link {
-        padding-bottom: .5rem;
-        span {
-          font-weight: 500;
-          font-size: 15px;
-          line-height: 17px;
-          color: #888888;
-        }
-
-        a{
-          color: #1D1D1D;
-          font-weight: 700;
-          font-size: 15px;
-          line-height: 17px;
-          text-decoration: none;
-        }
+         padding-bottom: .5rem;
+         span {
+           font-weight: 500;
+           font-size: 15px;
+           line-height: 17px;
+           color: #888888;
+         }
+         a{
+            color: #1D1D1D;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 17px;
+            text-decoration: none;
+          }
+      }
+      .price {
+         font-family: 'Lato', sans-serif;
+         font-weight: 400;
+         font-size: 24px;
+         line-height: 29px;
+         color: #818181;
+         margin-bottom: 1.5rem;
+      }
+      .desc{
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #555555;
+         margin-bottom: 3rem;
+      }
+      .bonus-price{
+         color: #024E82;
+         margin-left: .5rem;
       }
       h4{
-        font-family: 'Arimo', sans-serif;
-        font-weight: 700;
-        font-size: 2rem;
-        line-height: 48px;
-        color: #1D1D1D;
-        margin-bottom: 1rem;
+         font-family: 'Arimo', sans-serif;
+         font-weight: 700;
+         font-size: 2rem;
+         line-height: 48px;
+         color: #1D1D1D;
+         margin-bottom: 1rem;
       }
-     .price{
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      line-height: 29px;
-      color: #818181;
-      margin-bottom: 1.5rem;
-     }
-     .bonus-price{
-      color: #024E82;
-      margin-left: .5rem;
-     }
-     .desc{
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 19px;
-      color: #555555;
-      margin-bottom: 3rem;
-     }
+      .add-to-cart{
+         margin: 2.5rem 0;
+         button {
+            all: unset;
+            padding: 1rem 2rem;
+            background: #024e82;
+            color: #ffffff;
+            cursor: pointer;
+          &:hover {
+             transform: translateY(-1px);
+        }
     }
-  }
+    
+   }
+  .cate_tags{
+     margin-bottom: 2rem;
+     .category{
+      padding-bottom: 1rem;
 
+      .title{
+        padding-right: .3rem;
+      }
+     }
+     .tags{
+      .title{
+        padding-right: .3rem;
+      }
+     }
+  }
+     
+     
+    
+    }  
+  }
   @media screen and (min-width: 480px) {
     padding: 2rem;
   }

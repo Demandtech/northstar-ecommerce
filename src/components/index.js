@@ -1,6 +1,6 @@
 import Navbar from './Navbar'
 import NewArrivals from './NewArrivals'
-import HomeCard from './HomeCard'
+import ProductCard from './ProductCard'
 import Benefits from './Benefits'
 import Promo from './Promo'
 import AncrButton from './AncrButton'
@@ -16,7 +16,7 @@ import SelectSize from './SelectSize'
 export {
   Navbar,
   NewArrivals,
-  HomeCard,
+  ProductCard,
   Benefits,
   Promo,
   AncrButton,
@@ -27,5 +27,5 @@ export {
   Testimonials,
   ContactForm,
   Stars,
-  SelectSize
+  SelectSize,
 }
