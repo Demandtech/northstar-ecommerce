@@ -12,6 +12,7 @@ import Testimonials from './Testimonials'
 import ContactForm from './ContactForm'
 import Stars from './Stars'
 import SelectSize from './SelectSize'
+import Description from './Description'
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   ContactForm,
   Stars,
   SelectSize,
+  Description
 }

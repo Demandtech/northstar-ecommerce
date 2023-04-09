@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, NavLink } from 'react-router-dom'
 import { products } from '../utils/datas'
 import styled from 'styled-components'
-import { Stars, SelectSize } from '../components'
+import { Stars, SelectSize, Description } from '../components'
 import { formatPrice } from '../utils/helpers'
 import { useProductsContext } from '../reducers/productsContext'
 import Socials from '../components/Socials'
@@ -57,8 +57,9 @@ const SingleProduct = () => {
         </div>
         <div className='right'>
           <div className='link'>
-            <span>HOME</span>/<span>SHOP</span>/
-            <span>{type.toUpperCase()}</span>/<Link to={'/'}>SHOP</Link>
+            <NavLink to={'/'}>HOME</NavLink>/
+            <NavLink to={'/product/category'}>{type.toUpperCase()}</NavLink>/
+            <NavLink to={`/product/${id}`}>PRODUCT</NavLink>
           </div>
           <h4>{name}</h4>
           <Stars rating={rating} review={review} />
@@ -71,7 +72,7 @@ const SingleProduct = () => {
           <p className='desc'>{desc}</p>
           <SelectSize />
           <div className='add-to-cart'>
-            <button onClick={()=>addToCart(id)}>ADD TO CART</button>
+            <button onClick={() => addToCart(id)}>ADD TO CART</button>
           </div>
           <div className='cate_tags'>
             <div className='category'>
@@ -81,7 +82,7 @@ const SingleProduct = () => {
               ))}
             </div>
             <div className='tags'>
-              <span className='title'>Tags:</span> 
+              <span className='title'>Tags:</span>
               {tags.map((tag, ind) => (
                 <span key={ind}>{tag}</span>
               ))}
@@ -90,6 +91,7 @@ const SingleProduct = () => {
           <Socials />
         </div>
       </div>
+      <Description reviews={review} />
     </Wrapper>
   )
 }
@@ -102,7 +104,7 @@ const Wrapper = styled.main`
     display: flex;
     gap: 3rem;
     flex-direction: column;
-
+    padding-bottom: 10rem;
     .left {
       width: 100%;
 
@@ -160,19 +162,18 @@ const Wrapper = styled.main`
       flex: 2;
       .link {
          padding-bottom: .5rem;
-         span {
+         a {
            font-weight: 500;
            font-size: 15px;
            line-height: 17px;
            color: #888888;
+           text-decoration: none;
          }
-         a{
-            color: #1D1D1D;
-            font-weight: 700;
-            font-size: 15px;
-            line-height: 17px;
-            text-decoration: none;
-          }
+         .active{
+          color: #1D1D1D;
+          font-weight: 900;
+           font-size: 15px;
+         }
       }
       .price {
          font-family: 'Lato', sans-serif;
@@ -231,8 +232,7 @@ const Wrapper = styled.main`
       }
      }
   }
-     
-     
+       
     
     }  
   }

@@ -74,6 +74,7 @@ const Wrapper = styled.div`
     width: 200px;
     border: 1px solid #ebebeb;
     position: relative;
+    background: #fbfbfb;
     .size {
       display: flex;
       color: #1d1d1d;
@@ -99,8 +100,9 @@ const Wrapper = styled.div`
       overflow: hidden;
       position: absolute;
       width: 100%;
-      // border-left: 1px solid #ebebeb;
-      // border-right: 1px solid #ebebeb;
+      border-left: 1px solid #ebebeb;
+      border-right: 1px solid #ebebeb;
+      background: #fbfbfb;
       z-index: 10;
       transition: 0.5s;
       li {
