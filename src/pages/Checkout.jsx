@@ -130,8 +130,9 @@ const Wrapper = styled.main`
       padding: 1rem 0;
     }
     form {
-      max-width: 500px;
+      width: 100%;
       .input-control {
+        width: 100%;
         margin-bottom: 1rem;
         label {
           display: block;
@@ -210,6 +211,10 @@ const Wrapper = styled.main`
 
   @media screen and (min-width: 480px) {
     padding: 2rem;
+
+    form{
+      max-width: 500px;
+    }
   }
 
   @media screen and (min-width: 780px) {

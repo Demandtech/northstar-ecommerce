@@ -16,7 +16,7 @@ const TopSellers = () => {
         {topseller.map((seller, index) => {
           return (
             <div key={index}>
-              <ProductCard {...seller} />
+              <ProductCard index={index} {...seller} />
             </div>
           )
         })}

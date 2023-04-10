@@ -15,6 +15,7 @@ import SelectSize from './SelectSize'
 import Description from './Description'
 import Quantity from './Quantity'
 import CartTotal from './CartTotal'
+import Loader from './Loader'
 
 export {
   Navbar,
@@ -33,5 +34,6 @@ export {
   SelectSize,
   Description,
   Quantity,
-  CartTotal
+  CartTotal,
+  Loader
 }

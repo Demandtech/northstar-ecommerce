@@ -19,7 +19,7 @@ const NewArrivals = () => {
             .map((female, i) => {
               return (
                 <div key={i}>
-                  <ProductCard {...female} />
+                  <ProductCard index = {i} {...female} />
                 </div>
               )
             })
@@ -30,7 +30,7 @@ const NewArrivals = () => {
             .map((male, i) => {
               return (
                 <div key={i}>
-                  <ProductCard {...male} />
+                  <ProductCard index = {i} {...male} />
                 </div>
               )
             })

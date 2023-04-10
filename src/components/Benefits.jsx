@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { benefits } from '../utils/datas'
 import styled from 'styled-components'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
 const Benefits = () => {
+  useEffect(()=>{
+    Aos.init({duration: 1000})
+  })
   return (
     <Wrapper>
       {benefits.map((ben, i) => {
+       
         return (
-          <div key={i} className='card'>
+          <div key={i} className='card' data-aos = 'zoom-in'>
             <div className='icon-wrap'>
               <img src={ben.icon} alt={ben.title} />
             </div>

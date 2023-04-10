@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import AncrButton from './AncrButton'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
 const Promo = () => {
+  useEffect(()=>{
+   Aos.init({duration: 1000})
+  },[])
   return (
     <Wrapper>
       <div className='promo-wrapper'>
-        <div className='left card'>
+        <div className='left card' data-aos='flip-right'>
           <div className='card-content'>
             <h3>peace of mind</h3>
             <p>
@@ -18,7 +23,7 @@ const Promo = () => {
             <AncrButton href='#new_arrival' type='secondary' label='buy now' />
           </div>
         </div>
-        <div className='right card'>
+        <div className='right card' data-aos='flip-left'>
           <div className='card-content'>
             <h3>Buy 2 Get 1 Free</h3>
             <p>

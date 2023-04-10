@@ -1,28 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import hero_bg from '../assets/images/hero-bg.jpeg'
-import { NewArrivals, Benefits, Promo, AncrButton, TopSellers } from '../components'
+import {
+  NewArrivals,
+  Benefits,
+  Promo,
+  AncrButton,
+  TopSellers,
+} from '../components'
 // import AncrButton from '../components/AncrButton'
 
 const Home = () => {
+  
+
   return (
-    <Wrapper>
-      <section className='hero'>
-        <div className='hero-content'>
-          <h1>
-            stylist picks beat <br />
-            the heat
-          </h1>
-          <AncrButton type='border' href='#new_arrival' label='shop now' />
+    <>
+      <Wrapper>
+        <section className='hero'>
+          <div className='hero-content'>
+            <h1>
+              stylist picks beat <br />
+              the heat
+            </h1>
+            <AncrButton type='border' href='#new_arrival' label='shop now' />
+          </div>
+        </section>
+        <div className='sections'>
+          <NewArrivals />
+          <Benefits />
+          <Promo />
+          <TopSellers />
         </div>
-      </section>
-      <div className='sections'>
-        <NewArrivals />
-        <Benefits />
-        <Promo />
-        <TopSellers />
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </>
   )
 }
 

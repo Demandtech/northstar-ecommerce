@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 import { useProductsContext } from '../contexts/productsContext'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
-const ProductCard = ({ id, name, img, price }) => {
+const ProductCard = ({ id, name, img, price, index }) => {
   const { getSingleProduct } = useProductsContext()
+  useEffect(()=>{
+    Aos.init({duration: 1000})
+  }, [])
+  let animation = ''
+  if (index == 0) {
+    animation = 'fade-right'
+  } else if (index == 1) {
+    animation = 'fade-down'
+  } else if (index == 2) {
+    animation = 'fade-up'
+  } else if (index == 3) {
+    animation = 'fade-left'
+  }
   return (
-    <Card>
+    <Card data-aos={animation}>
       <Link to={`/product/${id}`} onClick={() => getSingleProduct(id)}>
         <div className='img-wrapper'>
           <img src={img} alt='' />

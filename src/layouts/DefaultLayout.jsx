@@ -1,15 +1,37 @@
-import React from 'react'
-import {Navbar, Footer} from '../components'
+import React, { useEffect, useState } from 'react'
+import { Navbar, Footer, Loader } from '../components'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
 const DefaultLayout = () => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000)
+    })
+
+    return ()=> clearTimeout(timeoutId)
+  }, [])
+
   return (
-    <Container>
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </Container>
+    <>
+      {loading ? (
+        <Loader loading={loading} />
+      ) : (
+        <Container>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </Container>
+      )}
+    </>
   )
 }
 
