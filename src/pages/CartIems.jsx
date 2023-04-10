@@ -87,6 +87,7 @@ const Wrapper = styled.main`
         line-height: 17px;
         color: #888888;
         text-decoration: none;
+        text-transform: uppercase;
       }
       .active {
         color: #1d1d1d;
