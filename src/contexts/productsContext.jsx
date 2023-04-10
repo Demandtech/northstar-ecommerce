@@ -1,4 +1,4 @@
-import productsReducer from '../contexts/productsReducer'
+import productsReducer from '../reducers/productsReducer'
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import {
   GET_ALL_PRODUCTS,
@@ -26,8 +26,6 @@ const getLocalStorage = () => {
 }
 
 const initialState = {
-  cart: getLocalStorage(),
-  cart_total: 0,
   products: [],
   males: [],
   females: [],
@@ -41,17 +39,17 @@ export const ProductProvider = ({ children }) => {
     dispath({ type: GET_ALL_PRODUCTS, payload: products })
   }, [])
 
-  const addToCart = (id) => {
-    dispath({ type: ADD_TO_CART, payload:id })
-  }
+  // const addToCart = (id, sizes, quantity) => {
+  //   dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
+  // }
 
-  useEffect(() => {
-    dispath({ type: COUNT_CART_TOTALS })
-    localStorage.setItem('cart', JSON.stringify(state.cart))
-  }, [state.cart])
+  // useEffect(() => {
+  //   dispath({ type: COUNT_CART_TOTALS })
+  //   localStorage.setItem('cart', JSON.stringify(state.cart))
+  // }, [state.cart])
 
   return (
-    <ProductContext.Provider value={{ ...state, addToCart }}>
+    <ProductContext.Provider value={{ ...state}}>
       {children}
     </ProductContext.Provider>
   )

@@ -2,14 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-import { useProductsContext } from '../reducers/productsContext'
+import { useProductsContext } from '../contexts/productsContext'
 
-
-const ProductCard = ({id, name, img, price }) => {
-  const {getSingleProduct} = useProductsContext()
+const ProductCard = ({ id, name, img, price }) => {
+  const { getSingleProduct } = useProductsContext()
   return (
     <Card>
-      <Link to={`/product/${id}`} onClick={()=>getSingleProduct(id)}>
+      <Link to={`/product/${id}`} onClick={() => getSingleProduct(id)}>
         <div className='img-wrapper'>
           <img src={img} alt='' />
         </div>
@@ -49,7 +48,7 @@ const Card = styled.article`
       color: #024e82;
     }
   }
-  a{
+  a {
     text-decoration: none;
   }
 `

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useProductsContext } from '../reducers/productsContext'
+import { useProductsContext } from '../contexts/productsContext'
 
-const Description = ({reviews}) => {
+const Description = ({ reviews }) => {
   const [description, setDescription] = useState(true)
-  const {singleProduct}  = useProductsContext()
+  const { singleProduct } = useProductsContext()
   return (
     <Wrapper>
       <div className='controller'>

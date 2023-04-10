@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { sizes } from '../utils/datas'
 
-const SelectSize = () => {
+const SelectSize = ({setSizes}) => {
   const [sizeIndex, setSizeIndex] = useState(0)
   const [size, setSize] = useState(sizes[sizeIndex])
   const [opensizeList, setOpenSizeList] = useState(false)
@@ -11,7 +11,9 @@ const SelectSize = () => {
   const listcontainerRef = useRef(null)
 
   
- 
+  useEffect(()=>{
+    setSizes(size.short)
+  }, [size])
 
   useEffect(() => {
     setSize(sizes[sizeIndex])

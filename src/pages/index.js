@@ -3,4 +3,6 @@ import Contact from './Contact'
 import About from './about'
 import SingleProduct from './SingleProduct'
 import Categories from "./Categories";
-export {Home, Contact, About, SingleProduct, Categories}
+import CartIems from "./CartIems";
+import Checkout from "./Checkout";
+export {Home, Contact, About, SingleProduct, Categories, CartIems, Checkout}

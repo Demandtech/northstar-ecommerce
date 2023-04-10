@@ -13,6 +13,8 @@ import ContactForm from './ContactForm'
 import Stars from './Stars'
 import SelectSize from './SelectSize'
 import Description from './Description'
+import Quantity from './Quantity'
+import CartTotal from './CartTotal'
 
 export {
   Navbar,
@@ -29,5 +31,7 @@ export {
   ContactForm,
   Stars,
   SelectSize,
-  Description
+  Description,
+  Quantity,
+  CartTotal
 }

@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { NavLink, Link } from 'react-router-dom'
 import { FaBars, FaRegUser, FaTimes } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
-import { useProductsContext } from '../reducers/productsContext'
+import { useCartContext } from '../contexts/cartContext'
 
 const Navbar = () => {
-  const {cart_total} = useProductsContext()
+  const { total_items } = useCartContext()
   const [showLinks, setShowLinks] = useState(false)
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
@@ -52,7 +52,7 @@ const Navbar = () => {
           </button>
           <button>
             <FiShoppingBag className='icon' />
-            <div className='cart-num'>{cart_total}</div>
+            <div className='cart-num'>{total_items}</div>
           </button>
           <button onClick={() => setShowLinks(!showLinks)}>
             {showLinks ? (

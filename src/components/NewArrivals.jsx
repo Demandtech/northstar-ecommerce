@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ProductCard } from '../components'
-import {products} from '../utils/datas'
-import { useProductsContext } from '../reducers/productsContext'
+import { products } from '../utils/datas'
+import { useProductsContext } from '../contexts/productsContext'
 
 const NewArrivals = () => {
-  const {males, females} = useProductsContext()
- 
+  const { males, females } = useProductsContext()
+
   return (
     <Wrapper id='new_arrival'>
       <div className='newArrivals-header'>
@@ -15,22 +15,26 @@ const NewArrivals = () => {
       </div>
       <div className='arrival-wrappers'>
         <div className='wrap women'>
-          {females.map((female, i) => {
-            return (
-              <div key={i}>
-                <ProductCard {...female} />
-              </div>
-            )
-          }).slice(0, 4)}
+          {females
+            .map((female, i) => {
+              return (
+                <div key={i}>
+                  <ProductCard {...female} />
+                </div>
+              )
+            })
+            .slice(0, 4)}
         </div>
         <div className='wrap'>
-          {males.map((male, i) => {
-            return (
-              <div key={i}>
-                <ProductCard {...male} />
-              </div>
-            )
-          }).slice(0, 4)}
+          {males
+            .map((male, i) => {
+              return (
+                <div key={i}>
+                  <ProductCard {...male} />
+                </div>
+              )
+            })
+            .slice(0, 4)}
         </div>
       </div>
     </Wrapper>
@@ -70,7 +74,7 @@ const Wrapper = styled.section`
 
     .arrival-wrappers {
       padding-top: 4rem;
-      
+
       .women {
         margin-bottom: 2rem;
       }

@@ -4,12 +4,13 @@ import { products } from '../utils/datas'
 import styled from 'styled-components'
 import { Stars, SelectSize, Description } from '../components'
 import { formatPrice } from '../utils/helpers'
-import { useProductsContext } from '../reducers/productsContext'
+import { useCartContext } from '../contexts/cartContext'
 import Socials from '../components/Socials'
 
 const SingleProduct = () => {
   const { id } = useParams()
-  const {addToCart} = useProductsContext()
+  const { addToCart } = useCartContext()
+  const [sizes, setSizes] = useState('M')
   let singleProduct = products.find((product) => product.id === Number(id))
 
   const {
@@ -24,7 +25,9 @@ const SingleProduct = () => {
     bonus,
     desc,
   } = singleProduct
-
+  // const addSize = (size)=>{
+  //  singleProduct.sizes = size
+  // }
   const [imgIndex, setImgIndex] = useState(0)
   const [mainImg, setMainImg] = useState(thumbnails[imgIndex])
 
@@ -70,9 +73,15 @@ const SingleProduct = () => {
             </span>
           </div>
           <p className='desc'>{desc}</p>
-          <SelectSize />
+          <SelectSize setSizes={setSizes} />
           <div className='add-to-cart'>
-            <button onClick={() => addToCart(id)}>ADD TO CART</button>
+            <button
+              onClick={() => {
+                addToCart(id, sizes, 1)
+              }}
+            >
+              ADD TO CART
+            </button>
           </div>
           <div className='cate_tags'>
             <div className='category'>

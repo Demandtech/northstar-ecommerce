@@ -4,9 +4,18 @@ import App from './App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import DefaultLayout from './layouts/DefaultLayout'
 import ProtectedLayout from './layouts/ProtectedLayout'
-import { Contact, Home, About, SingleProduct, Categories } from './pages'
+import {
+  Contact,
+  Home,
+  About,
+  SingleProduct,
+  Categories,
+  CartIems,
+  Checkout,
+} from './pages'
 import { createGlobalStyle } from 'styled-components'
-import { ProductProvider } from './reducers/productsContext'
+import { ProductProvider } from './contexts/productsContext'
+import { CartProvider } from './contexts/cartContext'
 
 const router = createBrowserRouter([
   {
@@ -36,6 +45,14 @@ const router = createBrowserRouter([
         path: '/product/category',
         element: <Categories />,
       },
+      {
+        path: '/cart',
+        element: <CartIems />,
+      },
+      {
+        path: '/checkout',
+        element: <Checkout />
+      }
     ],
   },
 ])
@@ -59,8 +76,10 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ProductProvider>
-      <GlobalStyle />
-      <RouterProvider router={router} />
+      <CartProvider>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </CartProvider>
     </ProductProvider>
   </React.StrictMode>
 )

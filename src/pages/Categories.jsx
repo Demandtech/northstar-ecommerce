@@ -1,19 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
-import { useProductsContext } from '../reducers/productsContext'
+import { useProductsContext } from '../contexts/productsContext'
 
 const Categories = () => {
-  const {female, male} = useProductsContext()
+  const { female, male } = useProductsContext()
   return (
     <Wrapper>
       <div className='link'>
         <NavLink to={'/'}>HOME</NavLink>/<NavLink to={'/about'}>About</NavLink>/
         <NavLink to={'/product/category'}>Female</NavLink>
       </div>
-      <div className="products">
-          
-      </div>
+      <div className='products'></div>
     </Wrapper>
   )
 }
