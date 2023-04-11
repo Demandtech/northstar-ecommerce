@@ -5,7 +5,7 @@ import { BeatLoader } from 'react-spinners'
 const Loader = ({loading}) => {
   return (
     <Wrapper className='loader'>
-      <div>Nastar</div>
+      <div className='name'>NorthStar</div>
       <BeatLoader color={'#D6763C'} loading={loading} size={20} />
     </Wrapper>
   )
@@ -18,7 +18,9 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  F
+  .name{
+    font-size: 2rem;
+  }
 `
 
 export default Loader

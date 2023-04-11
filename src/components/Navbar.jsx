@@ -4,10 +4,12 @@ import { NavLink, Link } from 'react-router-dom'
 import { FaBars, FaRegUser, FaTimes } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
 import { useCartContext } from '../contexts/cartContext'
+import { useUserContext } from '../contexts/userContext'
 
 const Navbar = () => {
   const { total_items } = useCartContext()
   const [showLinks, setShowLinks] = useState(false)
+  const { authenticated } = useUserContext()
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
 
@@ -52,9 +54,15 @@ const Navbar = () => {
           </div>
         </ul>
         <div className='controls'>
-          <button>
-            <FaRegUser className='icon' />
-          </button>
+          <div>
+            {authenticated ? (
+              <button>
+                <FaRegUser className='icon' />
+              </button>
+            ) : (
+              <Link to={'login'}>Login</Link>
+            )}
+          </div>
           <button>
             <FiShoppingBag className='icon' />
             <div className='cart-num'>{total_items}</div>
@@ -127,8 +135,13 @@ const Wrapper = styled.nav`
       }
     }
     .controls {
+      a{
+        text-decoration: none;
+        font-weight: 500;
+        color:#b1b1b1;
+      }
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
       margin-left: auto;
       button {
         all: unset;

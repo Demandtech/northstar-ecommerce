@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Navigate } from 'react-router-dom'
 import { Navbar, Footer, Loader } from '../components'
 import styled from 'styled-components'
-
+import { useUserContext } from '../contexts/userContext'
 
 const ProtectedLayout = () => {
   const [loading, setLoading] = useState(true)
+  const { authenticated } = useUserContext()
+
+  if (!authenticated) {
+    return <Navigate to={'/login'} />
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -15,11 +20,12 @@ const ProtectedLayout = () => {
     window.addEventListener('load', () => {
       setTimeout(() => {
         setLoading(false)
-      }, 2000)
+      }, 1000)
     })
 
     return () => clearTimeout(timeoutId)
   }, [])
+  
   return (
     <>
       {loading ? (
