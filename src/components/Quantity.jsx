@@ -5,7 +5,7 @@ import { GET_QUANTITY, COUNT_CART_TOTALS } from '../actions'
 
 const Quantity = ({ id, quantity }) => {
   const { dispath, cart } = useCartContext()
-  const [inputVal, setInputVal] = useState(1)
+  const [inputVal, setInputVal] = useState(quantity)
 
   const handleChange = (e) => {
     setInputVal(e.target.value)
@@ -13,7 +13,7 @@ const Quantity = ({ id, quantity }) => {
 
   useEffect(() => {
     dispath({ type: COUNT_CART_TOTALS })
-    localStorage.setItem('cart', JSON.stringify(cart))
+    //localStorage.setItem('cart', JSON.stringify(cart))
   }, [quantity])
 
   useEffect(() => {

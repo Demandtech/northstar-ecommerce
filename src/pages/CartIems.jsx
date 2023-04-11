@@ -39,7 +39,7 @@ const CartIems = () => {
             </thead>
             <tbody>
               {cart.map((item, index) => {
-                let total = item.price * item.quantity
+                let total = item.discountedPrice * item.quantity
                 return (
                   <tr key={index}>
                     <td>
@@ -58,7 +58,7 @@ const CartIems = () => {
                     <td>
                       <strong>{item.name}</strong>
                     </td>
-                    <td>{formatPrice(item.price)}</td>
+                    <td>{formatPrice(item.discountedPrice)}</td>
                     <td>
                       <Quantity id={item.id} quantity={item.quantity} />
                     </td>
@@ -122,8 +122,8 @@ const Wrapper = styled.main`
           button {
             all: unset;
             cursor: pointer;
-            transition: .5s;
-            &:hover{
+            transition: 0.5s;
+            &:hover {
               color: #1b1b1b;
               transform: translateY(-2px);
             }
@@ -146,11 +146,28 @@ const Wrapper = styled.main`
     place-items: center;
 
     a {
-      background: #024e82;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
       text-decoration: none;
       color: #ffffff;
-      text-transform: uppercase;
-      padding: 0.4rem 1rem;
+      font-weight: 500;
+      border: 2px solid #024e82;
+      background-image: -webkit-linear-gradient(
+        30deg,
+        #024e82 50%,
+        transparent 50%
+      );
+      background-image: linear-gradient(30deg, #024e82 50%, transparent 50%);
+      background-size: 600px;
+      background-repeat: no-repeat;
+      background-position: 0%;
+      -webkit-transition: all 300ms ease-in-out;
+      transition: all color 300ms ease-in-out;
+
+      &:hover {
+        background-position: 100%;
+        color: #024e82;
+      }
     }
   }
 

@@ -11,7 +11,7 @@ const Promo = () => {
   return (
     <Wrapper>
       <div className='promo-wrapper'>
-        <div className='left card' data-aos='flip-right'>
+        <div className='left card' data-aos='zoom-in'>
           <div className='card-content'>
             <h3>peace of mind</h3>
             <p>
@@ -23,7 +23,7 @@ const Promo = () => {
             <AncrButton href='#new_arrival' type='secondary' label='buy now' />
           </div>
         </div>
-        <div className='right card' data-aos='flip-left'>
+        <div className='right card' data-aos='zoom-in'>
           <div className='card-content'>
             <h3>Buy 2 Get 1 Free</h3>
             <p>

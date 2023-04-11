@@ -6,8 +6,7 @@ import {
   COUNT_CART_TOTALS,
   DELETE_CART_ITEM,
 } from '../actions'
-import { products } from '../utils/datas'
-
+import { useProductsContext } from './productsContext'
 const CartContext = createContext()
 
 const getLocalStorage = () => {
@@ -30,28 +29,29 @@ const initialState = {
   total_items: 0,
   total_amount: 0,
   all_products: [],
-  shipping: 0
+  shipping: 0,
 }
 
 export const CartProvider = ({ children }) => {
   const [state, dispath] = useReducer(cartReducer, initialState)
+  const { products } = useProductsContext()
+
+  // function savedLocalStorage() {
+  //   localStorage.setItem('cart', JSON.stringify(state.cart))
+  // }
 
   useEffect(() => {
     dispath({ type: GET_ALL_PRODUCTS, payload: products })
-  }, [])
+  }, [products])
 
   const addToCart = (id, sizes, quantity) => {
     dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
   }
 
   useEffect(() => {
-    dispath({ type: COUNT_CART_TOTALS})
+    dispath({ type: COUNT_CART_TOTALS })
     localStorage.setItem('cart', JSON.stringify(state.cart))
   }, [state.cart])
-
-  // useEffect(() => {
-  //   dispath({ type: COUNT_CART_TOTAL })
-  // }, [quantity])
 
   const deleteCartItem = (id) => {
     dispath({ type: DELETE_CART_ITEM, payload: id })

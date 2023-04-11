@@ -39,17 +39,12 @@ export const ProductProvider = ({ children }) => {
     dispath({ type: GET_ALL_PRODUCTS, payload: products })
   }, [])
 
-  // const addToCart = (id, sizes, quantity) => {
-  //   dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
-  // }
-
-  // useEffect(() => {
-  //   dispath({ type: COUNT_CART_TOTALS })
-  //   localStorage.setItem('cart', JSON.stringify(state.cart))
-  // }, [state.cart])
+  useEffect(() => {
+    dispath({ type: 'GET_DISCOUNTED_PRICE', payload:products })
+  }, [])
 
   return (
-    <ProductContext.Provider value={{ ...state}}>
+    <ProductContext.Provider value={{ ...state }}>
       {children}
     </ProductContext.Provider>
   )

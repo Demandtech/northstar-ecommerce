@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: '/about',
         element: <About />,
       },
-      { path: '/Contact', element: <Contact /> },
+      { path: '/contact', element: <Contact /> },
     ],
   },
   {

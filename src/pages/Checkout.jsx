@@ -71,7 +71,7 @@ const Checkout = () => {
                 return (
                   <tr key={ind}>
                     <td>{ca.name}</td>
-                    <td>{formatPrice(ca.price)}</td>
+                    <td>{formatPrice(ca.discountedPrice)}</td>
                   </tr>
                 )
               })}

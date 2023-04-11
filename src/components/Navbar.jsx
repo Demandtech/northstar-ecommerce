@@ -40,8 +40,13 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={() => setShowLinks(false)} to={'Contact'}>
+              <NavLink onClick={() => setShowLinks(false)} to={'contact'}>
                 Contact
+              </NavLink>
+            </li>
+            <li>
+              <NavLink onClick={() => setShowLinks(false)} to={'cart'}>
+                Cart
               </NavLink>
             </li>
           </div>

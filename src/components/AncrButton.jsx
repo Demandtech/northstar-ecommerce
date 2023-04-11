@@ -1,10 +1,10 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const AncrButton = (props) => {
   return (
-    <BtnWrapper href={props.href} type={props.type} >
-       {props.label}
+    <BtnWrapper type={props.type} href={props.href}>
+      {props.label}
     </BtnWrapper>
   )
 }
@@ -107,12 +107,7 @@ const BtnWrapper = styled.a`
   }}
 
   ${(props) => {
-    return (
-      props.type === 'rounded' &&
-      css`
-       
-      `
-    )
+    return props.type === 'rounded' && css``
   }}
 `
 
