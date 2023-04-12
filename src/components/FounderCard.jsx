@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
-const FounderCard = ({ name, img }) => {
+const FounderCard = ({index, name, img }) => {
   //console.log(founder)
+  let animation = ''
+  if (index == 0) {
+    animation = 'fade-right'
+  } else if (index == 1) {
+    animation = 'fade-down'
+  } else if (index == 2) {
+    animation = 'fade-up'
+  } else if (index == 3) {
+    animation = 'fade-left'
+  }
+
+   useEffect(() => {
+     Aos.init({ duration: 1000 })
+   }, [])
+
   return (
-    <Wrapper>
+    <Wrapper data-aos={animation}>
       <div className='img-wrapper'>
         <img src={img} alt={name} />
       </div>

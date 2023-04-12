@@ -1,22 +1,23 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import maleImg from '../assets/images/male.jpeg'
 import femaleImg from '../assets/images/female.jpeg'
 import { Link } from 'react-router-dom'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
 const Category = () => {
+  useEffect(() => {
+    Aos.init({ duration: 1000 })
+  }, [])
   return (
     <Wrapper>
       <div className='category-wrapper'>
-        <div className='female category'>
-          <Link to='/product/category'>
-            Buy Now
-          </Link>
+        <div className='female category' data-aos='zoom-in'>
+          <Link to='/product/category'>Buy Now</Link>
         </div>
-        <div className='male category'>
-          <Link to='/product/category'>
-            Buy Now
-          </Link>
+        <div className='male category' data-aos='zoom-in'>
+          <Link to='/product/category'>Buy Now</Link>
         </div>
       </div>
     </Wrapper>

@@ -14,7 +14,7 @@ const Founders = () => {
              {founders.map((founder, index)=>{
                return (
                  <div key={index}>
-                   <FounderCard {...founder} />
+                   <FounderCard index={index} {...founder} />
                  </div>
                )
              })}
