@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const Register = () => {
   const [viewPass, setViewPass] = useState(false)
-  const [user, setUser] = useState({ name: '', email: '', password: '' })
+  const [user, setUser] = useState({ fName: '', lName: '', email: '', password: '' })
   const { handleRegister } = useUserContext()
 
   return (
@@ -37,15 +37,23 @@ const Register = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                handleRegister(user.name, user.email, user.password)
+                handleRegister(user.fName, user.lName, user.email, user.password)
               }}
             >
               <div className='input-control'>
                 <input
-                  value={user.name}
+                  value={user.fName}
                   type='text'
-                  placeholder='Full Name'
-                  onChange={(e) => setUser({ ...user, name: e.target.value })}
+                  placeholder='First Name'
+                  onChange={(e) => setUser({ ...user, fName: e.target.value })}
+                />
+              </div>
+              <div className='input-control'>
+                <input
+                  value={user.lName}
+                  type='text'
+                  placeholder='Last Name'
+                  onChange={(e) => setUser({ ...user, lName: e.target.value })}
                 />
               </div>
               <div className='input-control'>
@@ -61,7 +69,9 @@ const Register = () => {
                   type={viewPass ? 'text' : 'password'}
                   placeholder='Password'
                   value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                 />
                 <button
                   className='password-setting'
@@ -128,15 +138,19 @@ const Wrapper = styled.main`
         padding: 0 2rem;
 
         .right-header {
-          padding: 2rem 0;
+          padding: 1.5rem 0;
+
           h2 {
             padding-bottom: 2rem;
           }
           .social {
             display: flex;
             flex-direction: column;
+            width: 100%;
             gap: 2rem;
+
             .facebook {
+              flex: 1;
               display: flex;
               gap: 0.5rem;
               border: 1px solid rgba(0, 0, 0, 0.12);
@@ -146,6 +160,7 @@ const Wrapper = styled.main`
               align-items: center;
               cursor: pointer;
               transition: .3s;
+
               &:hover{
                 background: lightgray;
               }
@@ -155,6 +170,7 @@ const Wrapper = styled.main`
               }
             }
             .google {
+              flex: 1;
               display: flex;
               gap: 0.5rem;
               border: 1px solid rgba(0, 0, 0, 0.12);
@@ -188,6 +204,7 @@ const Wrapper = styled.main`
             position: relative;
 
             input {
+              all:unset;
               width: 100%;
               padding: .5rem 0;
               font-size: 1rem;
@@ -210,6 +227,7 @@ const Wrapper = styled.main`
               right: 0;
               bottom: 50%;
               transform: translateY(50%);
+              cursor: pointer;
 
               .icon{
                color:rgba(26, 23, 23, 0.38);
@@ -253,10 +271,12 @@ const Wrapper = styled.main`
     }
   }
   @media screen and (min-width: 780px) {
+    
     .container {
       background-size: 60% 100%;
       background-position: left;
       flex-direction: row;
+
       .left {
         flex: 1;
         p {
@@ -267,11 +287,11 @@ const Wrapper = styled.main`
         flex: 1;
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
-        background: #ffffff;
-        padding: 5rem;
+        background: #ffffff;    
 
         .right-wrapper {
-          max-width: 600px;
+          max-width: 500px;
+          padding: 4rem 0 2rem 0;
 
           .right-header {
             .social {

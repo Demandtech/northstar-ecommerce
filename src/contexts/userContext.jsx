@@ -15,8 +15,8 @@ export const UserProvider = ({ children }) => {
     console.log(email, password)
   }
 
-  const handleRegister = (name, email, password)=> {
-    console.log(name, email, password)
+  const handleRegister = (fName,lName, email, password)=> {
+    console.log(fName,lName, email, password)
   }
 
   return (

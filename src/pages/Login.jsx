@@ -200,6 +200,7 @@ const Wrapper = styled.main`
               right: 0;
               bottom: 50%;
               transform: translateY(50%);
+              cursor: pointer;
 
               .icon{
                color:rgba(26, 23, 23, 0.38);
@@ -257,10 +258,10 @@ const Wrapper = styled.main`
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
         background: #ffffff;
-        padding: 5rem;
+        padding: 4rem 0 2rem 0;
 
         .right-wrapper {
-          max-width: 600px;
+           max-width: 500px;
 
           .right-header {
             .social {

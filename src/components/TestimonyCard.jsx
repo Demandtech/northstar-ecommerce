@@ -12,10 +12,7 @@ const TestimonyCard = ({index, img, icon, text, name }) => {
    } else if (index == 2) {
      animation = 'fade-right'
    }
-  //   else if (index == 3) {
-  //    animation = 'fade-left'
-  //  }
-
+  
    useEffect(() => {
      Aos.init({ duration: 1000 })
    }, [])
