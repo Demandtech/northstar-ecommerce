@@ -7,7 +7,12 @@ import { Link } from 'react-router-dom'
 
 const Register = () => {
   const [viewPass, setViewPass] = useState(false)
-  const [user, setUser] = useState({ fName: '', lName: '', email: '', password: '' })
+  const [newUser, setNewUser] = useState({
+    fName: '',
+    lName: '',
+    email: '',
+    password: '',
+  })
   const { handleRegister } = useUserContext()
 
   return (
@@ -37,40 +42,46 @@ const Register = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                handleRegister(user.fName, user.lName, user.email, user.password)
+                handleRegister(newUser)
               }}
             >
               <div className='input-control'>
                 <input
-                  value={user.fName}
+                  value={newUser.fName}
                   type='text'
                   placeholder='First Name'
-                  onChange={(e) => setUser({ ...user, fName: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, fName: e.target.value })
+                  }
                 />
               </div>
               <div className='input-control'>
                 <input
-                  value={user.lName}
+                  value={newUser.lName}
                   type='text'
                   placeholder='Last Name'
-                  onChange={(e) => setUser({ ...user, lName: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, lName: e.target.value })
+                  }
                 />
               </div>
               <div className='input-control'>
                 <input
-                  value={user.email}
+                  value={newUser.email}
                   type='text'
                   placeholder='Email Address'
-                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, email: e.target.value })
+                  }
                 />
               </div>
               <div className='input-control'>
                 <input
                   type={viewPass ? 'text' : 'password'}
                   placeholder='Password'
-                  value={user.password}
+                  value={newUser.password}
                   onChange={(e) =>
-                    setUser({ ...user, password: e.target.value })
+                    setNewUser({ ...newUser, password: e.target.value })
                   }
                 />
                 <button

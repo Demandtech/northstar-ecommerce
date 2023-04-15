@@ -36,7 +36,7 @@ const Login = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                handleLogin(user.email, user.password)
+                handleLogin(user)
               }}
             >
               <div className='input-control'>

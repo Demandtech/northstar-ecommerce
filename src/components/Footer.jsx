@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaChevronRight } from 'react-icons/fa'
 import visa from '../assets/images/visa.jpeg'
 import master from '../assets/images/master.jpeg'
 import electron from '../assets/images/electron.jpeg'
 import paypal from '../assets/images/paypal.jpeg'
+import { useUserContext } from '../contexts/userContext'
 
 const Footer = () => {
-  const onsubmit = (e) => {
-    e.preventDefault()
-  }
+  const [email, setEmail] = useState('')
+  const {handleNewsLetter} = useUserContext()
+
   return (
     <Wrapper>
       <div className='footer-wrapper'>
@@ -41,12 +42,15 @@ const Footer = () => {
           <li>Advetising</li>
           <li>Terms of Use</li>
         </ul>
-        <form className='fourth' onSubmit={onsubmit}>
+        <form className='fourth' onSubmit={(e)=>{
+          e.preventDefault()
+          handleNewsLetter(email)
+        }}>
           <label>
             <strong>get in the know</strong>
           </label>
           <div className='input-control'>
-            <input type='text' placeholder='Enter email' />
+            <input value={email} onChange={(e)=>setEmail(e.target.value)} type='text' placeholder='Enter email' />
             <button>
               <FaChevronRight />
             </button>
@@ -115,6 +119,7 @@ const Wrapper = styled.footer`
       .input-control {
         display: flex;
         align-items: center;
+        gap: 1rem;
         input {
           border: none;
           border-bottom: 1px solid #1d1d1d;

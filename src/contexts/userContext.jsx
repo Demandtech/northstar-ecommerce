@@ -4,7 +4,7 @@ import userReducer from '../reducers/userReducer'
 const UserContext = createContext()
 
 const initialState = {
-  authenticated: true,
+  authenticated: false,
   user: {},
 }
 
@@ -12,8 +12,8 @@ export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
 
-  const handleLogin = (email, password) => {
-    console.log(email, password)
+  const handleLogin = (user) => {
+    console.log(user)
   }
 
   const handleLogout = () => {
@@ -21,8 +21,8 @@ export const UserProvider = ({ children }) => {
     setOpenSetup(false)
   }
 
-  const handleRegister = (fName,lName, email, password)=> {
-    console.log(fName,lName, email, password)
+  const handleRegister = (newUser)=> {
+   console.log(newUser)
   }
 
   const handleOpenSetup = () => {
@@ -30,10 +30,24 @@ export const UserProvider = ({ children }) => {
     setOpenSetup(!openSetup)
   }
 
-  
+  const handleNewsLetter = (email)=> {
+    console.log(email)
+  }
 
   return (
-    <UserContext.Provider value={{ ...state, handleLogin, handleRegister, handleOpenSetup, openSetup, handleLogout }}>{children}</UserContext.Provider>
+    <UserContext.Provider
+      value={{
+        ...state,
+        handleLogin,
+        handleRegister,
+        handleOpenSetup,
+        openSetup,
+        handleLogout,
+        handleNewsLetter,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
   )
 }
 
