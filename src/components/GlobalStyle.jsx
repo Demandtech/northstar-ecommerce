@@ -5,10 +5,11 @@ const GlobalStyle = createGlobalStyle`
   html{
     scroll-behavior: smooth;
   }
+  
   body{
-    background: red;
     font-family: 'Arimo' , sans-serif;
   }
+
   *, 
   *::before, 
   *::after{

@@ -16,6 +16,7 @@ import Description from './Description'
 import Quantity from './Quantity'
 import CartTotal from './CartTotal'
 import Loader from './Loader'
+import GlobalStyle from './GlobalStyle'
 
 export {
   Navbar,
@@ -35,5 +36,6 @@ export {
   Description,
   Quantity,
   CartTotal,
-  Loader
+  Loader,
+  GlobalStyle
 }

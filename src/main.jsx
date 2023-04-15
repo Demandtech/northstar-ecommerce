@@ -5,7 +5,7 @@ import { ProductProvider } from './contexts/productsContext'
 import { CartProvider } from './contexts/cartContext'
 import { UserProvider } from './contexts/userContext'
 import router from './router'
-import GlobalStyle from './components/GlobalStyle'
+import {GlobalStyle} from './components'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
