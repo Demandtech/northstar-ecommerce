@@ -5,11 +5,12 @@ import { FaBars, FaRegUser, FaTimes } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
 import { useCartContext } from '../contexts/cartContext'
 import { useUserContext } from '../contexts/userContext'
+import UserSetting from './UserSetting'
 
 const Navbar = () => {
   const { total_items } = useCartContext()
   const [showLinks, setShowLinks] = useState(false)
-  const { authenticated } = useUserContext()
+  const { authenticated, handleOpenSetup, openSetup } = useUserContext()
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
 
@@ -23,6 +24,9 @@ const Navbar = () => {
       linksContainerRef.current.style.opacity = 0
     }
   }, [showLinks])
+
+  
+
   return (
     <Wrapper>
       <div className='nav-wrapper'>
@@ -32,22 +36,22 @@ const Navbar = () => {
         <ul ref={linksContainerRef}>
           <div className='nav_list' ref={linksRef}>
             <li>
-              <NavLink onClick={() => setShowLinks(false)} to={'/'}>
+              <NavLink className={'nav-link'}  onClick={() => setShowLinks(false)} to={'/'}>
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={() => setShowLinks(false)} to={'/about'}>
+              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'/about'}>
                 About
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={() => setShowLinks(false)} to={'contact'}>
+              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'contact'}>
                 Contact
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={() => setShowLinks(false)} to={'cart'}>
+              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'cart'}>
                 Cart
               </NavLink>
             </li>
@@ -56,18 +60,21 @@ const Navbar = () => {
         <div className='controls'>
           <div>
             {authenticated ? (
-              <button>
-                <FaRegUser className='icon' />
-              </button>
+              <div className='user-container'>
+                <button className='btn' onClick={handleOpenSetup}>
+                  <FaRegUser className='icon' />
+                </button>
+                {openSetup && <UserSetting />}
+              </div>
             ) : (
-              <Link to={'login'}>Login</Link>
+              <Link className='login-link' to={'login'}>Login</Link>
             )}
           </div>
-          <button>
+          <button className='btn'>
             <FiShoppingBag className='icon' />
             <div className='cart-num'>{total_items}</div>
           </button>
-          <button onClick={() => setShowLinks(!showLinks)}>
+          <button className='btn' onClick={() => setShowLinks(!showLinks)}>
             {showLinks ? (
               <FaTimes className='icon' />
             ) : (
@@ -121,7 +128,7 @@ const Wrapper = styled.nav`
         li {
           padding: 0.5rem 0;
 
-          a {
+          .nav-link {
             text-decoration: none;
             font-weight: 700;
             color: #000000;
@@ -135,15 +142,20 @@ const Wrapper = styled.nav`
       }
     }
     .controls {
-      a{
+      .login-link {
         text-decoration: none;
         font-weight: 500;
-        color:#b1b1b1;
+        color: #b1b1b1;
       }
       display: flex;
       gap: 1rem;
       margin-left: auto;
-      button {
+
+      .user-container{
+        position: relative;
+      }
+
+      .btn {
         all: unset;
         cursor: pointer;
 
@@ -152,7 +164,7 @@ const Wrapper = styled.nav`
         }
       }
 
-      button:nth-child(2) {
+      .btn:nth-child(2) {
         position: relative;
 
         .cart-num {
@@ -211,7 +223,7 @@ const Wrapper = styled.nav`
       }
 
       .controls {
-        button:nth-child(3) {
+        btn:nth-child(3) {
           display: none;
         }
       }

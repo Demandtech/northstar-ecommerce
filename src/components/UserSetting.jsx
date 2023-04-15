@@ -5,12 +5,16 @@ import {FaSignOutAlt} from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 
 const UserSetting = () => {
- const { handleLogout } = useUserContext()
+ const { handleLogout, handleOpenSetup } = useUserContext()
  console.log(handleLogout)
   return (
     <Wrapper>
-      <Link className='link-btn' to={'/profile'}>Profile</Link>
-      <Link className='link-btn' to={'/cart'}>Order</Link>
+      <Link onClick={handleOpenSetup} className='link-btn' to={'/profile'}>
+        Profile
+      </Link>
+      <Link onClick={handleOpenSetup} className='link-btn' to={'/cart'}>
+        Order
+      </Link>
       <button className='logout-btn' onClick={handleLogout}>
         <span>Sign Out</span>
         <FaSignOutAlt />

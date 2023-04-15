@@ -117,6 +117,11 @@ const Wrapper = styled.div`
         line-height: 19px;
         color: #1d1d1d;
         border-bottom: 1px solid #ebebeb;
+        cursor: pointer;
+
+        &:hover{
+          background: #ffffff;
+        }
       }
     }
   }

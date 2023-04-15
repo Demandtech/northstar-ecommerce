@@ -7,6 +7,7 @@ import CartIems from './CartIems'
 import Checkout from './Checkout'
 import Login from './Login'
 import Register from './Register'
+import UserProfile from './UserProfile'
 export {
   Home,
   Contact,
@@ -17,4 +18,5 @@ export {
   Checkout,
   Login,
   Register,
+  UserProfile
 }
