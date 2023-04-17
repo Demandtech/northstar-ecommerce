@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
 
-  const handleLogin = (user) => {
+  const emailLogin = (user) => {
     console.log(user)
   }
 
@@ -40,8 +40,12 @@ export const UserProvider = ({ children }) => {
     console.log(email)
   }
 
-  const google = () => {
+  const googleLogin = () => {
     window.open('http://localhost:5000/auth/google', '_self')
+  }
+
+  const facebookLogin = ()=> {
+    window.open('http://localhost:5000/auth/facebook', '_self')
   }
 
   const getUser = async () => {
@@ -77,14 +81,15 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         ...state,
-        handleLogin,
+        emailLogin,
         handleRegister,
         handleOpenSetup,
         openSetup,
         handleLogout,
         handleNewsLetter,
-        google,
-        getUser
+        googleLogin,
+        getUser,
+        facebookLogin
       }}
     >
       {children}

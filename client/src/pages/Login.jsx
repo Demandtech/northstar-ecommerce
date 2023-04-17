@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const Login = () => {
   const [viewPass, setViewPass] = useState(false)
   const [user, setUser] = useState({ email: '', password: '' })
-  const { handleLogin, google } = useUserContext()
+  const { emailLogin, googleLogin, facebookLogin } = useUserContext()
   return (
     <Wrapper>
       <div className='container'>
@@ -20,11 +20,11 @@ const Login = () => {
             <div className='right-header'>
               <h2>Sigin Account</h2>
               <div className='social'>
-                <div className='google' onClick={google}>
+                <div className='google' onClick={googleLogin}>
                   <FaGoogle className='icon' />
                   <p>Sign in with Google</p>
                 </div>
-                <div className='facebook'>
+                <div className='facebook' onClick={facebookLogin}>
                   <FaFacebook className='icon' />
                   <p>Sign in with facebook</p>
                 </div>
@@ -66,7 +66,7 @@ const Login = () => {
                   )}
                 </button>
               </div>
-              <button className='submit-btn' type='submit'>
+              <button onClick={emailLogin} className='submit-btn' type='submit'>
                 Login
               </button>
               <div className='login-link'>
