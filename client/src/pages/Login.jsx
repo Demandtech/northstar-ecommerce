@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const Login = () => {
   const [viewPass, setViewPass] = useState(false)
   const [user, setUser] = useState({ email: '', password: '' })
-  const { handleLogin } = useUserContext()
+  const { handleLogin, google } = useUserContext()
   return (
     <Wrapper>
       <div className='container'>
@@ -20,7 +20,7 @@ const Login = () => {
             <div className='right-header'>
               <h2>Sigin Account</h2>
               <div className='social'>
-                <div className='google'>
+                <div className='google' onClick={google}>
                   <FaGoogle className='icon' />
                   <p>Sign in with Google</p>
                 </div>

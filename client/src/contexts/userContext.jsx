@@ -1,5 +1,12 @@
-import { useContext, createContext, useReducer, useState } from 'react'
+import React, {
+  useContext,
+  createContext,
+  useReducer,
+  useState,
+  useEffect,
+} from 'react'
 import userReducer from '../reducers/userReducer'
+import {LOGIN_SUCCESS} from '../actions'
 
 const UserContext = createContext()
 
@@ -17,22 +24,54 @@ export const UserProvider = ({ children }) => {
   }
 
   const handleLogout = () => {
-    console.log('clicked')
+    window.open('http://localhost:5000/auth/logout', '_self')
     setOpenSetup(false)
   }
 
-  const handleRegister = (newUser)=> {
-   console.log(newUser)
+  const handleRegister = (newUser) => {
+    console.log(newUser)
   }
 
   const handleOpenSetup = () => {
-    console.log('clicked')
     setOpenSetup(!openSetup)
   }
 
-  const handleNewsLetter = (email)=> {
+  const handleNewsLetter = (email) => {
     console.log(email)
   }
+
+  const google = () => {
+    window.open('http://localhost:5000/auth/google', '_self')
+  }
+
+  const getUser = async () => {
+   
+    fetch('http://localhost:5000/auth/login/success', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json()
+        }
+        throw new Error('authentication failed')
+      })
+      .then((resObj) => {
+        dispath({ type: LOGIN_SUCCESS, payload: resObj })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(()=>{
+    getUser()
+  }, [])
 
   return (
     <UserContext.Provider
@@ -44,6 +83,8 @@ export const UserProvider = ({ children }) => {
         openSetup,
         handleLogout,
         handleNewsLetter,
+        google,
+        getUser
       }}
     >
       {children}

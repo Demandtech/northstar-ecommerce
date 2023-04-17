@@ -10,7 +10,7 @@ import UserSetting from './UserSetting'
 const Navbar = () => {
   const { total_items } = useCartContext()
   const [showLinks, setShowLinks] = useState(false)
-  const { authenticated, handleOpenSetup, openSetup } = useUserContext()
+  const { authenticated, handleOpenSetup, openSetup, user } = useUserContext()
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
 
@@ -61,9 +61,10 @@ const Navbar = () => {
           <div>
             {authenticated ? (
               <div className='user-container'>
-                <button className='btn' onClick={handleOpenSetup}>
-                  <FaRegUser className='icon' />
-                </button>
+                <div className='display-btn' onClick={handleOpenSetup}>
+                  {/* <FaRegUser className='icon' /> */}
+                  <img src={user.photos[0].value} alt="avatar" />
+                </div>
                 {openSetup && <UserSetting />}
               </div>
             ) : (
@@ -142,6 +143,8 @@ const Wrapper = styled.nav`
       }
     }
     .controls {
+     
+      
       .login-link {
         text-decoration: none;
         font-weight: 500;
@@ -151,8 +154,22 @@ const Wrapper = styled.nav`
       gap: 1rem;
       margin-left: auto;
 
-      .user-container{
+      .user-container {
         position: relative;
+
+        .display-btn {
+          width: 35px;
+          height: 35px;
+          cursor: pointer;
+
+          img {
+            border: 2px solid #024e82;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
       }
 
       .btn {
@@ -180,7 +197,7 @@ const Wrapper = styled.nav`
           display: grid;
           place-items: center;
           border-radius: 50%;
-          top: -10px;
+          top: -5px;
           right: -8px;
         }
       }
