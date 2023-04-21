@@ -6,7 +6,8 @@ import React, {
   useEffect,
 } from 'react'
 import userReducer from '../reducers/userReducer'
-import {LOGIN_SUCCESS} from '../actions'
+import { LOGIN_SUCCESS } from '../actions'
+import { useNavigate } from 'react-router-dom'
 
 const UserContext = createContext()
 
@@ -18,9 +19,12 @@ const initialState = {
 export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
+  const [messages, setMessages] = useState({ success: '', error: '' })
+  
+ 
 
-  const emailLogin = (user) => {
-    console.log(user)
+  const emailLogin = (e) => {
+    e.preventDefault()
   }
 
   const handleLogout = () => {
@@ -29,7 +33,28 @@ export const UserProvider = ({ children }) => {
   }
 
   const handleRegister = (newUser) => {
-    console.log(newUser)
+    let payload = {
+      first_name: newUser.fName,
+      last_name: newUser.lName,
+      email: newUser.email,
+      password: newUser.pass2,
+    }
+    fetch('http://localhost/northstar/newuser.php/register', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setMessages({ success: data.message, error: data.error })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const handleOpenSetup = () => {
@@ -44,15 +69,15 @@ export const UserProvider = ({ children }) => {
     window.open('http://localhost:5000/auth/google', '_self')
   }
 
-  const facebookLogin = ()=> {
+  const facebookLogin = () => {
     window.open('http://localhost:5000/auth/facebook', '_self')
   }
 
   const getUser = async () => {
-   
     fetch('http://localhost:5000/auth/login/success', {
       method: 'GET',
       credentials: 'include',
+      mode: 'no-cors',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -73,9 +98,15 @@ export const UserProvider = ({ children }) => {
       })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getUser()
   }, [])
+
+  useEffect(()=> {
+    setTimeout(()=>{
+      setMessages({...messages, success: ''})
+    }, 1500)
+  }, [messages])
 
   return (
     <UserContext.Provider
@@ -89,7 +120,8 @@ export const UserProvider = ({ children }) => {
         handleNewsLetter,
         googleLogin,
         getUser,
-        facebookLogin
+        facebookLogin,
+        messages,
       }}
     >
       {children}

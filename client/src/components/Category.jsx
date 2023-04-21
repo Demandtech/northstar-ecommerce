@@ -5,8 +5,10 @@ import femaleImg from '../assets/images/female.jpeg'
 import { Link } from 'react-router-dom'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import { useProductsContext } from '../contexts/productsContext'
 
 const Category = () => {
+  const { getCategory } = useProductsContext()
   useEffect(() => {
     Aos.init({ duration: 1000 })
   }, [])
@@ -14,10 +16,10 @@ const Category = () => {
     <Wrapper>
       <div className='category-wrapper'>
         <div className='female category' data-aos='zoom-in'>
-          <Link to='/product/category'>Buy Now</Link>
+          <Link to='/product/category' onClick={()=> getCategory('female')}>Buy Now</Link>
         </div>
         <div className='male category' data-aos='zoom-in'>
-          <Link to='/product/category'>Buy Now</Link>
+          <Link to='/product/category' onClick={()=> getCategory('male')}>Buy Now</Link>
         </div>
       </div>
     </Wrapper>

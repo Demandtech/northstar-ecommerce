@@ -5,6 +5,8 @@ const userReducer = (state, action) => {
     case LOGIN_SUCCESS:
       const { user } = action.payload
       return { ...state, authenticated: true, user }
+    default:
+      throw new Error(`No Matching "${action.type}" - action type`)
   }
 }
 export default userReducer

@@ -3,17 +3,136 @@ import img from '../assets/images/register-img.jpg'
 import styled from 'styled-components'
 import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
+  const navigate = useNavigate()
   const [viewPass, setViewPass] = useState(false)
+  const { handleRegister, facebookLogin, googleLogin, messages } =
+    useUserContext()
   const [newUser, setNewUser] = useState({
     fName: '',
     lName: '',
     email: '',
-    password: '',
+    pass1: '',
+    pass2: '',
   })
-  const { handleRegister } = useUserContext()
+  const [inputsError, setInputsError] = useState({})
+
+  useUserContext()
+  if (messages.success) {
+    setTimeout(() => {
+      navigate('/login')
+    }, 3000)
+  }
+
+  const checkInput = (e) => {
+    let name = e.target.name
+    let value = e.target.value
+    let password = ''
+
+    switch (name) {
+      case 'fname':
+        if (value == '') {
+          setInputsError({
+            ...inputsError,
+            fname: 'Fist name can not be blank',
+          })
+        } else if (/\d/.test(value)) {
+          setInputsError({
+            ...inputsError,
+            fname: 'First name can not contain number',
+          })
+        } else {
+          setInputsError({
+            ...inputsError,
+            error: false,
+            fname: '',
+          })
+        }
+        break
+      case 'lname':
+        if (value == '') {
+          setInputsError({
+            ...inputsError,
+            lname: 'Last name can not be blank',
+          })
+        } else if (/\d/.test(value)) {
+          setInputsError({
+            ...inputsError,
+            lname: 'Last name can not contain number',
+          })
+        } else {
+          setInputsError({
+            ...inputsError,
+            lname: '',
+          })
+        }
+        break
+      case 'email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (value == '') {
+          setInputsError({
+            ...inputsError,
+            email: 'Email can not be blank',
+          })
+        } else if (!emailRegex.test(value)) {
+          setInputsError({
+            ...inputsError,
+            email: 'Wrong email format',
+          })
+        } else {
+          setInputsError({
+            ...inputsError,
+            email: '',
+          })
+        }
+        break
+      case 'pass1':
+        const passwordRegex =
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
+
+        if (value == '') {
+          setInputsError({
+            ...inputsError,
+            pass1: 'Password can not be blank',
+          })
+        } else if (!passwordRegex.test(value)) {
+          setInputsError({
+            ...inputsError,
+            pass1: 'Choose strong password',
+          })
+        } else {
+          setInputsError({
+            ...inputsError,
+            pass1: '',
+          })
+        }
+        password = value
+        break
+      case 'pass2':
+        console.log(newUser.pass1)
+        if (value == '') {
+          setInputsError({
+            ...inputsError,
+            pass2: 'Password can not be blank',
+          })
+        } else if (newUser.pass1 !== value) {
+          setInputsError({
+            ...inputsError,
+            pass2: 'Passwords does not match',
+          })
+        } else {
+          setInputsError({
+            ...inputsError,
+            pass2: '',
+          })
+        }
+
+        break
+      default:
+    }
+  }
 
   return (
     <Wrapper>
@@ -26,11 +145,11 @@ const Register = () => {
             <div className='right-header'>
               <h2>Create Account</h2>
               <div className='social'>
-                <div className='google'>
+                <div className='google' onClick={googleLogin}>
                   <FaGoogle className='icon' />
                   <p>Sign up with Google</p>
                 </div>
-                <div className='facebook'>
+                <div className='facebook' onClick={facebookLogin}>
                   <FaFacebook className='icon' />
                   <p>Sign up with facebook</p>
                 </div>
@@ -45,44 +164,81 @@ const Register = () => {
                 handleRegister(newUser)
               }}
             >
+              <p>
+                {(messages.error && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {messages.error}
+                  </span>
+                )) ||
+                  (messages.success && (
+                    <span style={{ color: 'green' }}>{messages.success}</span>
+                  ))}
+              </p>
               <div className='input-control'>
                 <input
+                  name='fname'
                   value={newUser.fName}
                   type='text'
                   placeholder='First Name'
                   onChange={(e) =>
                     setNewUser({ ...newUser, fName: e.target.value })
                   }
+                  onBlur={(e) => checkInput(e)}
+                  className={`${inputsError.fname ? 'error-input' : ''}`}
                 />
+                {inputsError.fname && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {inputsError.fname}
+                  </span>
+                )}
               </div>
               <div className='input-control'>
                 <input
+                  name='lname'
                   value={newUser.lName}
                   type='text'
                   placeholder='Last Name'
                   onChange={(e) =>
                     setNewUser({ ...newUser, lName: e.target.value })
                   }
+                  onBlur={(e) => checkInput(e)}
+                  className={`${inputsError.lname ? 'error-input' : ''}`}
                 />
+                {inputsError.lname && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {inputsError.lname}
+                  </span>
+                )}
               </div>
               <div className='input-control'>
                 <input
+                  name='email'
                   value={newUser.email}
                   type='text'
                   placeholder='Email Address'
                   onChange={(e) =>
                     setNewUser({ ...newUser, email: e.target.value })
                   }
+                  onBlur={(e) => checkInput(e)}
+                  className={`${inputsError.email ? 'error-input' : ''}`}
                 />
+                {inputsError.email && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {inputsError.email}
+                  </span>
+                )}
               </div>
               <div className='input-control'>
                 <input
+                  name='pass1'
                   type={viewPass ? 'text' : 'password'}
                   placeholder='Password'
-                  value={newUser.password}
+                  value={newUser.pass1}
                   onChange={(e) =>
-                    setNewUser({ ...newUser, password: e.target.value })
+                    setNewUser({ ...newUser, pass1: e.target.value })
                   }
+                  onBlur={(e) => checkInput(e)}
+                  className={`${inputsError.pass1 ? 'error-input' : ''}`}
                 />
                 <button
                   className='password-setting'
@@ -95,8 +251,42 @@ const Register = () => {
                     <FaEyeSlash className='icon' />
                   )}
                 </button>
+                {inputsError.pass1 && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {inputsError.pass1}
+                  </span>
+                )}
               </div>
-              <button className='submit-btn' type='submit'>
+              <div className='input-control'>
+                <input
+                  name='pass2'
+                  type={viewPass ? 'text' : 'password'}
+                  placeholder='Confirm Password'
+                  value={newUser.pass2}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, pass2: e.target.value })
+                  }
+                  onBlur={(e) => checkInput(e)}
+                  className={`${inputsError.pass2 ? 'error-input' : ''}`}
+                />
+                <button
+                  className='password-setting'
+                  type='button'
+                  onClick={() => setViewPass(!viewPass)}
+                >
+                  {viewPass ? (
+                    <FaEye className='icon' />
+                  ) : (
+                    <FaEyeSlash className='icon' />
+                  )}
+                </button>
+                {inputsError.pass2 && (
+                  <span style={{ color: 'red', fontSize: '12px' }}>
+                    {inputsError.pass2}
+                  </span>
+                )}
+              </div>
+              <button disabled={inputsError.pass2 !== '' && true } className='submit-btn' type='submit'>
                 Create Account
               </button>
               <div className='login-link'>
@@ -232,6 +422,10 @@ const Wrapper = styled.main`
               }
             }
 
+            .error-input{
+              border-bottom: 1px solid red;
+            }
+
             .password-setting{
               all: unset;
               position: absolute;
@@ -260,10 +454,18 @@ const Wrapper = styled.main`
           cursor: pointer;
           transition: .3s;
 
+          
+
           &:hover{
             background: #ffffff;
             color: #024e82;
             
+          }
+
+          &:disabled{
+            background: gray;
+            border: none;
+            color: #ffffff;
           }
 
          }
@@ -302,7 +504,7 @@ const Wrapper = styled.main`
 
         .right-wrapper {
           max-width: 500px;
-          padding: 4rem 0 2rem 0;
+          padding: 1rem 0 1rem 0;
 
           .right-header {
             .social {

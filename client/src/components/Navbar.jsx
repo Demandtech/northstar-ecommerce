@@ -25,8 +25,6 @@ const Navbar = () => {
     }
   }, [showLinks])
 
-  
-
   return (
     <Wrapper>
       <div className='nav-wrapper'>
@@ -36,22 +34,38 @@ const Navbar = () => {
         <ul ref={linksContainerRef}>
           <div className='nav_list' ref={linksRef}>
             <li>
-              <NavLink className={'nav-link'}  onClick={() => setShowLinks(false)} to={'/'}>
+              <NavLink
+                className={'nav-link'}
+                onClick={() => setShowLinks(false)}
+                to={'/'}
+              >
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'/about'}>
+              <NavLink
+                className={'nav-link'}
+                onClick={() => setShowLinks(false)}
+                to={'/about'}
+              >
                 About
               </NavLink>
             </li>
             <li>
-              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'contact'}>
+              <NavLink
+                className={'nav-link'}
+                onClick={() => setShowLinks(false)}
+                to={'contact'}
+              >
                 Contact
               </NavLink>
             </li>
             <li>
-              <NavLink className={'nav-link'} onClick={() => setShowLinks(false)} to={'cart'}>
+              <NavLink
+                className={'nav-link'}
+                onClick={() => setShowLinks(false)}
+                to={'cart'}
+              >
                 Cart
               </NavLink>
             </li>
@@ -62,26 +76,27 @@ const Navbar = () => {
             {authenticated ? (
               <div className='user-container'>
                 <div className='display-btn' onClick={handleOpenSetup}>
-                  {/* <FaRegUser className='icon' /> */}
-                  <img src={user.photos[0].value} alt="avatar" />
+                  <img src={user.photos[0].value} alt='avatar' />
                 </div>
                 {openSetup && <UserSetting />}
               </div>
             ) : (
-              <Link className='login-link' to={'login'}>Login</Link>
+              <Link className='login-link' to={'login'}>
+                Login
+              </Link>
             )}
           </div>
-          <button className='btn'>
+          <div className='cart-btn'>
             <FiShoppingBag className='icon' />
             <div className='cart-num'>{total_items}</div>
-          </button>
-          <button className='btn' onClick={() => setShowLinks(!showLinks)}>
+          </div>
+          <div className='hamburger' onClick={() => setShowLinks(!showLinks)}>
             {showLinks ? (
               <FaTimes className='icon' />
             ) : (
               <FaBars className='icon' />
             )}
-          </button>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -142,8 +157,9 @@ const Wrapper = styled.nav`
         }
       }
     }
-    .controls {
-     
+    .controls {  
+      display: flex;
+      align-items: center;
       
       .login-link {
         text-decoration: none;
@@ -158,8 +174,8 @@ const Wrapper = styled.nav`
         position: relative;
 
         .display-btn {
-          width: 35px;
-          height: 35px;
+          width: 25px;
+          height: 25px;
           cursor: pointer;
 
           img {
@@ -181,7 +197,7 @@ const Wrapper = styled.nav`
         }
       }
 
-      .btn:nth-child(2) {
+      .cart-btn {
         position: relative;
 
         .cart-num {
@@ -197,8 +213,8 @@ const Wrapper = styled.nav`
           display: grid;
           place-items: center;
           border-radius: 50%;
-          top: -5px;
-          right: -8px;
+          top: -10px;
+          right: -10px;
         }
       }
     }

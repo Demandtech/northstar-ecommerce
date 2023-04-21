@@ -7,7 +7,7 @@ const ContactForm = () => {
   }
   return (
     <Wrapper>
-      <form  onSubmit={handleForm}>
+      <form onSubmit={handleForm}>
         <div className='inputs-control'>
           <div className='name'>
             <label htmlFor='name'>Name</label>
@@ -44,33 +44,43 @@ const Wrapper = styled.div`
     gap: 2rem;
     margin-bottom: 1rem;
 
-    .name {
-      flex: 1;
-      input {
-        width: 100%;
-        border: 1px solid #ebebeb;
-        height: 48px;
-        padding: 0 0.5rem;
+    input {
+      width: 100%;
+      border: 2px solid #ebebeb;
+      height: 48px;
+      padding: 0 0.5rem;
+      border-radius: 0.2rem;
+      transition: all 0.5s;
+
+      &:focus {
+        outline: none;
+        border-color: #024e82;
+        transform: translateY(-2px);
       }
     }
+
+    .name,
     .email {
       flex: 1;
-      input {
-        width: 100%;
-        border: 1px solid #ebebeb;
-        height: 48px;
-        padding: 0 0.5rem;
-      }
     }
   }
   .text {
     width: 100%;
     margin-bottom: 2rem;
+
     textarea {
       width: 100%;
       resize: none;
-      border: 1px solid #ebebeb;
-      padding: 0 0.5rem;
+      border: 2px solid #ebebeb;
+      padding: 0.5rem;
+      border-radius: 0.2rem;
+      transition: all 0.5s;
+
+      &:focus {
+        outline: none;
+        border-color: #024e82;
+        transform: translateY(-2px);
+      }
     }
   }
   button {

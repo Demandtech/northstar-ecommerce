@@ -34,9 +34,8 @@ const Login = () => {
               <b>- OR -</b>
             </div>
             <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleLogin(user)
+              onSubmit={() => {
+                emailLogin(user)
               }}
             >
               <div className='input-control'>
@@ -52,7 +51,9 @@ const Login = () => {
                   type={viewPass ? 'text' : 'password'}
                   placeholder='Password'
                   value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                 />
                 <button
                   className='password-setting'

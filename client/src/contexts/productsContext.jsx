@@ -2,34 +2,19 @@ import productsReducer from '../reducers/productsReducer'
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import {
   GET_ALL_PRODUCTS,
-  ADD_TO_CART,
-  GET_SINGLE_PRODUCT,
-  COUNT_CART_TOTALS,
+  GET_DISCOUNTED_PRICE,
+  GET_CATEGORY,
 } from '../actions'
 import { products } from '../utils/datas'
 
 const ProductContext = createContext()
-
-const getLocalStorage = () => {
-  let cart = localStorage.getItem('cart')
-  if (cart) {
-    try {
-      return JSON.parse(cart)
-    } catch (err) {
-      console.log(err)
-      localStorage.removeItem('cart')
-      return []
-    }
-  } else {
-    return []
-  }
-}
 
 const initialState = {
   products: [],
   males: [],
   females: [],
   singleProduct: {},
+  category:{ name: '', products:[] },
 }
 
 export const ProductProvider = ({ children }) => {
@@ -40,11 +25,15 @@ export const ProductProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    dispath({ type: 'GET_DISCOUNTED_PRICE', payload:products })
+    dispath({ type: GET_DISCOUNTED_PRICE, payload: products })
   }, [])
 
+  const getCategory = (sex)=> {
+    dispath({ type: GET_CATEGORY, payload: sex })
+  }
+
   return (
-    <ProductContext.Provider value={{ ...state }}>
+    <ProductContext.Provider value={{ ...state, getCategory }}>
       {children}
     </ProductContext.Provider>
   )
