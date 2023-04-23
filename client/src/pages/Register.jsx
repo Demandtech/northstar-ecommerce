@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import img from '../assets/images/register-img.jpg'
 import styled from 'styled-components'
 import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
@@ -10,6 +10,8 @@ const Register = () => {
   const [viewPass, setViewPass] = useState(false)
   const { handleRegister, facebookLogin, googleLogin, messages } =
     useUserContext()
+
+    console.log(messages)
   const [newUser, setNewUser] = useState({
     fName: '',
     lName: '',
@@ -20,16 +22,18 @@ const Register = () => {
   const [inputsError, setInputsError] = useState({})
 
   useUserContext()
+
   if (messages.success) {
     setTimeout(() => {
       navigate('/login')
     }, 3000)
   }
 
+  
+
   const checkInput = (e) => {
     let name = e.target.name
     let value = e.target.value
-    let password = ''
 
     switch (name) {
       case 'fname':
@@ -108,7 +112,6 @@ const Register = () => {
             pass1: '',
           })
         }
-        password = value
         break
       case 'pass2':
         console.log(newUser.pass1)
@@ -164,7 +167,7 @@ const Register = () => {
                 handleRegister(newUser)
               }}
             >
-              <p>
+              <p style={{paddingBottom: '1rem'}}>
                 {(messages.error && (
                   <span style={{ color: 'red', fontSize: '12px' }}>
                     {messages.error}

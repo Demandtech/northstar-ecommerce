@@ -60,15 +60,6 @@ const Navbar = () => {
                 Contact
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                className={'nav-link'}
-                onClick={() => setShowLinks(false)}
-                to={'cart'}
-              >
-                Cart
-              </NavLink>
-            </li>
           </div>
         </ul>
         <div className='controls'>
@@ -76,7 +67,11 @@ const Navbar = () => {
             {authenticated ? (
               <div className='user-container'>
                 <div className='display-btn' onClick={handleOpenSetup}>
-                  <img src={user.photos[0].value} alt='avatar' />
+                  {user.photos ? (
+                    <img src={user.photos[0].value} alt='avatar' />
+                  ) : (
+                    <FaRegUser />
+                  )}
                 </div>
                 {openSetup && <UserSetting />}
               </div>
@@ -157,10 +152,10 @@ const Wrapper = styled.nav`
         }
       }
     }
-    .controls {  
+    .controls {
       display: flex;
       align-items: center;
-      
+
       .login-link {
         text-decoration: none;
         font-weight: 500;

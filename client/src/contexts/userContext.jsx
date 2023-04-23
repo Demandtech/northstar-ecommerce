@@ -20,11 +20,33 @@ export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
   const [messages, setMessages] = useState({ success: '', error: '' })
-  
- 
 
-  const emailLogin = (e) => {
+  const emailLogin = (e, user) => {
     e.preventDefault()
+
+    let payload = {
+      email: user.email,
+      password: user.password,
+    }
+    fetch('http://localhost/northstar/login.php/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated) {
+          dispath({ type: LOGIN_SUCCESS, payload:data}) 
+        }else{
+          dispath({type: LOGIN_FAILURE, payload:data})
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const handleLogout = () => {
@@ -49,7 +71,6 @@ export const UserProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setMessages({ success: data.message, error: data.error })
       })
       .catch((err) => {
@@ -102,11 +123,13 @@ export const UserProvider = ({ children }) => {
     getUser()
   }, [])
 
-  useEffect(()=> {
-    setTimeout(()=>{
-      setMessages({...messages, success: ''})
-    }, 1500)
-  }, [messages])
+  useEffect(() => {
+    const timeOutid = setTimeout(() => {
+      setMessages((prev) => ({ ...prev, success: '' }))
+    }, 3000)
+
+    return () => clearTimeout(timeOutid)
+  })
 
   return (
     <UserContext.Provider

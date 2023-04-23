@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import img from '../assets/images/login-img.jpg'
 import styled from 'styled-components'
 import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate =useNavigate()
   const [viewPass, setViewPass] = useState(false)
   const [user, setUser] = useState({ email: '', password: '' })
-  const { emailLogin, googleLogin, facebookLogin } = useUserContext()
+  const { emailLogin, googleLogin, facebookLogin, authenticated } =
+    useUserContext()
+
+  useEffect(()=>{
+    if(authenticated){
+     navigate('/')
+    }
+  }, [authenticated])
   return (
     <Wrapper>
       <div className='container'>
@@ -67,7 +75,7 @@ const Login = () => {
                   )}
                 </button>
               </div>
-              <button onClick={emailLogin} className='submit-btn' type='submit'>
+              <button onClick={(e)=>emailLogin(e, user)} className='submit-btn' type='submit'>
                 Login
               </button>
               <div className='login-link'>

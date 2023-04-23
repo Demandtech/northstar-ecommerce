@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import {FaSignOutAlt} from 'react-icons/fa'
+import { FaSignOutAlt } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 
 const UserSetting = () => {
- const { handleLogout, handleOpenSetup, user } = useUserContext()
+  const { handleLogout, handleOpenSetup, user } = useUserContext()
 
   return (
     <Wrapper>
       <Link onClick={handleOpenSetup} className='link-btn' to={'/profile'}>
-       {user.displayName}
+        {user.displayName || user.first_name}
+      </Link>
+      <Link className={'link-btn'} onClick={handleOpenSetup} to={'cart'}>
+        Cart
       </Link>
       <button className='logout-btn' onClick={handleLogout}>
         <span>Sign Out</span>
@@ -51,7 +54,7 @@ const Wrapper = styled.article`
     color: #b1b1b1;
     text-decoration: none;
     font-weight: 500;
-    transition: .3s;
+    transition: 0.3s;
 
     &:hover {
       color: #024e82;
