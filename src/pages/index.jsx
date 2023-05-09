@@ -1,6 +1,6 @@
 import Home from './Home'
 import Contact from './Contact'
-import About from './about'
+import About from './About'
 import SingleProduct from './SingleProduct'
 import Categories from './Categories'
 import CartIems from './CartIems'
