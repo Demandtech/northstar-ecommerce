@@ -82,10 +82,15 @@ const Navbar = () => {
             )}
           </div>
           <div className='cart-btn'>
-            <FiShoppingBag className='icon' />
+            <Link to={'/cart'}>
+              <FiShoppingBag className='icon' />
+            </Link>
             <div className='cart-num'>{total_items}</div>
           </div>
-          <button className='hamburger' onClick={() => setShowLinks(!showLinks)}>
+          <button
+            className='hamburger'
+            onClick={() => setShowLinks(!showLinks)}
+          >
             {showLinks ? (
               <FaTimes className='icon' />
             ) : (
@@ -259,7 +264,7 @@ const Wrapper = styled.nav`
         //   display: none;
         // }
         .hamburger {
-          display:none ;
+          display: none;
         }
       }
     }

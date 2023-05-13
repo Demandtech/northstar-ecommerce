@@ -5,6 +5,7 @@ import {
   ADD_TO_CART,
   COUNT_CART_TOTALS,
   DELETE_CART_ITEM,
+  HIDE_SNACKBAR,
 } from '../actions'
 import { useProductsContext } from './productsContext'
 const CartContext = createContext()
@@ -30,6 +31,7 @@ const initialState = {
   total_amount: 0,
   all_products: [],
   shipping: 0,
+  showSnackbar: {show:false, msg: ''},
 }
 
 export const CartProvider = ({ children }) => {
@@ -41,10 +43,19 @@ export const CartProvider = ({ children }) => {
   // }
 
   useEffect(() => {
+    const setTimeoutId = setTimeout(() => {
+      dispath({type: HIDE_SNACKBAR})
+    }, 3000)
+    
+    return () => clearTimeout(setTimeoutId)
+  }, [state.showSnackbar.show])
+
+  useEffect(() => {
     dispath({ type: GET_ALL_PRODUCTS, payload: products })
   }, [products])
 
   const addToCart = (id, sizes, quantity) => {
+    console.log(quantity)
     dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
   }
 

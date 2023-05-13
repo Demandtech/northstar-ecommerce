@@ -77,7 +77,7 @@ const SingleProduct = () => {
           <div className='add-to-cart'>
             <button
               onClick={() => {
-                addToCart(id, sizes)
+                addToCart(id, sizes, 1)
               }}
             >
               ADD TO CART

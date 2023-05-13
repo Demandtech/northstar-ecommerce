@@ -5,38 +5,36 @@ import styled from 'styled-components'
 import { useUserContext } from '../contexts/userContext'
 
 const ProtectedLayout = () => {
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const { authenticated } = useUserContext()
 
   if (!authenticated) {
     return <Navigate to={'/login'} />
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setLoading(false)
-    }, 2000)
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     setLoading(false)
+  //   }, 2000)
 
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        setLoading(false)
-      }, 1000)
-    })
+  //   window.addEventListener('load', () => {
+  //     setTimeout(() => {
+  //       setLoading(false)
+  //     }, 1000)
+  //   })
 
-    return () => clearTimeout(timeoutId)
-  }, [])
-  
+  //   return () => clearTimeout(timeoutId)
+  // }, [])
+
   return (
     <>
-      {loading ? (
-        <Loader loading={loading} />
-      ) : (
-        <Container>
-          <Navbar />
-          <Outlet />
-          <Footer />
-        </Container>
-      )}
+      (
+      <Container>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </Container>
+      )
     </>
   )
 }

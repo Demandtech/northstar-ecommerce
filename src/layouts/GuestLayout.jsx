@@ -4,24 +4,24 @@ import styled from 'styled-components'
 import { Loader } from '../components'
 
 const GuestLayout = () => {
- const [loading, setLoading] = useState(true)
- useEffect(() => {
-   const timeoutId = setTimeout(() => {
-     setLoading(false)
-   }, 2000)
+//  const [loading, setLoading] = useState(true)
+//  useEffect(() => {
+//    const timeoutId = setTimeout(() => {
+//      setLoading(false)
+//    }, 2000)
 
-   window.addEventListener('load', () => {
-     setTimeout(() => {
-       setLoading(false)
-     }, 1000)
-   })
+//    window.addEventListener('load', () => {
+//      setTimeout(() => {
+//        setLoading(false)
+//      }, 1000)
+//    })
 
-   return () => clearTimeout(timeoutId)
- }, [])
+//    return () => clearTimeout(timeoutId)
+//  }, [])
 
- if(loading){
-  return <Loader />
- }
+//  if(loading){
+//   return <Loader />
+//  }
 
   return (
     <Container>
