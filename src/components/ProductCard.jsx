@@ -25,7 +25,7 @@ const ProductCard = ({ id, name, img, price, index }) => {
     <Card data-aos={animation}>
       <Link to={`/product/${id}`} onClick={() => getSingleProduct(id)}>
         <div className='img-wrapper'>
-          <img src={img} alt='' />
+          <img src={img} alt={name} loading='lazy'/>
         </div>
         <div className='info'>
           <p>{name}</p>

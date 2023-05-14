@@ -63,10 +63,10 @@ const Footer = () => {
           <p><span>Privacy Policy</span> <span>Term & Conditions</span></p>
         </div>
         <div className="right">
-           <img src={visa} alt="card payment" />
-           <img src={master} alt="card payment" />
-           <img src={electron} alt="card payment" />
-           <img src={paypal} alt="card payment" />
+           <img src={visa} alt="card payment visa" loading='lazy'/>
+           <img src={master} alt="card payment master" loading='lazy'/>
+           <img src={electron} alt="card payment electron" loading='lazy'/>
+           <img src={paypal} alt="card payment paypal" loading='lazy'/>
         </div>
       </div>
     </Wrapper>

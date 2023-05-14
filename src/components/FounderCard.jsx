@@ -23,7 +23,7 @@ const FounderCard = ({index, name, img }) => {
   return (
     <Wrapper data-aos={animation}>
       <div className='img-wrapper'>
-        <img src={img} alt={name} />
+        <img src={img} alt={name} loading='lazy'/>
       </div>
       <p>{name}</p>
     </Wrapper>
