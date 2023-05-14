@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import styled from 'styled-components'
-import hero_bg from '../assets/images/hero-bg.jpeg'
+import hero_bg from '../assets/images/hero-bg.webp'
+
 import {
   NewArrivals,
   Benefits,

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaChevronRight } from 'react-icons/fa'
-import visa from '../assets/images/visa.jpeg'
-import master from '../assets/images/master.jpeg'
-import electron from '../assets/images/electron.jpeg'
-import paypal from '../assets/images/paypal.jpeg'
+import visa from '../assets/images/visa.webp'
+import master from '../assets/images/master.webp'
+import electron from '../assets/images/electron.webp'
+import paypal from '../assets/images/paypal.webp'
 import { useUserContext } from '../contexts/userContext'
 
 const Footer = () => {

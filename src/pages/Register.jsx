@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import img from '../assets/images/register-img.jpg'
+import React, { useState } from 'react'
+import img from '../assets/images/register-img.webp'
 import styled from 'styled-components'
 import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
