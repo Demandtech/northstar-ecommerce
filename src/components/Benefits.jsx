@@ -15,7 +15,7 @@ const Benefits = () => {
         return (
           <div key={i} className='card' data-aos = 'zoom-in'>
             <div className='icon-wrap'>
-              <img src={ben.icon} alt={ben.title} />
+              <img src={ben.icon} alt={ben.title}  loading='lazy' width={'100%'}/>
             </div>
             <div className="content">
                <h6>{ben.title}</h6>

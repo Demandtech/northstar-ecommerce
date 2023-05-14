@@ -9,7 +9,7 @@ import { useUserContext } from '../contexts/userContext'
 
 const Footer = () => {
   const [email, setEmail] = useState('')
-  const {handleNewsLetter} = useUserContext()
+  const { handleNewsLetter } = useUserContext()
 
   return (
     <Wrapper>
@@ -42,15 +42,23 @@ const Footer = () => {
           <li>Advetising</li>
           <li>Terms of Use</li>
         </ul>
-        <form className='fourth' onSubmit={(e)=>{
-          e.preventDefault()
-          handleNewsLetter(email)
-        }}>
+        <form
+          className='fourth'
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleNewsLetter(email)
+          }}
+        >
           <label>
             <strong>get in the know</strong>
           </label>
           <div className='input-control'>
-            <input value={email} onChange={(e)=>setEmail(e.target.value)} type='text' placeholder='Enter email' />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type='text'
+              placeholder='Enter email'
+            />
             <button>
               <FaChevronRight />
             </button>
@@ -60,13 +68,43 @@ const Footer = () => {
       <div className='footer-floor'>
         <div className='left'>
           <p> &copy; {new Date().getFullYear()} eCommerce</p>
-          <p><span>Privacy Policy</span> <span>Term & Conditions</span></p>
+          <p>
+            <span>Privacy Policy</span> <span>Term & Conditions</span>
+          </p>
         </div>
-        <div className="right">
-           <img src={visa} alt="card payment visa" loading='lazy'/>
-           <img src={master} alt="card payment master" loading='lazy'/>
-           <img src={electron} alt="card payment electron" loading='lazy'/>
-           <img src={paypal} alt="card payment paypal" loading='lazy'/>
+        <div className='right'>
+          <picture>
+            <img
+              src={visa}
+              alt='card payment visa'
+              loading='lazy'
+              width={'100%'}
+            />
+          </picture>
+          <picture>
+            <img
+              src={master}
+              alt='card payment master'
+              loading='lazy'
+              width={'100%'}
+            />
+          </picture>
+          <picture>
+            <img
+              src={electron}
+              alt='card payment electron'
+              loading='lazy'
+              width={'100%'}
+            />
+          </picture>
+          <picture>
+            <img
+              src={paypal}
+              alt='card payment paypal'
+              loading='lazy'
+              width={'100%'}
+            />
+          </picture>
         </div>
       </div>
     </Wrapper>
