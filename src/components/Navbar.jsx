@@ -174,7 +174,7 @@ const Wrapper = styled.nav`
       .login-link {
         text-decoration: none;
         font-weight: 500;
-        color: #b1b1b1;
+        color: #bbbbbb;
       }
 
       .user-container {
@@ -222,6 +222,9 @@ const Wrapper = styled.nav`
           border-radius: 50%;
           top: -10px;
           right: -10px;
+        }
+        .icon {
+          color: #bbbbbb;
         }
       }
       .hamburger {
