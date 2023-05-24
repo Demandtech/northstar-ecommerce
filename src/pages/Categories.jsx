@@ -2,24 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink, Navigate } from 'react-router-dom'
 import { useProductsContext } from '../contexts/productsContext'
-import {ProductCard} from '../components'
+import { Loader, ProductCard } from '../components'
 
 const Categories = () => {
-  const { category } = useProductsContext()
+  const { category, loading } = useProductsContext()
 
- if(category.products.length < 1){
-  return <Navigate to={'/about'}/>
- }
+  if (category.length < 1) {
+    return <Navigate to={'/about'} />
+  }
+
+  if (loading) {
+    return <Loader />
+  }
   return (
     <Wrapper>
       <div className='link'>
         <NavLink to={'/'}>HOME</NavLink>/<NavLink to={'/about'}>About</NavLink>/
-        <NavLink to={'/product/category'}>{category.name}</NavLink>
+        <NavLink to={'/product/category'}>{category.categoryName}</NavLink>
       </div>
       <div className='products-wrapper'>
-          {category.products.map((cat, index)=> (
-           <ProductCard key={index}  {...cat}/>
-          ))}
+        {category.categoryProducts.map((cat, index) => (
+          <ProductCard key={index} {...cat} />
+        ))}
       </div>
     </Wrapper>
   )

@@ -31,6 +31,9 @@ const FounderCard = ({index, name, img }) => {
 }
 
 const Wrapper = styled.article`
+  overflow: hidden;
+  padding-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   .img-wrapper {
     height: 250px;
     margin-bottom: 0.5rem;
@@ -46,6 +49,7 @@ const Wrapper = styled.article`
     font-size: 21px;
     line-height: 24px;
     color: #1d1d1d;
+    padding-left: .5rem;
   }
 `
 

@@ -1,11 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ProductCard } from '../components'
-import { products } from '../utils/datas'
+import { Loader, ProductCard } from '../components'
 import { useProductsContext } from '../contexts/productsContext'
 
 const NewArrivals = () => {
-  const { males, females } = useProductsContext()
+  const { products, loading } = useProductsContext()
+
+  console.log(products)
+
+  if(loading){
+    return <Loader />
+  }
 
   return (
     <Wrapper id='new_arrival'>
@@ -14,28 +19,17 @@ const NewArrivals = () => {
         <p>Recently added shirts!</p>
       </div>
       <div className='arrival-wrappers'>
-        <div className='wrap women'>
-          {females
-            .map((female, i) => {
-              return (
-                <div key={i}>
-                  <ProductCard index = {i} {...female} />
-                </div>
-              )
-            })
-            .slice(0, 4)}
-        </div>
         <div className='wrap'>
-          {males
-            .map((male, i) => {
+          {products
+            .map((product, i) => {
               return (
                 <div key={i}>
-                  <ProductCard index = {i} {...male} />
+                  <ProductCard index = {i} {...product} />
                 </div>
               )
-            })
-            .slice(0, 4)}
+            }).slice(0, 8)}
         </div>
+        
       </div>
     </Wrapper>
   )
@@ -69,9 +63,7 @@ const Wrapper = styled.section`
       margin-bottom: 2rem;
     }
   }
-  @media screen and (min-width: 480px) {
-    // padding: 4rem  2rem;
-
+  @media screen and (min-width: 480px) { 
     .arrival-wrappers {
       padding-top: 4rem;
 

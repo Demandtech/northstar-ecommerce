@@ -105,19 +105,26 @@ const Navbar = () => {
 
 const Wrapper = styled.nav`
   position: relative;
-  width: 1440px;
+  top: 0;
+  width: 100%;
+  margin: 0 auto;
+  height: 75px;
+  padding: 0 1rem;
+  position: fixed;
+  background: #ffffff;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  overflow-x: hidden;
+
   .nav-wrapper {
     display: flex;
+    //justify-content: space-between;
     align-items: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    min-height: 75px;
-    padding: 0 1rem;
-    position: fixed;
-    background: #ffffff;
     z-index: 100;
+    width: 100%;
+
     .logo {
       color: #1d1d1d;
       font-weight: 400;
@@ -160,15 +167,15 @@ const Wrapper = styled.nav`
     .controls {
       display: flex;
       align-items: center;
+      display: flex;
+      gap: 1rem;
+      margin-left: auto;
 
       .login-link {
         text-decoration: none;
         font-weight: 500;
         color: #b1b1b1;
       }
-      display: flex;
-      gap: 1rem;
-      margin-left: auto;
 
       .user-container {
         position: relative;
@@ -240,6 +247,8 @@ const Wrapper = styled.nav`
   @media screen and (min-width: 780px) {
     .nav-wrapper {
       padding: 0 4rem;
+      width: 100%;
+      max-width: 1440px;
       p {
         font-size: 2.25rem;
       }
@@ -260,9 +269,6 @@ const Wrapper = styled.nav`
       }
 
       .controls {
-        // btn:nth-child(3) {
-        //   display: none;
-        // }
         .hamburger {
           display: none;
         }

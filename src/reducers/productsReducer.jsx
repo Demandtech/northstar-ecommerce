@@ -2,6 +2,11 @@ import {
   GET_ALL_PRODUCTS,
   GET_DISCOUNTED_PRICE,
   GET_CATEGORY,
+  GET_FOUNDERS,
+  GET_TESTIMONIES,
+  GET_TOPSELLERS,
+  START_LOADING,
+  STOP_LOADING
 } from '../actions'
 
 const productsReducer = (state, action) => {
@@ -22,11 +27,27 @@ const productsReducer = (state, action) => {
         }
       })
       return { ...state, products: tempProduct }
-    case GET_CATEGORY :
-      let categoryProducts = state.products.filter(product => product.type === action.payload)
-      let categoryName = action.payload
-
-      return {...state, category:{...state.category, name: categoryName, products:categoryProducts}}
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: {
+          categoryName: action.payload.querystr,
+          categoryProducts: action.payload.catProducts,
+        },
+      }
+    case GET_FOUNDERS:
+      return { ...state, founders: action.payload }
+    case GET_TESTIMONIES:
+      return { ...state, testimonies: action.payload }
+    case GET_TOPSELLERS:
+      const topseller = state.products.filter(
+        (product) => product.topseller === true
+      )
+      return { ...state, topseller }
+    case START_LOADING:
+      return { ...state, loading: true }
+    case STOP_LOADING:
+      return { ...state, loading: false }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

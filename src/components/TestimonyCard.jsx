@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import quote from '../assets/svgs/quote.svg'
 
 const TestimonyCard = ({index, img, icon, text, name }) => {
    let animation = ''
@@ -22,7 +23,7 @@ const TestimonyCard = ({index, img, icon, text, name }) => {
         <img src={img} alt={name} />
       </div>
       <div className='content'>
-        <img src={icon} alt='quote-icon' />
+        <img src={quote} alt='quote-icon' />
         <p>{text}</p>
         <span>{name}</span>
       </div>

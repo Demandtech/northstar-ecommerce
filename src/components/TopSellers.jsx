@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
 import AncrButton from './AncrButton'
-import { products } from '../utils/datas'
+import { useProductsContext } from '../contexts/productsContext'
 
 const TopSellers = () => {
-  let topseller = products.filter((product) => product.topseller === true)
+  const { topseller } = useProductsContext()
   return (
     <Wrapper>
       <div className='topseller-header'>

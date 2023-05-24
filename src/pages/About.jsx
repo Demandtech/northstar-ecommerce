@@ -30,10 +30,11 @@ const Wrapper = styled.main`
     background-size: cover;
     background-position: center;
     min-height: calc(50vh - 70px);
-    width: 100%;
+    max-width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: end;
+    overflow-x: hidden;
 
     .hero-content {
       padding-left: 1rem;

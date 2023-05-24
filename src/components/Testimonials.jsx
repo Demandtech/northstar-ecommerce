@@ -1,16 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { testimonials } from '../utils/datas'
+import { useProductsContext } from '../contexts/productsContext'
 import TestimonyCard from './TestimonyCard'
 
 const Testimonials = () => {
+  const { testimonies } = useProductsContext()
   return (
     <Wrapper>
       <div className='testimonials-header'>
         <h2>Testimonials</h2>
       </div>
       <div className='testimonial-content'>
-        {testimonials.map((testimony, index) => {
+        {testimonies?.map((testimony, index) => {
           return (
             <div key={index}>
               <TestimonyCard index={index} {...testimony} />

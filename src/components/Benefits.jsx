@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   padding: 1rem 0;
+  margin-top: 2rem;
   gap: 2rem;
   .card {
     display: flex;
@@ -61,9 +62,9 @@ const Wrapper = styled.div`
       }
     }
   }
-  // @media screen and (min-width: 480px) {
-  //   padding: 0 2rem;
-  // }
+  @media screen and (min-width: 480px) {
+    padding: 0 0rem;
+  }
 
   // @media screen and (min-width: 780px) {
   //   padding: 0 4rem;

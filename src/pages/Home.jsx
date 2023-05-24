@@ -37,17 +37,17 @@ const Home = () => {
 }
 
 const Wrapper = styled.main`
-  margin-top: 70px;
-
   .hero {
+    margin-top: 57px;
     background: url(${hero_bg});
     background-size: cover;
     background-position: center;
-    min-height: calc(100vh - 70px);
-    width: 100%;
+    min-height: calc(100vh - 75px);
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-x: hidden;
 
     .hero-content {
       text-align: center;

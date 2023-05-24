@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import maleImg from '../assets/images/male.webp'
 import femaleImg from '../assets/images/female.webp'
@@ -8,7 +8,11 @@ import 'aos/dist/aos.css'
 import { useProductsContext } from '../contexts/productsContext'
 
 const Category = () => {
+
   const { getCategory } = useProductsContext()
+
+  
+
   useEffect(() => {
     Aos.init({ duration: 1000 })
   }, [])
@@ -16,10 +20,14 @@ const Category = () => {
     <Wrapper>
       <div className='category-wrapper'>
         <div className='female category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={()=> getCategory('female')}>Buy Now</Link>
+          <Link to='/product/category' onClick={()=>getCategory('female')}>
+            Buy Now
+          </Link>
         </div>
         <div className='male category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={()=> getCategory('male')}>Buy Now</Link>
+          <Link to='/product/category' onClick={()=>getCategory('male')}>
+            Buy Now
+          </Link>
         </div>
       </div>
     </Wrapper>
@@ -61,12 +69,16 @@ const Wrapper = styled.section`
     }
 
     .male {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
       flex: 1;
       background: url(${maleImg}) no-repeat center;
       background-size: cover;
       height: 100%;
     }
     .female {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
       flex: 1;
       background: url(${femaleImg}) no-repeat center;
       background-size: cover;
@@ -81,7 +93,6 @@ const Wrapper = styled.section`
   }
 
   @media screen and (min-width: 780px) {
-    
   }
 `
 

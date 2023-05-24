@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { founders } from '../utils/datas'
 import FounderCard from './FounderCard'
+import { useProductsContext } from '../contexts/productsContext'
 
 const Founders = () => {
+  const {founders}= useProductsContext()
   return (
     <Wrapper>
       <div className="founders-wrapper">
@@ -11,7 +12,7 @@ const Founders = () => {
               <h2>The Founders</h2>
           </div>
           <div className="founders">
-             {founders.map((founder, index)=>{
+             {founders?.map((founder, index)=>{
                return (
                  <div key={index}>
                    <FounderCard index={index} {...founder} />
