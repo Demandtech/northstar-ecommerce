@@ -42,6 +42,8 @@ export const CartProvider = ({ children }) => {
   //   localStorage.setItem('cart', JSON.stringify(state.cart))
   // }
 
+  // console.log(products)
+
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
       dispath({type: HIDE_SNACKBAR})

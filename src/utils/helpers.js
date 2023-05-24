@@ -4,5 +4,5 @@ export const formatPrice =(num)=>{
    currency: 'USD',
    minimumFractionDigits: 2,
  }
- return num.toLocaleString('en-Us', options)
+ return num?.toLocaleString('en-Us', options)
 }

@@ -10,13 +10,13 @@ const Description = ({ reviews }) => {
       <div className='controller'>
         <div
           onClick={() => setDescription(true)}
-          className={`${description ? 'active-tab' : ''}`}
+          className={`desc-btn${description ? 'active-tab' : ''}`}
         >
           Description
         </div>
         <div
           onClick={() => setDescription(false)}
-          className={`${!description ? 'active-tab' : ''}`}
+          className={`review-btn${!description ? 'active-tab' : ''}`}
         >
           Reviews({reviews})
         </div>
@@ -64,6 +64,8 @@ const Wrapper = styled.section`
       color: #818181;
       background: #fbfbfb;
       font-family: 'Arimo', sans-serif;
+      cursor: pointer;
+      
       &:not(:last-child) {
         border-right: 2px solid #ebebeb;
       }
@@ -78,7 +80,10 @@ const Wrapper = styled.section`
   .options-wrapper {
     border: 2px solid #ebebeb;
 
+   
+
     .description-tab {
+      cursor: pointer;
       padding: 1.5rem;
       font-weight: 400;
       font-size: 16px;

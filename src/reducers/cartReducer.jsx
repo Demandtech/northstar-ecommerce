@@ -13,21 +13,23 @@ const cartReducer = (state, action) => {
       return { ...state, all_products: action.payload }
     case ADD_TO_CART:
       let itemExist = state.cart.some(
-        (product) => product.id == action.payload.id
+        (product) => product.id === action.payload.id
       )
       if (itemExist) {
         return state
-      }
-      let newItem = state.all_products.find(
-        (product) => product.id === +action.payload.id
-      )
-      newItem.quantity = action.payload.quantity
-      newItem.sizes = action.payload.sizes
-
+      }  
+      let newItem =  state.all_products.find( (product) => product.id === action.payload.id )
+       
+      let item = {
+        ...newItem,
+        quantity: action.payload.quantity,
+        sizes: action.payload.sizes
+      } 
+      
       return {
         ...state,
         showSnackbar: { show: true, msg: 'New item added to cart' },
-        cart: [...state.cart, newItem],
+        cart: [...state.cart, item],
       }
     case GET_QUANTITY:
       let itemToUpdate = state.cart.find(
@@ -40,7 +42,7 @@ const cartReducer = (state, action) => {
       return { ...state, cart: state.cart }
     case DELETE_CART_ITEM:
       let newCart = state.cart.filter((ca) => ca.id !== action.payload)
-      console.log(newCart)
+    
       return {
         ...state,
         cart: newCart,

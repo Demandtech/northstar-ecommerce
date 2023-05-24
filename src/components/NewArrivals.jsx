@@ -6,8 +6,6 @@ import { useProductsContext } from '../contexts/productsContext'
 const NewArrivals = () => {
   const { products, loading } = useProductsContext()
 
-  console.log(products)
-
   if(loading){
     return <Loader />
   }

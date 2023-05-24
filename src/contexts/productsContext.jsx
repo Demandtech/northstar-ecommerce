@@ -8,7 +8,8 @@ import {
   GET_FOUNDERS,
   GET_TOPSELLERS,
   START_LOADING,
-  STOP_LOADING
+  STOP_LOADING,
+  GET_SINGLE_PRODUCT,
 } from '../actions'
 import { initializeApp } from 'firebase/app'
 import {
@@ -17,6 +18,8 @@ import {
   getDocs,
   query,
   where,
+  getDoc,
+  doc,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -96,17 +99,27 @@ export const ProductProvider = ({ children }) => {
         dispath({ type: GET_CATEGORY, payload: { querystr, catProducts } })
 
         dispath({ type: STOP_LOADING })
-        console.log('called')
-        console.log(catProducts)
+
         return catProducts
       })
       .catch((err) => console.log(err))
   }
 
-  // useEffect(()=>{
+  const getSingleProduct = (id) => {
+    dispath({ type: START_LOADING })
+    const singleProductRef = doc(db, 'products', id)
+    getDoc(singleProductRef)
+      .then((res) => {
+        dispath({ type: GET_SINGLE_PRODUCT, payload:{ product:res.data(), singleId:id }})
+        dispath({ type: STOP_LOADING })
+      })
+      .catch((err) => {
+        dispath({ type: STOP_LOADING })
+        console.log(err)
+      })
+  }
 
-  //   getCategory('female')
-  // }, [])
+  
 
   useEffect(() => {
     fetchApi(foundersColRef, GET_FOUNDERS)
@@ -115,7 +128,9 @@ export const ProductProvider = ({ children }) => {
   }, [])
 
   return (
-    <ProductContext.Provider value={{ ...state, getCategory }}>
+    <ProductContext.Provider
+      value={{ ...state, getCategory, getSingleProduct }}
+    >
       {children}
     </ProductContext.Provider>
   )

@@ -23,7 +23,7 @@ const ProductCard = ({ id, name, img, price, index }) => {
   }
   return (
     <Card data-aos={animation}>
-      <Link to={`/product/${id}`} onClick={() => getSingleProduct(id)}>
+      <Link to={`/product/${id}`} >
         <IMGDIV className='img-wrapper'>
           <img src={img} alt={name} loading='lazy' />
         </IMGDIV>

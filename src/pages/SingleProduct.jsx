@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useParams,  NavLink } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { Stars, SelectSize, Description } from '../components'
+import {
+  Stars,
+  SelectSize,
+  Description,
+  Loader,
+  ProductCard,
+} from '../components'
 import { formatPrice } from '../utils/helpers'
 import { useCartContext } from '../contexts/cartContext'
+import { useProductsContext } from '../contexts/productsContext'
 import Socials from '../components/Socials'
+import ProductImages from '../components/ProductImages'
 
 const SingleProduct = () => {
   const { id } = useParams()
   const { addToCart } = useCartContext()
   const [sizes, setSizes] = useState('M')
-  let singleProduct = products.find((product) => product.id === Number(id))
+
+  const { singleProduct, loading, getSingleProduct } = useProductsContext()
 
   const {
     type,
@@ -22,45 +31,31 @@ const SingleProduct = () => {
     name,
     thumbnails,
     bonus,
-    desc,
+    description,
   } = singleProduct
-  // const addSize = (size)=>{
-  //  singleProduct.sizes = size
-  // }
-  const [imgIndex, setImgIndex] = useState(0)
-  const [mainImg, setMainImg] = useState(thumbnails[imgIndex])
 
   useEffect(() => {
-    setMainImg(thumbnails[imgIndex])
-  }, [imgIndex])
+    getSingleProduct(id)
+  }, [id])
+
+  if (loading) {
+    return (
+      <div style={{ marginTop: '100px' }}>
+        <Loader loading={loading} />
+      </div>
+    )
+  }
+
   return (
     <Wrapper>
       <div className='content-wrapper'>
         <div className='left'>
-          <div className='main-img'>
-            <img src={mainImg} alt='' />
-            <div className='percent'>
-              <span>-{bonus}%</span>
-            </div>
-          </div>
-          <div className='img-pagination'>
-            {thumbnails.map((thumb, index) => {
-              return (
-                <div
-                  className={`${index === imgIndex ? 'active-pag' : null} pag`}
-                  onClick={() => setImgIndex(index)}
-                  key={index}
-                >
-                  <img src={thumb} alt='' />
-                </div>
-              )
-            })}
-          </div>
+          <ProductImages images={thumbnails} bonus={bonus} />
         </div>
         <div className='right'>
           <div className='link'>
             <NavLink to={'/'}>HOME</NavLink>/
-            <NavLink to={'/product/category'}>{type.toUpperCase()}</NavLink>/
+            <NavLink to={'/product/category'}>{type?.toUpperCase()}</NavLink>/
             <NavLink to={`/product/${id}`}>PRODUCT</NavLink>
           </div>
           <h4>{name}</h4>
@@ -71,7 +66,7 @@ const SingleProduct = () => {
               {formatPrice(price - price * (bonus / 100))}
             </span>
           </div>
-          <p className='desc'>{desc}</p>
+          <p className='desc'>{description}</p>
           <SelectSize setSizes={setSizes} />
           <div className='add-to-cart'>
             <button
@@ -85,13 +80,13 @@ const SingleProduct = () => {
           <div className='cate_tags'>
             <div className='category'>
               <span className='title'>Category:</span>
-              {category.map((cat, ind) => (
+              {category?.map((cat, ind) => (
                 <span key={ind}>{cat}, </span>
               ))}
             </div>
             <div className='tags'>
               <span className='title'>Tags:</span>
-              {tags.map((tag, ind) => (
+              {tags?.map((tag, ind) => (
                 <span key={ind}>{tag}</span>
               ))}
             </div>
@@ -115,134 +110,80 @@ const Wrapper = styled.main`
     padding-bottom: 10rem;
     .left {
       width: 100%;
-
-      .main-img {
-        width: 100%;
-        height: 500px;
-        margin-bottom: .5rem;
-        position: relative;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .percent{
-          font-family: 'Arimo', sans-serif;
-          position: absolute;
-          top: 1rem;
-          left: 1rem;
-          font-weight: 700;
-          font-size: 15px;
-          line-height: 17px;
-          background: #D6763C;
-          width: 45px;
-          height: 45px;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          color: #ffffff;
-        }
-      }
-      .img-pagination {
-        display: flex;
-        width: 100%;
-        gap: .5rem;
-
-        .pag {
-          flex: 1;
-          max-height: 7rem;
-          border: 2px solid #ffffff;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover:
-          }
-        }
-        .active-pag{
-          opacity: 0.5;
-          border: 2px solid #024E82;
-        }
-      }
     }
     .right {
-      flex: 2;
       .link {
-         padding-bottom: .5rem;
-         a {
-           font-weight: 500;
-           font-size: 15px;
-           line-height: 17px;
-           color: #888888;
-           text-decoration: none;
-         }
-         .active{
-          color: #1D1D1D;
+        padding-bottom: 0.5rem;
+        a {
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 17px;
+          color: #888888;
+          text-decoration: none;
+        }
+        .active {
+          color: #1d1d1d;
           font-weight: 900;
-           font-size: 15px;
-         }
+          font-size: 15px;
+        }
       }
       .price {
-         font-family: 'Lato', sans-serif;
-         font-weight: 400;
-         font-size: 24px;
-         line-height: 29px;
-         color: #818181;
-         margin-bottom: 1.5rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 29px;
+        color: #818181;
+        margin-bottom: 1.5rem;
       }
-      .desc{
+      .desc {
         font-family: 'Lato', sans-serif;
         font-weight: 400;
         font-size: 16px;
         line-height: 19px;
         color: #555555;
-         margin-bottom: 3rem;
+        margin-bottom: 3rem;
       }
-      .bonus-price{
-         color: #024E82;
-         margin-left: .5rem;
+      .bonus-price {
+        color: #024e82;
+        margin-left: 0.5rem;
       }
-      h4{
-         font-family: 'Arimo', sans-serif;
-         font-weight: 700;
-         font-size: 2rem;
-         line-height: 48px;
-         color: #1D1D1D;
-         margin-bottom: 1rem;
+      h4 {
+        font-family: 'Arimo', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 48px;
+        color: #1d1d1d;
+        margin-bottom: 1rem;
       }
-      .add-to-cart{
-         margin: 2.5rem 0;
-         button {
-            all: unset;
-            padding: 1rem 2rem;
-            background: #024e82;
-            color: #ffffff;
-            cursor: pointer;
+      .add-to-cart {
+        margin: 2.5rem 0;
+        button {
+          all: unset;
+          padding: 1rem 2rem;
+          background: #024e82;
+          color: #ffffff;
+          cursor: pointer;
           &:hover {
-             transform: translateY(-1px);
+            transform: translateY(-1px);
+          }
         }
-    }
-    
-   }
-  .cate_tags{
-     margin-bottom: 2rem;
-     .category{
-      padding-bottom: 1rem;
+      }
+      .cate_tags {
+        margin-bottom: 2rem;
+        .category {
+          padding-bottom: 1rem;
 
-      .title{
-        padding-right: .3rem;
+          .title {
+            padding-right: 0.3rem;
+          }
+        }
+        .tags {
+          .title {
+            padding-right: 0.3rem;
+          }
+        }
       }
-     }
-     .tags{
-      .title{
-        padding-right: .3rem;
-      }
-     }
-  }
-       
-    
-    }  
+    }
   }
   @media screen and (min-width: 480px) {
     padding: 2rem;
@@ -252,24 +193,25 @@ const Wrapper = styled.main`
     padding: 1rem 4rem;
     .content-wrapper {
       flex-direction: row;
+      gap: 4rem;
       .right {
-        flex: 2;
+        flex: 1;
         padding-right: 7rem;
       }
       .left {
-        flex: 1.5;
+        flex: 1;
 
-      .main-img {
-        width: 100%;
-        min-height: 500px;
-        margin-bottom: .8rem;
-
-        img {
+        .main-img {
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          min-height: 500px;
+          margin-bottom: 0.8rem;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
-       }
       }
     }
   }

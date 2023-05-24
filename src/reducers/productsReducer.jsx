@@ -6,7 +6,8 @@ import {
   GET_TESTIMONIES,
   GET_TOPSELLERS,
   START_LOADING,
-  STOP_LOADING
+  STOP_LOADING,
+  GET_SINGLE_PRODUCT,
 } from '../actions'
 
 const productsReducer = (state, action) => {
@@ -48,6 +49,13 @@ const productsReducer = (state, action) => {
       return { ...state, loading: true }
     case STOP_LOADING:
       return { ...state, loading: false }
+    case GET_SINGLE_PRODUCT:
+      const singleProduct = {
+        ...action.payload.product,
+        id: action.payload.singleId,
+      }
+
+      return { ...state, singleProduct }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }
