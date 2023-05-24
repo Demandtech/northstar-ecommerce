@@ -112,17 +112,17 @@ const Wrapper = styled.nav`
   padding: 0 1rem;
   position: fixed;
   background: #ffffff;
-  z-index: 1;
+  //z-index: 100;
   display: flex;
   align-items: center;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-z: hidden;
 
   .nav-wrapper {
     display: flex;
     //justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    //z-index: 100;
     width: 100%;
 
     .logo {
@@ -225,6 +225,7 @@ const Wrapper = styled.nav`
         }
         .icon {
           color: #bbbbbb;
+          cursor: pointer
         }
       }
       .hamburger {
