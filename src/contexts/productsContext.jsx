@@ -1,5 +1,11 @@
 import productsReducer from '../reducers/productsReducer'
-import { createContext, useContext, useEffect, useReducer } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react'
 import {
   GET_ALL_PRODUCTS,
   GET_DISCOUNTED_PRICE,
@@ -10,6 +16,7 @@ import {
   START_LOADING,
   STOP_LOADING,
   GET_SINGLE_PRODUCT,
+  SET_CATESTR,
 } from '../actions'
 import { initializeApp } from 'firebase/app'
 import {
@@ -44,6 +51,21 @@ const productsColRef = collection(db, 'products')
 
 const ProductContext = createContext()
 
+const getLocalStorage = () => {
+  let catstr = localStorage.getItem('str')
+  if (catstr) {
+    try {
+      return catstr
+    } catch (err) {
+      console.log(err)
+      localStorage.removeItem('str')
+      return []
+    }
+  } else {
+    return ''
+  }
+}
+
 const initialState = {
   loading: false,
   products: [],
@@ -53,7 +75,8 @@ const initialState = {
   females: [],
   singleProduct: {},
   topseller: [],
-  category: { categoryName: '', categoryProducts: [] },
+  category: [],
+  categoryStr: getLocalStorage(),
 }
 
 export const ProductProvider = ({ children }) => {
@@ -67,9 +90,10 @@ export const ProductProvider = ({ children }) => {
     dispath({ type: GET_TOPSELLERS })
   }, [state.products])
 
-  // const getCategory = (type) => {
-  //   dispath({ type: GET_CATEGORY, payload: type })
-  // }
+  const setCatStr = (str) => {
+    localStorage.setItem('str', str)
+    dispath({ type: SET_CATESTR, payload: str })
+  }
 
   const fetchApi = (apicolRef, action) => {
     dispath({ type: START_LOADING })
@@ -89,20 +113,13 @@ export const ProductProvider = ({ children }) => {
 
   const getCategory = (querystr) => {
     dispath({ type: START_LOADING })
-    const queryProducts = query(productsColRef, where('type', '==', querystr))
+    localStorage.setItem('str', querystr)
 
-    getDocs(queryProducts)
-      .then((snapshot) => {
-        let catProducts = snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id }
-        })
-        dispath({ type: GET_CATEGORY, payload: { querystr, catProducts } })
+    dispath({ type: GET_CATEGORY, payload: querystr })
 
-        dispath({ type: STOP_LOADING })
+    dispath({ type: STOP_LOADING })
 
-        return catProducts
-      })
-      .catch((err) => console.log(err))
+    console.log(querystr)
   }
 
   const getSingleProduct = (id) => {
@@ -110,7 +127,10 @@ export const ProductProvider = ({ children }) => {
     const singleProductRef = doc(db, 'products', id)
     getDoc(singleProductRef)
       .then((res) => {
-        dispath({ type: GET_SINGLE_PRODUCT, payload:{ product:res.data(), singleId:id }})
+        dispath({
+          type: GET_SINGLE_PRODUCT,
+          payload: { product: res.data(), singleId: id },
+        })
         dispath({ type: STOP_LOADING })
       })
       .catch((err) => {
@@ -118,8 +138,6 @@ export const ProductProvider = ({ children }) => {
         console.log(err)
       })
   }
-
-  
 
   useEffect(() => {
     fetchApi(foundersColRef, GET_FOUNDERS)
@@ -129,7 +147,7 @@ export const ProductProvider = ({ children }) => {
 
   return (
     <ProductContext.Provider
-      value={{ ...state, getCategory, getSingleProduct }}
+      value={{ ...state, getCategory, getSingleProduct, setCatStr }}
     >
       {children}
     </ProductContext.Provider>

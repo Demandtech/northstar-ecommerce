@@ -9,23 +9,22 @@ import { useProductsContext } from '../contexts/productsContext'
 
 const Category = () => {
 
-  const { getCategory } = useProductsContext()
-
-  
+  const { setCatStr } = useProductsContext()
 
   useEffect(() => {
     Aos.init({ duration: 1000 })
   }, [])
+
   return (
     <Wrapper>
       <div className='category-wrapper'>
         <div className='female category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={()=>getCategory('female')}>
+          <Link to='/product/category' onClick={() => setCatStr('female')}>
             Buy Now
           </Link>
         </div>
         <div className='male category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={()=>getCategory('male')}>
+          <Link to='/product/category' onClick={() => setCatStr('male')}>
             Buy Now
           </Link>
         </div>

@@ -1,27 +1,28 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import { NavLink, Navigate } from 'react-router-dom'
 import { useProductsContext } from '../contexts/productsContext'
 import { Loader, ProductCard } from '../components'
 
 const Categories = () => {
-  const { category, loading } = useProductsContext()
-
-  if (category.length < 1) {
-    return <Navigate to={'/about'} />
-  }
+  const { category, loading, getCategory, categoryStr } = useProductsContext()
 
   if (loading) {
     return <Loader />
   }
+
+  useEffect(() => {
+    getCategory(categoryStr)
+  },[])
+
   return (
     <Wrapper>
       <div className='link'>
         <NavLink to={'/'}>HOME</NavLink>/<NavLink to={'/about'}>About</NavLink>/
-        <NavLink to={'/product/category'}>{category.categoryName}</NavLink>
+        <NavLink to={'/product/category'}>{categoryStr}</NavLink>
       </div>
       <div className='products-wrapper'>
-        {category.categoryProducts.map((cat, index) => (
+        {category.map((cat, index) => (
           <ProductCard key={index} {...cat} />
         ))}
       </div>

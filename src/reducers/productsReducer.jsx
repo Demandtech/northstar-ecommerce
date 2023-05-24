@@ -8,6 +8,7 @@ import {
   START_LOADING,
   STOP_LOADING,
   GET_SINGLE_PRODUCT,
+  SET_CATESTR
 } from '../actions'
 
 const productsReducer = (state, action) => {
@@ -29,13 +30,12 @@ const productsReducer = (state, action) => {
       })
       return { ...state, products: tempProduct }
     case GET_CATEGORY:
-      return {
-        ...state,
-        category: {
-          categoryName: action.payload.querystr,
-          categoryProducts: action.payload.catProducts,
-        },
-      }
+      const category = state.products.filter(
+        (product) => product.type === state.categoryStr
+      )
+
+      console.log(category)
+      return { ...state, category}
     case GET_FOUNDERS:
       return { ...state, founders: action.payload }
     case GET_TESTIMONIES:
@@ -56,6 +56,8 @@ const productsReducer = (state, action) => {
       }
 
       return { ...state, singleProduct }
+    case SET_CATESTR:
+       return { ...state, categoryStr:action.payload }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

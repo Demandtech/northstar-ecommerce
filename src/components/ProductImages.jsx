@@ -59,7 +59,7 @@ const Wrapper = styled.div`
       color: #ffffff;
     }
   }
-  
+
   img {
     width: 100%;
     display: block;
@@ -75,6 +75,10 @@ const Wrapper = styled.div`
       height: 100px;
       cursor: pointer;
     }
+  }
+  .pag {
+    border-radius: 0.5rem;
+    overflow: hidden;
   }
   .active-pag {
     box-shadow: 0px 0px 0px 2px #024e82;

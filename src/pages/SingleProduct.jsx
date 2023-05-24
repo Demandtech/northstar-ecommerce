@@ -19,7 +19,8 @@ const SingleProduct = () => {
   const { addToCart } = useCartContext()
   const [sizes, setSizes] = useState('M')
 
-  const { singleProduct, loading, getSingleProduct } = useProductsContext()
+  const { singleProduct, loading, getSingleProduct, setCatStr } =
+    useProductsContext()
 
   const {
     type,
@@ -55,8 +56,10 @@ const SingleProduct = () => {
         <div className='right'>
           <div className='link'>
             <NavLink to={'/'}>HOME</NavLink>/
-            <NavLink to={'/product/category'}>{type?.toUpperCase()}</NavLink>/
-            <NavLink to={`/product/${id}`}>PRODUCT</NavLink>
+            <NavLink to={'/product/category'} onClick={() => setCatStr(type)}>
+              {type?.toUpperCase()}
+            </NavLink>
+            /<NavLink to={`/product/${id}`}>PRODUCT</NavLink>
           </div>
           <h4>{name}</h4>
           <Stars rating={rating} review={review} />
