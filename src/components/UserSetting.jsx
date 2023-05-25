@@ -10,7 +10,7 @@ const UserSetting = () => {
   return (
     <Wrapper>
       <Link onClick={handleOpenSetup} className='link-btn' to={'/profile'}>
-        {user.displayName || user.first_name}
+        {user.firstName}
       </Link>
       <Link className={'link-btn'} onClick={handleOpenSetup} to={'cart'}>
         Cart

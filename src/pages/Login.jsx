@@ -121,6 +121,7 @@ const Wrapper = styled.main`
       border-top-right-radius: 1rem;
       display: flex;
       justify-content: center;
+      padding-bottom: 2rem;
 
        .right-wrapper {
         width: 100%;

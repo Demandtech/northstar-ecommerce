@@ -8,10 +8,9 @@ import { Link, useNavigate } from 'react-router-dom'
 const Register = () => {
   const navigate = useNavigate()
   const [viewPass, setViewPass] = useState(false)
-  const { handleRegister,  messages } =
-    useUserContext()
+  const { handleRegister, messages, authenticated } = useUserContext()
 
-    console.log(messages)
+  //console.log(messages)
   const [newUser, setNewUser] = useState({
     fName: '',
     lName: '',
@@ -23,119 +22,115 @@ const Register = () => {
 
   useUserContext()
 
-  if (messages.success) {
-    setTimeout(() => {
-      navigate('/login')
-    }, 3000)
+  if (authenticated) {
+    navigate('/login')
   }
 
-  
+  // const checkInput = (e) => {
+  //   let name = e.target.name
+  //   let value = e.target.value
 
-  const checkInput = (e) => {
-    let name = e.target.name
-    let value = e.target.value
+  //   switch (name) {
+  //     case 'fname':
+  //       if (value == '') {
+  //         setInputsError({
+  //           ...inputsError,
+  //           fname: 'Fist name can not be blank',
+  //         })
+  //       } else if (/\d/.test(value)) {
+  //         setInputsError({
+  //           ...inputsError,
+  //           fname: 'First name can not contain number',
+  //         })
+  //       } else {
+  //         setInputsError({
+  //           ...inputsError,
+  //           error: false,
+  //           fname: '',
+  //         })
+  //       }
+  //       break
+  //     case 'lname':
+  //       if (value == '') {
+  //         setInputsError({
+  //           ...inputsError,
+  //           lname: 'Last name can not be blank',
+  //         })
+  //       } else if (/\d/.test(value)) {
+  //         setInputsError({
+  //           ...inputsError,
+  //           lname: 'Last name can not contain number',
+  //         })
+  //       } else {
+  //         setInputsError({
+  //           ...inputsError,
+  //           lname: '',
+  //         })
+  //       }
+  //       break
+  //     case 'email':
+  //       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  //       if (value == '') {
+  //         setInputsError({
+  //           ...inputsError,
+  //           email: 'Email can not be blank',
+  //         })
+  //       } else if (!emailRegex.test(value)) {
+  //         setInputsError({
+  //           ...inputsError,
+  //           email: 'Wrong email format',
+  //         })
+  //       } else {
+  //         setInputsError({
+  //           ...inputsError,
+  //           email: '',
+  //         })
+  //       }
+  //       break
+  //     case 'pass1':
+  //       const passwordRegex =
+  //         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
 
-    switch (name) {
-      case 'fname':
-        if (value == '') {
-          setInputsError({
-            ...inputsError,
-            fname: 'Fist name can not be blank',
-          })
-        } else if (/\d/.test(value)) {
-          setInputsError({
-            ...inputsError,
-            fname: 'First name can not contain number',
-          })
-        } else {
-          setInputsError({
-            ...inputsError,
-            error: false,
-            fname: '',
-          })
-        }
-        break
-      case 'lname':
-        if (value == '') {
-          setInputsError({
-            ...inputsError,
-            lname: 'Last name can not be blank',
-          })
-        } else if (/\d/.test(value)) {
-          setInputsError({
-            ...inputsError,
-            lname: 'Last name can not contain number',
-          })
-        } else {
-          setInputsError({
-            ...inputsError,
-            lname: '',
-          })
-        }
-        break
-      case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (value == '') {
-          setInputsError({
-            ...inputsError,
-            email: 'Email can not be blank',
-          })
-        } else if (!emailRegex.test(value)) {
-          setInputsError({
-            ...inputsError,
-            email: 'Wrong email format',
-          })
-        } else {
-          setInputsError({
-            ...inputsError,
-            email: '',
-          })
-        }
-        break
-      case 'pass1':
-        const passwordRegex =
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
+  //       if (value == '') {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass1: 'Password can not be blank',
+  //         })
+  //       } else if (!passwordRegex.test(value)) {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass1: 'Choose strong password',
+  //         })
+  //       } else {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass1: '',
+  //         })
+  //       }
+  //       break
+  //     case 'pass2':
+  //       console.log(newUser.pass1)
+  //       if (value == '') {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass2: 'Password can not be blank',
+  //         })
+  //       } else if (newUser.pass1 !== value) {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass2: 'Passwords does not match',
+  //         })
+  //       } else {
+  //         setInputsError({
+  //           ...inputsError,
+  //           pass2: '',
+  //         })
+  //       }
 
-        if (value == '') {
-          setInputsError({
-            ...inputsError,
-            pass1: 'Password can not be blank',
-          })
-        } else if (!passwordRegex.test(value)) {
-          setInputsError({
-            ...inputsError,
-            pass1: 'Choose strong password',
-          })
-        } else {
-          setInputsError({
-            ...inputsError,
-            pass1: '',
-          })
-        }
-        break
-      case 'pass2':
-        console.log(newUser.pass1)
-        if (value == '') {
-          setInputsError({
-            ...inputsError,
-            pass2: 'Password can not be blank',
-          })
-        } else if (newUser.pass1 !== value) {
-          setInputsError({
-            ...inputsError,
-            pass2: 'Passwords does not match',
-          })
-        } else {
-          setInputsError({
-            ...inputsError,
-            pass2: '',
-          })
-        }
-
-        break
-      default:
-    }
-  }
+  //       break
+  //     default:
+  //   }
+  // }
 
   return (
     <Wrapper>
@@ -152,7 +147,7 @@ const Register = () => {
                   <FaGoogle className='icon' />
                   <p>Sign up with Google</p>
                 </div>
-                <div className='facebook' >
+                <div className='facebook'>
                   <FaFacebook className='icon' />
                   <p>Sign up with facebook</p>
                 </div>
@@ -167,7 +162,7 @@ const Register = () => {
                 handleRegister(newUser)
               }}
             >
-              <p style={{paddingBottom: '1rem'}}>
+              <p style={{ paddingBottom: '1rem' }}>
                 {(messages.error && (
                   <span style={{ color: 'red', fontSize: '12px' }}>
                     {messages.error}
@@ -186,7 +181,6 @@ const Register = () => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, fName: e.target.value })
                   }
-                  onBlur={(e) => checkInput(e)}
                   className={`${inputsError.fname ? 'error-input' : ''}`}
                 />
                 {inputsError.fname && (
@@ -204,7 +198,6 @@ const Register = () => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, lName: e.target.value })
                   }
-                  onBlur={(e) => checkInput(e)}
                   className={`${inputsError.lname ? 'error-input' : ''}`}
                 />
                 {inputsError.lname && (
@@ -222,7 +215,6 @@ const Register = () => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, email: e.target.value })
                   }
-                  onBlur={(e) => checkInput(e)}
                   className={`${inputsError.email ? 'error-input' : ''}`}
                 />
                 {inputsError.email && (
@@ -240,7 +232,6 @@ const Register = () => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, pass1: e.target.value })
                   }
-                  onBlur={(e) => checkInput(e)}
                   className={`${inputsError.pass1 ? 'error-input' : ''}`}
                 />
                 <button
@@ -269,7 +260,6 @@ const Register = () => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, pass2: e.target.value })
                   }
-                  onBlur={(e) => checkInput(e)}
                   className={`${inputsError.pass2 ? 'error-input' : ''}`}
                 />
                 <button
@@ -289,7 +279,7 @@ const Register = () => {
                   </span>
                 )}
               </div>
-              <button disabled={inputsError.pass2 !== '' && true } className='submit-btn' type='submit'>
+              <button className='submit-btn' type='submit'>
                 Create Account
               </button>
               <div className='login-link'>
@@ -336,6 +326,7 @@ const Wrapper = styled.main`
       border-top-right-radius: 1rem;
       display: flex;
       justify-content: center;
+      padding-bottom: 2rem;
 
       .right-wrapper {
         width: 100%;
@@ -503,7 +494,8 @@ const Wrapper = styled.main`
         flex: 1;
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
-        background: #ffffff;    
+        background: #ffffff;  
+        padding-bottom: 0;  
 
         .right-wrapper {
           max-width: 500px;

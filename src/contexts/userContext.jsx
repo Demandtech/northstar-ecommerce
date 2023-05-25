@@ -6,20 +6,34 @@ import React, {
   useEffect,
 } from 'react'
 import userReducer from '../reducers/userReducer'
-import { LOGIN_SUCCESS } from '../actions'
-import { useNavigate } from 'react-router-dom'
+import { LOGIN_SUCCESS, LOG_OUT, GET_USER } from '../actions'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+} from 'firebase/firestore'
 
 const UserContext = createContext()
 
 const initialState = {
-  authenticated: false,
+  authenticated: !!localStorage.getItem('token'),
   user: {},
 }
+
+const auth = getAuth()
+const firestore = getFirestore()
 
 export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
   const [messages, setMessages] = useState({ success: '', error: '' })
+  //const navigate = useNavigate()
 
   const emailLogin = (e, user) => {
     e.preventDefault()
@@ -28,30 +42,24 @@ export const UserProvider = ({ children }) => {
       email: user.email,
       password: user.password,
     }
-    fetch('http://localhost/northstar/login.php/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.authenticated) {
-          dispath({ type: LOGIN_SUCCESS, payload:data}) 
-        }else{
-          dispath({type: LOGIN_FAILURE, payload:data})
+    signInWithEmailAndPassword(auth, payload.email, payload.password)
+      .then((cred) => {
+        console.log(cred.user.accessToken)
+        if (cred.user.accessToken) {
+          localStorage.setItem('token', cred.user.accessToken)
+          dispath({ type: LOGIN_SUCCESS })
         }
+        getUser(cred.user.uid)
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.message)
       })
   }
 
   const handleLogout = () => {
-    window.open('http://localhost:5000/auth/logout', '_self')
-    setOpenSetup(false)
+    console.log('clicked')
+    localStorage.removeItem('token')
+    dispath({ type: LOG_OUT })
   }
 
   const handleRegister = (newUser) => {
@@ -61,20 +69,23 @@ export const UserProvider = ({ children }) => {
       email: newUser.email,
       password: newUser.pass2,
     }
-    fetch('http://localhost/northstar/newuser.php/register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setMessages({ success: data.message, error: data.error })
+    createUserWithEmailAndPassword(auth, payload.email, payload.password)
+      .then((cred) => {
+        console.log(cred.user)
+        const userId = cred.user.uid
+
+        setDoc(doc(firestore, 'users', userId), {
+          firstName: payload.first_name,
+          lastName: payload.last_name,
+          email: payload.email,
+        })
+        if (cred.user.accessToken) {
+          dispath({ type: LOGIN_SUCCESS })
+          getUser(userId)
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.message)
       })
   }
 
@@ -93,6 +104,16 @@ export const UserProvider = ({ children }) => {
 
     return () => clearTimeout(timeOutid)
   })
+
+  const getUser = (id) => {
+    const userRef = doc(firestore, 'users', id)
+
+    getDoc(userRef).then((doc) => {
+      if (doc.exists()) {
+        dispath({ type: GET_USER, payload: doc.data() })
+      }
+    })
+  }
 
   return (
     <UserContext.Provider

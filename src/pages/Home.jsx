@@ -38,7 +38,7 @@ const Home = () => {
 
 const Wrapper = styled.main`
   .hero {
-    margin-top: 57px;
+    margin-top: 75px;
     background: url(${hero_bg});
     background-size: cover;
     background-position: center;
