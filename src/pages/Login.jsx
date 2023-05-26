@@ -6,15 +6,14 @@ import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   const [viewPass, setViewPass] = useState(false)
   const [user, setUser] = useState({ email: '', password: '' })
-  const { emailLogin, authenticated } =
-    useUserContext()
+  const { emailLogin, authenticated, error } = useUserContext()
 
-  useEffect(()=>{
-    if(authenticated){
-     navigate('/')
+  useEffect(() => {
+    if (authenticated) {
+      navigate('/')
     }
   }, [authenticated])
   return (
@@ -28,11 +27,11 @@ const Login = () => {
             <div className='right-header'>
               <h2>Sigin Account</h2>
               <div className='social'>
-                <div className='google' >
+                <div className='google'>
                   <FaGoogle className='icon' />
                   <p>Sign in with Google</p>
                 </div>
-                <div className='facebook' >
+                <div className='facebook'>
                   <FaFacebook className='icon' />
                   <p>Sign in with facebook</p>
                 </div>
@@ -46,6 +45,9 @@ const Login = () => {
                 emailLogin(user)
               }}
             >
+              <div className='error'>
+                {error.show && <span>{error.msg}</span>}
+              </div>
               <div className='input-control'>
                 <input
                   value={user.email}
@@ -75,7 +77,11 @@ const Login = () => {
                   )}
                 </button>
               </div>
-              <button onClick={(e)=>emailLogin(e, user)} className='submit-btn' type='submit'>
+              <button
+                onClick={(e) => emailLogin(e, user)}
+                className='submit-btn'
+                type='submit'
+              >
                 Login
               </button>
               <div className='login-link'>
@@ -183,6 +189,14 @@ const Wrapper = styled.main`
           line-height: 29px;
         }
         form {
+          .error{
+            color:red;
+            padding-bottom: 1rem;
+            text-align:center;
+            span{
+              font-size: .8rem;
+            }
+          }
           .input-control{
             margin-bottom: 1.5rem;
             position: relative;

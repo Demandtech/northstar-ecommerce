@@ -6,24 +6,20 @@ import React, {
   useEffect,
 } from 'react'
 import userReducer from '../reducers/userReducer'
-import { LOGIN_SUCCESS, LOG_OUT, GET_USER } from '../actions'
+import { LOGIN_SUCCESS, LOG_OUT, GET_USER, LOGIN_FAILURE } from '../actions'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-} from 'firebase/firestore'
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
 
 const UserContext = createContext()
 
 const initialState = {
   authenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')) || {},
+  error: { show: false, msg: '' },
 }
 
 const auth = getAuth()
@@ -32,7 +28,19 @@ const firestore = getFirestore()
 export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
-  const [messages, setMessages] = useState({ success: '', error: '' })
+
+  const getUser = (id) => {
+    console.log(id)
+    const userRef = doc(firestore, 'users', id)
+
+    getDoc(userRef).then((doc) => {
+      if (doc.exists()) {
+        console.log(doc.data())
+        localStorage.setItem('user', JSON.stringify(doc.data()))
+        dispath({ type: GET_USER, payload: doc.data() })
+      }
+    })
+  }
 
   const emailLogin = (e, user) => {
     e.preventDefault()
@@ -43,20 +51,23 @@ export const UserProvider = ({ children }) => {
     }
     signInWithEmailAndPassword(auth, payload.email, payload.password)
       .then((cred) => {
-        console.log(cred.user.accessToken)
+        //console.log(cred.user.reloadUserInfo.localId)
+        const userId = cred.user.reloadUserInfo.localId
         if (cred.user.accessToken) {
           localStorage.setItem('token', cred.user.accessToken)
+          getUser(userId)
           dispath({ type: LOGIN_SUCCESS })
         }
       })
       .catch((err) => {
+        dispath({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
         console.log(err.message)
       })
   }
 
   const handleLogout = () => {
-    console.log('clicked')
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     dispath({ type: LOG_OUT })
   }
 
@@ -69,19 +80,25 @@ export const UserProvider = ({ children }) => {
     }
     createUserWithEmailAndPassword(auth, payload.email, payload.password)
       .then((cred) => {
-        console.log(cred.user)
         const userId = cred.user.uid
+
+        if (cred.user.accessToken) {
+          localStorage.setItem('token', cred.user.accessToken)
+          getUser(userId)
+          dispath({ type: LOGIN_SUCCESS })
+        }
 
         setDoc(doc(firestore, 'users', userId), {
           firstName: payload.first_name,
           lastName: payload.last_name,
           email: payload.email,
-          id:userId,
-          cart:[],
-          order:[],
+          id: userId,
+          cart: [],
+          order: [],
         })
       })
       .catch((err) => {
+        dispath({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
         console.log(err.message)
       })
   }
@@ -94,25 +111,6 @@ export const UserProvider = ({ children }) => {
     console.log(email)
   }
 
-  useEffect(() => {
-    const timeOutid = setTimeout(() => {
-      setMessages((prev) => ({ ...prev, success: '' }))
-    }, 3000)
-
-    return () => clearTimeout(timeOutid)
-  }, [])
-
-  const getUser = (id) => {
-    const userRef = doc(firestore, 'users', id)
-
-    getDoc(userRef).then((doc) => {
-      if (doc.exists()) {
-        dispath({ type: GET_USER, payload: doc.data() })
-      }
-    })
-  }
-
-
   return (
     <UserContext.Provider
       value={{
@@ -123,7 +121,6 @@ export const UserProvider = ({ children }) => {
         openSetup,
         handleLogout,
         handleNewsLetter,
-        messages,
       }}
     >
       {children}

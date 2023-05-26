@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import img from '../assets/images/register-img.webp'
 import styled from 'styled-components'
-import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
+import { FaGoogle, FaFacebook } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
+import { checkInput } from '../utils/helpers'
+import Input from '../components/reusable/Input'
 
 const Register = () => {
   const navigate = useNavigate()
-  const [viewPass, setViewPass] = useState(false)
-  const { handleRegister, messages, authenticated } = useUserContext()
+  const { handleRegister, authenticated, error } = useUserContext()
+  const [inputsError, setInputsError] = useState({})
 
-  //console.log(messages)
   const [newUser, setNewUser] = useState({
     fName: '',
     lName: '',
@@ -18,119 +19,10 @@ const Register = () => {
     pass1: '',
     pass2: '',
   })
-  const [inputsError, setInputsError] = useState({})
-
-  useUserContext()
 
   if (authenticated) {
-    navigate('/login')
+    return navigate('/login')
   }
-
-  // const checkInput = (e) => {
-  //   let name = e.target.name
-  //   let value = e.target.value
-
-  //   switch (name) {
-  //     case 'fname':
-  //       if (value == '') {
-  //         setInputsError({
-  //           ...inputsError,
-  //           fname: 'Fist name can not be blank',
-  //         })
-  //       } else if (/\d/.test(value)) {
-  //         setInputsError({
-  //           ...inputsError,
-  //           fname: 'First name can not contain number',
-  //         })
-  //       } else {
-  //         setInputsError({
-  //           ...inputsError,
-  //           error: false,
-  //           fname: '',
-  //         })
-  //       }
-  //       break
-  //     case 'lname':
-  //       if (value == '') {
-  //         setInputsError({
-  //           ...inputsError,
-  //           lname: 'Last name can not be blank',
-  //         })
-  //       } else if (/\d/.test(value)) {
-  //         setInputsError({
-  //           ...inputsError,
-  //           lname: 'Last name can not contain number',
-  //         })
-  //       } else {
-  //         setInputsError({
-  //           ...inputsError,
-  //           lname: '',
-  //         })
-  //       }
-  //       break
-  //     case 'email':
-  //       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  //       if (value == '') {
-  //         setInputsError({
-  //           ...inputsError,
-  //           email: 'Email can not be blank',
-  //         })
-  //       } else if (!emailRegex.test(value)) {
-  //         setInputsError({
-  //           ...inputsError,
-  //           email: 'Wrong email format',
-  //         })
-  //       } else {
-  //         setInputsError({
-  //           ...inputsError,
-  //           email: '',
-  //         })
-  //       }
-  //       break
-  //     case 'pass1':
-  //       const passwordRegex =
-  //         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
-
-  //       if (value == '') {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass1: 'Password can not be blank',
-  //         })
-  //       } else if (!passwordRegex.test(value)) {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass1: 'Choose strong password',
-  //         })
-  //       } else {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass1: '',
-  //         })
-  //       }
-  //       break
-  //     case 'pass2':
-  //       console.log(newUser.pass1)
-  //       if (value == '') {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass2: 'Password can not be blank',
-  //         })
-  //       } else if (newUser.pass1 !== value) {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass2: 'Passwords does not match',
-  //         })
-  //       } else {
-  //         setInputsError({
-  //           ...inputsError,
-  //           pass2: '',
-  //         })
-  //       }
-
-  //       break
-  //     default:
-  //   }
-  // }
 
   return (
     <Wrapper>
@@ -162,123 +54,75 @@ const Register = () => {
                 handleRegister(newUser)
               }}
             >
-              <p style={{ paddingBottom: '1rem' }}>
-                {(messages.error && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {messages.error}
-                  </span>
-                )) ||
-                  (messages.success && (
-                    <span style={{ color: 'green' }}>{messages.success}</span>
-                  ))}
-              </p>
-              <div className='input-control'>
-                <input
-                  name='fname'
-                  value={newUser.fName}
-                  type='text'
-                  placeholder='First Name'
-                  onChange={(e) =>
-                    setNewUser({ ...newUser, fName: e.target.value })
-                  }
-                  className={`${inputsError.fname ? 'error-input' : ''}`}
-                />
-                {inputsError.fname && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {inputsError.fname}
-                  </span>
-                )}
+              <div className='error'>
+                {error.show && <span>{error.msg}</span>}
               </div>
-              <div className='input-control'>
-                <input
-                  name='lname'
-                  value={newUser.lName}
-                  type='text'
-                  placeholder='Last Name'
-                  onChange={(e) =>
-                    setNewUser({ ...newUser, lName: e.target.value })
-                  }
-                  className={`${inputsError.lname ? 'error-input' : ''}`}
-                />
-                {inputsError.lname && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {inputsError.lname}
-                  </span>
-                )}
-              </div>
-              <div className='input-control'>
-                <input
-                  name='email'
-                  value={newUser.email}
-                  type='text'
-                  placeholder='Email Address'
-                  onChange={(e) =>
-                    setNewUser({ ...newUser, email: e.target.value })
-                  }
-                  className={`${inputsError.email ? 'error-input' : ''}`}
-                />
-                {inputsError.email && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {inputsError.email}
-                  </span>
-                )}
-              </div>
-              <div className='input-control'>
-                <input
-                  name='pass1'
-                  type={viewPass ? 'text' : 'password'}
-                  placeholder='Password'
-                  value={newUser.pass1}
-                  onChange={(e) =>
-                    setNewUser({ ...newUser, pass1: e.target.value })
-                  }
-                  className={`${inputsError.pass1 ? 'error-input' : ''}`}
-                />
-                <button
-                  className='password-setting'
-                  type='button'
-                  onClick={() => setViewPass(!viewPass)}
-                >
-                  {viewPass ? (
-                    <FaEye className='icon' />
-                  ) : (
-                    <FaEyeSlash className='icon' />
-                  )}
-                </button>
-                {inputsError.pass1 && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {inputsError.pass1}
-                  </span>
-                )}
-              </div>
-              <div className='input-control'>
-                <input
-                  name='pass2'
-                  type={viewPass ? 'text' : 'password'}
-                  placeholder='Confirm Password'
-                  value={newUser.pass2}
-                  onChange={(e) =>
-                    setNewUser({ ...newUser, pass2: e.target.value })
-                  }
-                  className={`${inputsError.pass2 ? 'error-input' : ''}`}
-                />
-                <button
-                  className='password-setting'
-                  type='button'
-                  onClick={() => setViewPass(!viewPass)}
-                >
-                  {viewPass ? (
-                    <FaEye className='icon' />
-                  ) : (
-                    <FaEyeSlash className='icon' />
-                  )}
-                </button>
-                {inputsError.pass2 && (
-                  <span style={{ color: 'red', fontSize: '12px' }}>
-                    {inputsError.pass2}
-                  </span>
-                )}
-              </div>
+              <Input
+                name='fname'
+                value={newUser.fName}
+                type='text'
+                placeholder='Enter Your First Name'
+                error={inputsError.fname}
+                onchange={(e) =>
+                  setNewUser({ ...newUser, fName: e.target.value })
+                }
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError)
+                }
+              />
+              <Input
+                name='lname'
+                value={newUser.lName}
+                type='text'
+                placeholder='Enter Your Last Name'
+                error={inputsError.lname}
+                onchange={(e) =>
+                  setNewUser({ ...newUser, lName: e.target.value })
+                }
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError)
+                }
+              />
+              <Input
+                name='email'
+                value={newUser.email}
+                type='text'
+                placeholder='Enter Your Email Address'
+                onchange={(e) =>
+                  setNewUser({ ...newUser, email: e.target.value })
+                }
+                error={inputsError.email}
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError)
+                }
+              />
+              <Input
+                name='pass1'
+                value={newUser.pass1}
+                type='password'
+                placeholder='Enter Password'
+                onchange={(e) =>
+                  setNewUser({ ...newUser, pass1: e.target.value })
+                }
+                error={inputsError.pass1}
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError, newUser)
+                }
+              />
+              <Input
+                name='pass2'
+                value={newUser.pass2}
+                type='password'
+                placeholder='Comfirm Password'
+                onchange={(e) =>
+                  setNewUser({ ...newUser, pass2: e.target.value })
+                }
+                error={inputsError.pass2}
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError, newUser)
+                }
+              />
+
               <button className='submit-btn' type='submit'>
                 Create Account
               </button>
@@ -354,9 +198,9 @@ const Wrapper = styled.main`
               border-radius: 0.5rem;
               align-items: center;
               cursor: pointer;
-              transition: .3s;
+              transition: 0.3s;
 
-              &:hover{
+              &:hover {
                 background: lightgray;
               }
               .icon {
@@ -374,8 +218,8 @@ const Wrapper = styled.main`
               align-items: center;
               border-radius: 0.5rem;
               cursor: pointer;
-              transition: .3s;
-              &:hover{
+              transition: 0.3s;
+              &:hover {
                 background: lightgray;
               }
               .icon {
@@ -387,98 +231,61 @@ const Wrapper = styled.main`
         }
         .divider {
           text-align: center;
-          padding-bottom: 2rem;
           color: rgba(26, 23, 23, 0.38);
           font-weight: 800;
           font-size: 1.5rem;
           line-height: 29px;
         }
         form {
-          .input-control{
-            margin-bottom: 1.5rem;
-            position: relative;
-
-            input {
-              all:unset;
-              width: 100%;
-              padding: .5rem 0;
-              font-size: 1rem;
-              border: none;
-              border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-              color: color: rgba(26, 23, 23, 0.38);
-              line-height: 29px;
-              background: #ffffff;
-              
-
-              &:focus{
-                outline: none;
-                border-bottom-color: #024e82;
-              }
+          .error {
+            color: red;
+            padding-bottom: 1rem;
+            text-align: center;
+            span {
+              font-size: 0.8rem;
             }
-
-            .error-input{
-              border-bottom: 1px solid red;
-            }
-
-            .password-setting{
-              all: unset;
-              position: absolute;
-              right: 0;
-              bottom: 50%;
-              transform: translateY(50%);
-              cursor: pointer;
-
-              .icon{
-               color:rgba(26, 23, 23, 0.38);
-              }
-            }
-         }
-
-         .submit-btn{
-          margin-top: 2rem;
-          width: 100%;
-          text-align: center;
-          padding: .7rem;
-          border: none;
-          border-radius: .5rem;
-          font-size: 1.2rem;
-          color: #ffffff;
-          background: #024e82;
-          border: 2px solid  #024e82;
-          cursor: pointer;
-          transition: .3s;
-
-          
-
-          &:hover{
-            background: #ffffff;
-            color: #024e82;
-            
           }
 
-          &:disabled{
-            background: gray;
+          .submit-btn {
+            margin-top: 2rem;
+            width: 100%;
+            text-align: center;
+            padding: 0.7rem;
             border: none;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
             color: #ffffff;
+            background: #024e82;
+            border: 2px solid #024e82;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &:hover {
+              background: #ffffff;
+              color: #024e82;
+            }
+
+            &:disabled {
+              background: gray;
+              border: none;
+              color: #ffffff;
+            }
           }
 
-         }
+          .login-link {
+            margin-top: 1.5rem;
+            color: rgba(0, 0, 0, 0.12);
 
-         .login-link{
-          margin-top: 1.5rem;
-          color: rgba(0, 0, 0, 0.12);
-
-          a{
-            text-decoration: none;
-            color: #024e82;
+            a {
+              text-decoration: none;
+              color: #024e82;
+            }
           }
-         }
         }
       }
     }
   }
   @media screen and (min-width: 780px) {
-    
     .container {
       background-size: 60% 100%;
       background-position: left;
@@ -494,8 +301,8 @@ const Wrapper = styled.main`
         flex: 1;
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
-        background: #ffffff;  
-        padding-bottom: 0;  
+        background: #ffffff;
+        padding-bottom: 0;
 
         .right-wrapper {
           max-width: 500px;
