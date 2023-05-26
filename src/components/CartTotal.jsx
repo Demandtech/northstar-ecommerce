@@ -5,23 +5,25 @@ import { useCartContext } from '../contexts/cartContext'
 import { formatPrice } from '../utils/helpers'
 
 const CartTotal = () => {
- const {total_amount, shipping} = useCartContext()
+  const { total_amount, shipping } = useCartContext()
   return (
     <Wrapper>
       <h4>Cart Totals</h4>
-      <div className="total-wrapper">
-         <div className='sub-total'>
-            <p>Subtotal</p>
-            <span>{formatPrice(total_amount)}</span>
-         </div>
-         <div className='shipping'>
-           <p>Shipping Fee</p>
-           <span>{shipping === 0 ? 'FREE!!!' : shipping}</span>
-         </div>
-         <div className='total'>
-           <p><strong>Total</strong></p>
-           <span>{formatPrice(total_amount + shipping)}</span>
-         </div>
+      <div className='total-wrapper'>
+        <div className='sub-total'>
+          <p>Subtotal</p>
+          <span>{formatPrice(total_amount)}</span>
+        </div>
+        <div className='shipping'>
+          <p>Shipping Fee</p>
+          <span>{shipping === 0 ? 'FREE!!!' : shipping}</span>
+        </div>
+        <div className='total'>
+          <p>
+            <strong>Total</strong>
+          </p>
+          <span>{formatPrice(total_amount + shipping)}</span>
+        </div>
       </div>
       <Link to={'/checkout'}>Proceed to checkout</Link>
     </Wrapper>
@@ -29,6 +31,7 @@ const CartTotal = () => {
 }
 
 const Wrapper = styled.article`
+  padding-bottom: 4rem;
   h4 {
     font-family: 'Arimo', sans-serif;
     font-weight: 700;

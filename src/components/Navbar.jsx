@@ -112,7 +112,7 @@ const Wrapper = styled.nav`
   padding: 0 1rem;
   position: fixed;
   background: #ffffff;
-  //z-index: 100;
+  z-index: 100;
   display: flex;
   align-items: center;
   max-width: 100%;

@@ -39,6 +39,7 @@ const CartIems = () => {
             </thead>
             <tbody>
               {cart.map((item, index) => {
+                console.log(item)
                 let total = item.discountedPrice * item.quantity
                 return (
                   <tr key={index}>

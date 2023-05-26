@@ -7,7 +7,8 @@ const userReducer = (state, action) => {
     case LOG_OUT:
       return { ...state, authenticated: false }
     case GET_USER:
-      return {...state, user:action.payload}
+      console.log(action.payload)
+      return {...state, cart:action.payload.cart, user:action.payload}
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

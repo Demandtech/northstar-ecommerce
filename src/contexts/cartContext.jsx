@@ -8,47 +8,35 @@ import {
   HIDE_SNACKBAR,
 } from '../actions'
 import { useProductsContext } from './productsContext'
+import { getFirestore, doc, updateDoc } from 'firebase/firestore'
+import { useUserContext } from './userContext'
 const CartContext = createContext()
 
-const getLocalStorage = () => {
-  let cart = localStorage.getItem('cart')
-  if (cart) {
-    try {
-      return JSON.parse(cart)
-    } catch (err) {
-      console.log(err)
-      localStorage.removeItem('cart')
-      return []
-    }
-  } else {
-    return []
-  }
-}
+const db = getFirestore()
+
+
 
 const initialState = {
-  cart: getLocalStorage(),
+  cart: [],
   total_items: 0,
   total_amount: 0,
   all_products: [],
   shipping: 0,
-  showSnackbar: {show:false, msg: ''},
+  showSnackbar: { show: false, msg: '' },
 }
 
 export const CartProvider = ({ children }) => {
   const [state, dispath] = useReducer(cartReducer, initialState)
   const { products } = useProductsContext()
+  const { user } = useUserContext()
 
-  // function savedLocalStorage() {
-  //   localStorage.setItem('cart', JSON.stringify(state.cart))
-  // }
-
-  // console.log(products)
+  const userId = user.id
 
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
-      dispath({type: HIDE_SNACKBAR})
+      dispath({ type: HIDE_SNACKBAR })
     }, 3000)
-    
+
     return () => clearTimeout(setTimeoutId)
   }, [state.showSnackbar.show])
 
@@ -57,22 +45,29 @@ export const CartProvider = ({ children }) => {
   }, [products])
 
   const addToCart = (id, sizes, quantity) => {
-    console.log(quantity)
+  
     dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
   }
 
+  const addCartBd = (cartItem) => {
+    const userRef = doc(db, 'users', userId)
+    updateDoc(userRef, { cart: [...cart, cartItem] })
+  }
+
   useEffect(() => {
-    dispath({ type: COUNT_CART_TOTALS })
-    localStorage.setItem('cart', JSON.stringify(state.cart))
+    dispath({ type: COUNT_CART_TOTALS }) 
+   
   }, [state.cart])
 
   const deleteCartItem = (id) => {
     dispath({ type: DELETE_CART_ITEM, payload: id })
   }
 
+ 
+
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, dispath, deleteCartItem }}
+      value={{ ...state, addToCart, dispath, deleteCartItem}}
     >
       {children}
     </CartContext.Provider>

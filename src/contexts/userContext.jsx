@@ -23,7 +23,7 @@ const UserContext = createContext()
 
 const initialState = {
   authenticated: !!localStorage.getItem('token'),
-  user: {},
+  user: JSON.parse(localStorage.getItem('user')) || {},
 }
 
 const auth = getAuth()
@@ -33,7 +33,6 @@ export const UserProvider = ({ children }) => {
   const [state, dispath] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
   const [messages, setMessages] = useState({ success: '', error: '' })
-  //const navigate = useNavigate()
 
   const emailLogin = (e, user) => {
     e.preventDefault()
@@ -49,7 +48,6 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('token', cred.user.accessToken)
           dispath({ type: LOGIN_SUCCESS })
         }
-        getUser(cred.user.uid)
       })
       .catch((err) => {
         console.log(err.message)
@@ -78,11 +76,10 @@ export const UserProvider = ({ children }) => {
           firstName: payload.first_name,
           lastName: payload.last_name,
           email: payload.email,
+          id:userId,
+          cart:[],
+          order:[],
         })
-        if (cred.user.accessToken) {
-          dispath({ type: LOGIN_SUCCESS })
-          getUser(userId)
-        }
       })
       .catch((err) => {
         console.log(err.message)
@@ -103,7 +100,7 @@ export const UserProvider = ({ children }) => {
     }, 3000)
 
     return () => clearTimeout(timeOutid)
-  })
+  }, [])
 
   const getUser = (id) => {
     const userRef = doc(firestore, 'users', id)
@@ -114,6 +111,7 @@ export const UserProvider = ({ children }) => {
       }
     })
   }
+
 
   return (
     <UserContext.Provider

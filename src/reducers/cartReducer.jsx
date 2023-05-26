@@ -7,7 +7,9 @@ import {
   HIDE_SNACKBAR,
 } from '../actions'
 
+
 const cartReducer = (state, action) => {
+  
   switch (action.type) {
     case GET_ALL_PRODUCTS:
       return { ...state, all_products: action.payload }
@@ -16,16 +18,24 @@ const cartReducer = (state, action) => {
         (product) => product.id === action.payload.id
       )
       if (itemExist) {
-        return state
-      }  
-      let newItem =  state.all_products.find( (product) => product.id === action.payload.id )
-       
+        
+        return {
+          ...state,
+          showSnackbar: { show: true, msg: 'Item is in cart already' },
+        }
+      }
+
+      let newItem = state.all_products.find(
+        (product) => product.id === action.payload.id
+      )
+
       let item = {
         ...newItem,
         quantity: action.payload.quantity,
-        sizes: action.payload.sizes
-      } 
-      
+        sizes: action.payload.sizes,
+        discountedPrice: newItem.price * (100 - newItem.bonus) / 100 
+      }
+
       return {
         ...state,
         showSnackbar: { show: true, msg: 'New item added to cart' },
@@ -33,8 +43,9 @@ const cartReducer = (state, action) => {
       }
     case GET_QUANTITY:
       let itemToUpdate = state.cart.find(
-        (item) => item.id === Number(action.payload.id)
+        (item) => item.id === action.payload.id
       )
+
       itemToUpdate.quantity = Number(action.payload.inputVal)
 
       localStorage.setItem('cart', JSON.stringify(state.cart))
@@ -42,7 +53,7 @@ const cartReducer = (state, action) => {
       return { ...state, cart: state.cart }
     case DELETE_CART_ITEM:
       let newCart = state.cart.filter((ca) => ca.id !== action.payload)
-    
+
       return {
         ...state,
         cart: newCart,
