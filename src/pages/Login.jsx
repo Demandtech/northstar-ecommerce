@@ -4,12 +4,14 @@ import styled from 'styled-components'
 import { FaGoogle, FaFacebook, FaEyeSlash, FaEye } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
+import { Button, Input } from '../components/reusable'
 
 const Login = () => {
+ 
   const navigate = useNavigate()
-  const [viewPass, setViewPass] = useState(false)
   const [user, setUser] = useState({ email: '', password: '' })
-  const { emailLogin, authenticated, error } = useUserContext()
+  const { emailLogin, authenticated, error, btnLoading } = useUserContext()
+  const [inputsError, setInputsError] = useState({})
 
   useEffect(() => {
     if (authenticated) {
@@ -47,43 +49,26 @@ const Login = () => {
             >
               <div className='error'>
                 {error.show && <span>{error.msg}</span>}
-              </div>
-              <div className='input-control'>
-                <input
-                  value={user.email}
-                  type='text'
-                  placeholder='Email Address'
-                  onChange={(e) => setUser({ ...user, email: e.target.value })}
-                />
-              </div>
-              <div className='input-control'>
-                <input
-                  type={viewPass ? 'text' : 'password'}
-                  placeholder='Password'
-                  value={user.password}
-                  onChange={(e) =>
-                    setUser({ ...user, password: e.target.value })
-                  }
-                />
-                <button
-                  className='password-setting'
-                  type='button'
-                  onClick={() => setViewPass(!viewPass)}
-                >
-                  {viewPass ? (
-                    <FaEye className='icon' />
-                  ) : (
-                    <FaEyeSlash className='icon' />
-                  )}
-                </button>
-              </div>
-              <button
-                onClick={(e) => emailLogin(e, user)}
-                className='submit-btn'
-                type='submit'
-              >
-                Login
-              </button>
+              </div>          
+              <Input
+                onchange={(e) => setUser({ ...user, email: e.target.value })}
+                type='text'
+                value={user.email}
+                placeholder={'Enter Your Email Address'}
+              />
+              <Input
+                type={'password'}
+                placeholder={'Enter Your Password'}
+                value={user.password}
+                onchange={(e)=>setUser({ ...user, password: e.target.value })}
+              />
+
+              <Button
+                onclick={(e) => emailLogin(e, user)}
+                loading={btnLoading}
+                text='Login'
+                inputsError={{}}
+              />
               <div className='login-link'>
                 <span>
                   No account yet ? <Link to={'/register'}>Register</Link>
@@ -232,26 +217,7 @@ const Wrapper = styled.main`
             }
          }
 
-         .submit-btn{
-          margin-top: 2rem;
-          width: 100%;
-          text-align: center;
-          padding: .7rem;
-          border: none;
-          border-radius: .5rem;
-          font-size: 1.2rem;
-          color: #ffffff;
-          background: #024e82;
-          cursor: pointer;
-          transition: .3s;
-          border: 2px solid  #024e82;
-
-          &:hover{
-            background: #ffffff;
-            color: #024e82;
-            
-          }
-         }
+         
 
          .login-link{
           margin-top: 1.5rem;

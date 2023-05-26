@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaSignOutAlt } from 'react-icons/fa'
@@ -6,9 +6,12 @@ import { useUserContext } from '../contexts/userContext'
 
 const UserSetting = () => {
   const { handleLogout, handleOpenSetup, user } = useUserContext()
+ 
+
+ 
 
   return (
-    <Wrapper>
+    <Wrapper className='dropdown'>
       <Link onClick={handleOpenSetup} className='link-btn' to={'/profile'}>
         {user.firstName}
       </Link>
@@ -34,6 +37,8 @@ const Wrapper = styled.article`
   gap: 0.5rem;
   font-size: 14px;
   text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 
   .logout-btn {
     all: unset;

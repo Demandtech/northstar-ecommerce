@@ -5,11 +5,11 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { checkInput } from '../utils/helpers'
-import Input from '../components/reusable/Input'
+import {Input, Button} from '../components/reusable'
 
 const Register = () => {
   const navigate = useNavigate()
-  const { handleRegister, authenticated, error } = useUserContext()
+  const { handleRegister, authenticated, error, btnLoading } = useUserContext()
   const [inputsError, setInputsError] = useState({})
 
   const [newUser, setNewUser] = useState({
@@ -23,6 +23,8 @@ const Register = () => {
   if (authenticated) {
     return navigate('/login')
   }
+
+ 
 
   return (
     <Wrapper>
@@ -123,9 +125,7 @@ const Register = () => {
                 }
               />
 
-              <button className='submit-btn' type='submit'>
-                Create Account
-              </button>
+              <Button inputsError={inputsError} loading={btnLoading} text={'Create Account'}/>
               <div className='login-link'>
                 <span>
                   Already have an account ? <Link to={'/login'}>Login</Link>
@@ -246,31 +246,7 @@ const Wrapper = styled.main`
             }
           }
 
-          .submit-btn {
-            margin-top: 2rem;
-            width: 100%;
-            text-align: center;
-            padding: 0.7rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1.2rem;
-            color: #ffffff;
-            background: #024e82;
-            border: 2px solid #024e82;
-            cursor: pointer;
-            transition: 0.3s;
-
-            &:hover {
-              background: #ffffff;
-              color: #024e82;
-            }
-
-            &:disabled {
-              background: gray;
-              border: none;
-              color: #ffffff;
-            }
-          }
+          
 
           .login-link {
             margin-top: 1.5rem;

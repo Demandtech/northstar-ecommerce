@@ -13,6 +13,7 @@ const Navbar = () => {
   const { authenticated, handleOpenSetup, openSetup, user } = useUserContext()
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
+  
 
   useEffect(() => {
     const navHeight = linksRef.current.getBoundingClientRect().height
@@ -24,6 +25,10 @@ const Navbar = () => {
       linksContainerRef.current.style.opacity = 0
     }
   }, [showLinks])
+
+
+ 
+ 
 
   return (
     <Wrapper>
@@ -66,7 +71,7 @@ const Navbar = () => {
           <div>
             {authenticated ? (
               <div className='user-container'>
-                <div className='display-btn' onClick={handleOpenSetup}>
+                <div  className='display-btn' onClick={handleOpenSetup}>
                   {user.photos ? (
                     <img src={user.photos[0].value} alt='avatar' />
                   ) : (

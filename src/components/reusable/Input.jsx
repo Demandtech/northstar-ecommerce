@@ -63,6 +63,7 @@ const Input = ({ type, name, placeholder, onblur, onchange, value, error }) => {
 const Wrapper = styled.article`
 .input-control{           
      position: relative;
+     margin-bottom: 1rem;
 
      input {
        all:unset;
@@ -79,6 +80,10 @@ const Wrapper = styled.article`
        &:focus{
          outline: none;
          border-bottom-color: #024e82;
+       }
+
+       &::placeholder{
+        font-size:.8rem;
        }
      }
 

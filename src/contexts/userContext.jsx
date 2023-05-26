@@ -20,6 +20,7 @@ const initialState = {
   authenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')) || {},
   error: { show: false, msg: '' },
+  btnLoading:false
 }
 
 const auth = getAuth()
@@ -44,7 +45,7 @@ export const UserProvider = ({ children }) => {
 
   const emailLogin = (e, user) => {
     e.preventDefault()
-
+    dispath({type:'START_BTN_LOADING'})
     let payload = {
       email: user.email,
       password: user.password,
@@ -58,6 +59,7 @@ export const UserProvider = ({ children }) => {
           getUser(userId)
           dispath({ type: LOGIN_SUCCESS })
         }
+        dispath({ type: 'STOP_BTN_LOADING' })
       })
       .catch((err) => {
         dispath({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
@@ -72,6 +74,7 @@ export const UserProvider = ({ children }) => {
   }
 
   const handleRegister = (newUser) => {
+    dispath({ type: 'START_BTN_LOADING' })
     let payload = {
       first_name: newUser.fName,
       last_name: newUser.lName,
@@ -96,10 +99,11 @@ export const UserProvider = ({ children }) => {
           cart: [],
           order: [],
         })
+        dispath({ type: 'STOP_BTN_LOADING' })
       })
       .catch((err) => {
         dispath({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
-        console.log(err.message)
+        dispath({ type: 'STOP_BTN_LOADING' })
       })
   }
 

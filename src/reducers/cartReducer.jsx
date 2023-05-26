@@ -7,18 +7,17 @@ import {
   HIDE_SNACKBAR,
 } from '../actions'
 
-
 const cartReducer = (state, action) => {
-  
   switch (action.type) {
     case GET_ALL_PRODUCTS:
       return { ...state, all_products: action.payload }
+    case 'GET_CART':
+      return { ...state, cart: action.payload }
     case ADD_TO_CART:
       let itemExist = state.cart.some(
         (product) => product.id === action.payload.id
       )
       if (itemExist) {
-        
         return {
           ...state,
           showSnackbar: { show: true, msg: 'Item is in cart already' },
@@ -33,7 +32,7 @@ const cartReducer = (state, action) => {
         ...newItem,
         quantity: action.payload.quantity,
         sizes: action.payload.sizes,
-        discountedPrice: newItem.price * (100 - newItem.bonus) / 100 
+        discountedPrice: (newItem.price * (100 - newItem.bonus)) / 100,
       }
 
       return {
@@ -47,8 +46,6 @@ const cartReducer = (state, action) => {
       )
 
       itemToUpdate.quantity = Number(action.payload.inputVal)
-
-      localStorage.setItem('cart', JSON.stringify(state.cart))
 
       return { ...state, cart: state.cart }
     case DELETE_CART_ITEM:
