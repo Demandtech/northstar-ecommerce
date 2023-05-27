@@ -17,7 +17,8 @@ import ProductImages from '../components/ProductImages'
 const SingleProduct = () => {
   const { id } = useParams()
   const { addToCart } = useCartContext()
-  const [sizes, setSizes] = useState('M')
+  const [sizes, setSizes] = useState('')
+
 
   const { singleProduct, loading, getSingleProduct, setCatStr } =
     useProductsContext()
@@ -49,55 +50,58 @@ const SingleProduct = () => {
 
   return (
     <Wrapper>
-      <div className='content-wrapper'>
-        <div className='left'>
-          <ProductImages images={thumbnails} bonus={bonus} />
+      <div className='container'>
+        <div className='link'>
+          <NavLink to={'/'}>HOME</NavLink>/
+          <NavLink to={'/product/category'} onClick={() => setCatStr(type)}>
+            {type?.toUpperCase()}
+          </NavLink>
+          /<NavLink to={`/product/${id}`}>PRODUCT</NavLink>
         </div>
-        <div className='right'>
-          <div className='link'>
-            <NavLink to={'/'}>HOME</NavLink>/
-            <NavLink to={'/product/category'} onClick={() => setCatStr(type)}>
-              {type?.toUpperCase()}
-            </NavLink>
-            /<NavLink to={`/product/${id}`}>PRODUCT</NavLink>
+        <div className='content-wrapper'>
+          <div className='left'>
+            <ProductImages images={thumbnails} bonus={bonus} />
           </div>
-          <h4>{name}</h4>
-          <Stars rating={rating} review={review} />
-          <div className='price'>
-            <s className='price'>{formatPrice(price)}</s>{' '}
-            <span className='bonus-price'>
-              {formatPrice(price - price * (bonus / 100))}
-            </span>
-          </div>
-          <p className='desc'>{description}</p>
-          <SelectSize setSizes={setSizes} />
-          <div className='add-to-cart'>
-            <button
-              onClick={() => {
-                addToCart(id, sizes, 1)
-              }}
-            >
-              ADD TO CART
-            </button>
-          </div>
-          <div className='cate_tags'>
-            <div className='category'>
-              <span className='title'>Category:</span>
-              {category?.map((cat, ind) => (
-                <span key={ind}>{cat}, </span>
-              ))}
+          <div className='right'>
+            <h4>{name}</h4>
+            <Stars rating={rating} review={review} />
+            <div className='price'>
+              <s className='price'>{formatPrice(price)}</s>{' '}
+              <span className='bonus-price'>
+                {formatPrice(price - price * (bonus / 100))}
+              </span>
             </div>
-            <div className='tags'>
-              <span className='title'>Tags:</span>
-              {tags?.map((tag, ind) => (
-                <span key={ind}>{tag}</span>
-              ))}
+            <p className='desc'>{description}</p>
+            <SelectSize setSizes={setSizes} />
+            <div className='add-to-cart'>
+              <button
+                disabled={sizes === ''}
+                onClick={() => {
+                  addToCart(id, sizes, 1)
+                }}
+              >
+                ADD TO CART
+              </button>
             </div>
+            <div className='cate_tags'>
+              <div className='category'>
+                <span className='title'>Category:</span>
+                {category?.map((cat, ind) => (
+                  <span key={ind}>{cat}, </span>
+                ))}
+              </div>
+              <div className='tags'>
+                <span className='title'>Tags:</span>
+                {tags?.map((tag, ind) => (
+                  <span key={ind}>{tag}</span>
+                ))}
+              </div>
+            </div>
+            <Socials />
           </div>
-          <Socials />
         </div>
+        <Description reviews={review} />
       </div>
-      <Description reviews={review} />
     </Wrapper>
   )
 }
@@ -105,7 +109,23 @@ const SingleProduct = () => {
 const Wrapper = styled.main`
   margin-top: 75px;
   padding: 2rem 1rem;
-
+  .container {
+    .link {
+      padding: 1rem 0 2rem 0;
+      a {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 17px;
+        color: #888888;
+        text-decoration: none;
+      }
+      .active {
+        color: #1d1d1d;
+        font-weight: 900;
+        font-size: 15px;
+      }
+    }
+  }
   .content-wrapper {
     display: flex;
     gap: 3rem;
@@ -115,21 +135,6 @@ const Wrapper = styled.main`
       width: 100%;
     }
     .right {
-      .link {
-        padding-bottom: 0.5rem;
-        a {
-          font-weight: 500;
-          font-size: 15px;
-          line-height: 17px;
-          color: #888888;
-          text-decoration: none;
-        }
-        .active {
-          color: #1d1d1d;
-          font-weight: 900;
-          font-size: 15px;
-        }
-      }
       .price {
         font-family: 'Lato', sans-serif;
         font-weight: 400;
@@ -166,8 +171,19 @@ const Wrapper = styled.main`
           background: #024e82;
           color: #ffffff;
           cursor: pointer;
+
           &:hover {
             transform: translateY(-1px);
+          }
+
+          &:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+
+            &:hover {
+              transform: translateY(0);
+            }
           }
         }
       }

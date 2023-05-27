@@ -13,7 +13,6 @@ const Navbar = () => {
   const { authenticated, handleOpenSetup, openSetup, user } = useUserContext()
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
-  
 
   useEffect(() => {
     const navHeight = linksRef.current.getBoundingClientRect().height
@@ -25,10 +24,6 @@ const Navbar = () => {
       linksContainerRef.current.style.opacity = 0
     }
   }, [showLinks])
-
-
- 
- 
 
   return (
     <Wrapper>
@@ -71,7 +66,7 @@ const Navbar = () => {
           <div>
             {authenticated ? (
               <div className='user-container'>
-                <div  className='display-btn' onClick={handleOpenSetup}>
+                <div className='display-btn' onClick={handleOpenSetup}>
                   {user.photos ? (
                     <img src={user.photos[0].value} alt='avatar' />
                   ) : (
@@ -86,12 +81,12 @@ const Navbar = () => {
               </Link>
             )}
           </div>
-          <div className='cart-btn'>
-            <Link to={'/cart'}>
-              <FiShoppingBag className='icon' />
-            </Link>
+
+          <Link className='cart-btn' to={'/cart'}>
+            <FiShoppingBag className='icon' />
             <div className='cart-num'>{total_items}</div>
-          </div>
+          </Link>
+
           <button
             className='hamburger'
             onClick={() => setShowLinks(!showLinks)}
@@ -230,7 +225,7 @@ const Wrapper = styled.nav`
         }
         .icon {
           color: #bbbbbb;
-          cursor: pointer
+          cursor: pointer;
         }
       }
       .hamburger {

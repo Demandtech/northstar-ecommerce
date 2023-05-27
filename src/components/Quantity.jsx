@@ -21,23 +21,23 @@ const Quantity = ({ id, quantity }) => {
 
   return (
     <Wrapper>
-      <input
-        maxLength={2}
-        minLength={1}
-        onChange={handleChange}
-        type='text'
-        value={inputVal}
-      />
+      <input min={1} onChange={handleChange} type='number' value={inputVal} />
     </Wrapper>
   )
 }
 
 const Wrapper = styled.article`
   input {
-    width: 53px;
+    width: 35px;
     height: 42px;
     text-align: center;
     border: 1px solid #ebebeb;
+  }
+
+  @media screen and (min-width: 480px) {
+    input {
+      width: 50px;
+    }
   }
 `
 export default Quantity

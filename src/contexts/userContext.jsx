@@ -36,7 +36,6 @@ export const UserProvider = ({ children }) => {
 
     getDoc(userRef).then((doc) => {
       if (doc.exists()) {
-        console.log(doc.data())
         localStorage.setItem('user', JSON.stringify(doc.data()))
         dispath({ type: GET_USER, payload: doc.data() })
       }
@@ -52,7 +51,6 @@ export const UserProvider = ({ children }) => {
     }
     signInWithEmailAndPassword(auth, payload.email, payload.password)
       .then((cred) => {
-        //console.log(cred.user.reloadUserInfo.localId)
         const userId = cred.user.reloadUserInfo.localId
         if (cred.user.accessToken) {
           localStorage.setItem('token', cred.user.accessToken)
@@ -63,7 +61,7 @@ export const UserProvider = ({ children }) => {
       })
       .catch((err) => {
         dispath({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
-        console.log(err.message)
+        dispath({ type: 'STOP_BTN_LOADING' })
       })
   }
 

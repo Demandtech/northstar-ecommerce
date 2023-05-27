@@ -111,7 +111,7 @@ const Wrapper = styled.main`
           width: 25%;
           padding: 1rem 0;
           font-weight: 400;
-          font-size: 16px;
+          font-size: 0.8rem;
           line-height: 19px;
           color: #555555;
 
@@ -134,7 +134,7 @@ const Wrapper = styled.main`
           text-align: left;
           padding-bottom: 1rem;
           font-weight: 700;
-          font-size: 1.4rem;
+          font-size: 0.7rem;
           line-height: 23px;
         }
       }
@@ -173,6 +173,21 @@ const Wrapper = styled.main`
 
   @media screen and (min-width: 480px) {
     padding: 2rem;
+    .container {
+      .cart-wrapper {
+        margin-top: 2rem;
+        table {
+          tr {
+            td {
+              font-size: 1rem;
+            }
+            th {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
   }
 
   @media screen and (min-width: 780px) {

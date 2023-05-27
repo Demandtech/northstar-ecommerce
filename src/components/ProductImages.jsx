@@ -84,7 +84,7 @@ const Wrapper = styled.div`
     box-shadow: 0px 0px 0px 2px #024e82;
   }
   @media (max-width: 576px) {
-    .main {
+    .main-img {
       height: 300px;
     }
     .gallery {
@@ -94,7 +94,7 @@ const Wrapper = styled.div`
     }
   }
   @media (min-width: 992px) {
-    .main {
+    .main-img {
       height: 500px;
     }
     .gallery {
