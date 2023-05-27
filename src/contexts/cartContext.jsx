@@ -28,7 +28,7 @@ const getCartFromLocalStorage = ()=>{
 }
 
 const initialState = {
-  cart: getCartFromLocalStorage(),
+  cart:getCartFromLocalStorage(),
   newCartItem: {},
   total_items: 0,
   total_amount: 0,
@@ -38,7 +38,7 @@ const initialState = {
 }
 
 export const CartProvider = ({ children }) => {
-  const [state, dispath] = useReducer(cartReducer, initialState)
+  const [state, dispatch] = useReducer(cartReducer, initialState)
   const { products } = useProductsContext()
   const { user } = useUserContext()
 
@@ -49,8 +49,9 @@ export const CartProvider = ({ children }) => {
       const userRef = doc(db, 'users', userId)
       onSnapshot(userRef, (snapshot) => {
         const cartData = snapshot.data().cart
-        dispath({ type: 'GET_CART', payload: cartData })
-      })    
+        
+        dispatch({ type: 'GET_CART', payload: cartData })
+      })
     }
   }, [userId])
 
@@ -65,29 +66,29 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
-      dispath({ type: HIDE_SNACKBAR })
+      dispatch({ type: HIDE_SNACKBAR })
     }, 3000)
 
     return () => clearTimeout(setTimeoutId)
   }, [state.showSnackbar.show])
 
   useEffect(() => {
-    dispath({ type: GET_ALL_PRODUCTS, payload: products })
+    dispatch({ type: GET_ALL_PRODUCTS, payload: products })
   }, [products])
 
   const addToCart = (id, sizes, quantity) => {
     updateCartDb()
 
-    dispath({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
+    dispatch({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
   }
 
   useEffect(() => {
-    dispath({ type: COUNT_CART_TOTALS })
+    dispatch({ type: COUNT_CART_TOTALS })
   }, [state.cart])
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart))
-  },[state.cart])
+  }, [state.cart])
 
   const deleteCartItem = (id) => {
     if (userId) {
@@ -100,7 +101,7 @@ export const CartProvider = ({ children }) => {
         updateDoc(userRef, { cart: updatedCart })
       })
     }
-    dispath({ type: DELETE_CART_ITEM, payload: id })
+    dispatch({ type: DELETE_CART_ITEM, payload: id })
   }
 
   useEffect(() => {
@@ -111,7 +112,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, dispath, deleteCartItem }}
+      value={{ ...state, addToCart, dispatch, deleteCartItem }}
     >
       {children}
     </CartContext.Provider>
