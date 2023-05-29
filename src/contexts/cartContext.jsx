@@ -48,8 +48,8 @@ export const CartProvider = ({ children }) => {
     if (userId) {
       const userRef = doc(db, 'users', userId)
       onSnapshot(userRef, (snapshot) => {
+       
         const cartData = snapshot.data().cart
-        
         dispatch({ type: 'GET_CART', payload: cartData })
       })
     }
@@ -60,7 +60,7 @@ export const CartProvider = ({ children }) => {
       const userRef = doc(db, 'users', userId)
       const updatedCart = [...state.cart]
       updateDoc(userRef, { cart: updatedCart })
-      localStorage.removeItem('cart')
+     
     }
   }
 

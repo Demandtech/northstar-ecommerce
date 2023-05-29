@@ -12,8 +12,7 @@ const cartReducer = (state, action) => {
     case GET_ALL_PRODUCTS:
       return { ...state, all_products: action.payload }
     case 'GET_CART':
-      console.log(action.payload)
-      return { ...state, cart: action.payload }
+      return { ...state, cart:action.payload}
     case ADD_TO_CART:
       let itemExist = state.cart.some(
         (product) => product.id === action.payload.id
@@ -58,8 +57,7 @@ const cartReducer = (state, action) => {
         showSnackbar: { show: true, msg: 'item deleted from cart' },
       }
     case COUNT_CART_TOTALS:
-      
-      const { total_items, total_amount } = state.cart.reduce(
+      const { total_items, total_amount } = state.cart?.reduce(
         (total, cartItem) => {
           const { quantity, discountedPrice } = cartItem
           total.total_items += quantity
@@ -69,12 +67,12 @@ const cartReducer = (state, action) => {
         { total_items: 0, total_amount: 0 }
       )
 
-      return { ...state, 
-        total_items, 
-        total_amount 
-      }
+      return { ...state, total_items, total_amount }
     case HIDE_SNACKBAR:
-      return { ...state, showSnackbar: { show: false, msg: '' } }
+      return {
+        ...state,
+        showSnackbar: { show: false, msg: '' },
+      }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
   const [openSetup, setOpenSetup] = useState(false)
 
   const getUser = (id) => {
-    console.log(id)
+    
     const userRef = doc(firestore, 'users', id)
 
     getDoc(userRef).then((doc) => {

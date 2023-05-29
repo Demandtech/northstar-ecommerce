@@ -20,7 +20,7 @@ const SingleProduct = () => {
   const [sizes, setSizes] = useState('')
 
 
-  const { singleProduct, loading, getSingleProduct, setCatStr } =
+  const { singleProduct, loading, getSingleProduct} =
     useProductsContext()
 
   const {
@@ -40,6 +40,8 @@ const SingleProduct = () => {
     getSingleProduct(id)
   }, [id])
 
+
+
   if (loading) {
     return (
       <div style={{ marginTop: '100px' }}>
@@ -53,7 +55,7 @@ const SingleProduct = () => {
       <div className='container'>
         <div className='link'>
           <NavLink to={'/'}>HOME</NavLink>/
-          <NavLink to={'/product/category'} onClick={() => setCatStr(type)}>
+          <NavLink to={`/products/${type}`}>
             {type?.toUpperCase()}
           </NavLink>
           /<NavLink to={`/product/${id}`}>PRODUCT</NavLink>

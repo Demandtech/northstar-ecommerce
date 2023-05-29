@@ -6,23 +6,25 @@ import { Loader, ProductCard } from '../components'
 
 const Categories = () => {
   const {type}  = useParams()
-  const { category, loading, getCategory, categoryStr } = useProductsContext()
+  const { category, loading, getCategory } = useProductsContext()
 
   console.log(type)
+  console.log(category)
+
+  useEffect(()=>{
+    getCategory(type)
+  }, [type])
 
   if (loading) {
-    return <Loader />
+    return <Loader loading={loading}/>
   }
 
-  useEffect(() => {
-    getCategory(type)
-  },[])
 
   return (
     <Wrapper>
       <div className='link'>
         <NavLink to={'/'}>HOME</NavLink>/<NavLink to={'/about'}>About</NavLink>/
-        <NavLink to={'/product/category'}>{categoryStr}</NavLink>
+        <NavLink to={`/products/${type}`}>{type}</NavLink>
       </div>
       <div className='products-wrapper'>
         {category.map((cat, index) => (
@@ -39,6 +41,7 @@ const Wrapper = styled.section`
 
   .link {
     margin-bottom: 4rem;
+    display: flex;
     a {
       font-weight: 500;
       font-size: 15px;

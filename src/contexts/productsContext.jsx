@@ -112,7 +112,7 @@ export const ProductProvider = ({ children }) => {
     getDocs(query(productsCol, where('type', '==', querystr))).then(
       (snapshot) => {
         let result = snapshot.docs.map((doc) => {
-          return doc.data()
+          return {...doc.data(), id:doc.id}
         })
         console.log(result)
         dispath({ type: GET_CATEGORY, payload: result })
