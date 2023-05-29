@@ -1,18 +1,21 @@
 import React, { useEffect, useCallback } from 'react'
 import styled from 'styled-components'
-import { NavLink, Navigate } from 'react-router-dom'
+import { NavLink, Navigate, useParams } from 'react-router-dom'
 import { useProductsContext } from '../contexts/productsContext'
 import { Loader, ProductCard } from '../components'
 
 const Categories = () => {
+  const {type}  = useParams()
   const { category, loading, getCategory, categoryStr } = useProductsContext()
+
+  console.log(type)
 
   if (loading) {
     return <Loader />
   }
 
   useEffect(() => {
-    getCategory(categoryStr)
+    getCategory(type)
   },[])
 
   return (

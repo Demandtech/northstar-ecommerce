@@ -5,28 +5,20 @@ import femaleImg from '../assets/images/female.webp'
 import { Link } from 'react-router-dom'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import { useProductsContext } from '../contexts/productsContext'
 
 const Category = () => {
-
-  const { setCatStr } = useProductsContext()
-
   useEffect(() => {
-    Aos.init({ duration: 1000 })
+    Aos.init({ duration: 500 })
   }, [])
 
   return (
     <Wrapper>
       <div className='category-wrapper'>
         <div className='female category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={() => setCatStr('female')}>
-            Buy Now
-          </Link>
+          <Link to={`/products/female`}>Buy Now</Link>
         </div>
         <div className='male category' data-aos='zoom-in'>
-          <Link to='/product/category' onClick={() => setCatStr('male')}>
-            Buy Now
-          </Link>
+          <Link to={`/products/male`}>Buy Now</Link>
         </div>
       </div>
     </Wrapper>

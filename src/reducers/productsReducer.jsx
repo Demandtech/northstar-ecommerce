@@ -30,12 +30,7 @@ const productsReducer = (state, action) => {
       })
       return { ...state, products: tempProduct }
     case GET_CATEGORY:
-      const category = state.products.filter(
-        (product) => product.type === state.categoryStr
-      )
-
-      console.log(category)
-      return { ...state, category}
+      return { ...state, category:action.payload}
     case GET_FOUNDERS:
       return { ...state, founders: action.payload }
     case GET_TESTIMONIES:
@@ -56,8 +51,6 @@ const productsReducer = (state, action) => {
       }
 
       return { ...state, singleProduct }
-    case SET_CATESTR:
-       return { ...state, categoryStr:action.payload }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

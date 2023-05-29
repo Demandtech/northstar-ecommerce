@@ -90,11 +90,6 @@ export const ProductProvider = ({ children }) => {
     dispath({ type: GET_TOPSELLERS })
   }, [state.products])
 
-  const setCatStr = (str) => {
-    localStorage.setItem('str', str)
-    dispath({ type: SET_CATESTR, payload: str })
-  }
-
   const fetchApi = (apicolRef, action) => {
     dispath({ type: START_LOADING })
     getDocs(apicolRef)
@@ -113,13 +108,18 @@ export const ProductProvider = ({ children }) => {
 
   const getCategory = (querystr) => {
     dispath({ type: START_LOADING })
-    localStorage.setItem('str', querystr)
-
-    dispath({ type: GET_CATEGORY, payload: querystr })
+    const productsCol = collection(db, 'products')
+    getDocs(query(productsCol, where('type', '==', querystr))).then(
+      (snapshot) => {
+        let result = snapshot.docs.map((doc) => {
+          return doc.data()
+        })
+        console.log(result)
+        dispath({ type: GET_CATEGORY, payload: result })
+      }
+    )
 
     dispath({ type: STOP_LOADING })
-
-    console.log(querystr)
   }
 
   const getSingleProduct = (id) => {
@@ -147,7 +147,7 @@ export const ProductProvider = ({ children }) => {
 
   return (
     <ProductContext.Provider
-      value={{ ...state, getCategory, getSingleProduct, setCatStr }}
+      value={{ ...state, getCategory, getSingleProduct  }}
     >
       {children}
     </ProductContext.Provider>
