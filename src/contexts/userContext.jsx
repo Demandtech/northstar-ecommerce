@@ -16,13 +16,6 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
 
 const UserContext = createContext()
 
-/*
-{
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-} 
-*/
-
 const initialState = {
   authenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')) || {},

@@ -29,13 +29,30 @@ import {
   doc,
 } from 'firebase/firestore'
 
+const apikey = import.meta.env.VITE_APP_API_KEY
+const authDomain = import.meta.env.VITE_APP_AUTH_DOMAIN
+const projectId = import.meta.env.VITE_APP_PROJECT_ID
+const storageBucket=import.meta.env.VITE_APP_MESSENGE_SENDER_ID
+const messagingSenderId = import.meta.env.VITE_APP_STORAGE_BUCKET
+const appId = import.meta.env.VITE_APP_ID
+
+//console.log(apikey,authDomain,projectId,storageBucket,appId)
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyCXAbGsX3-J_8s_jTJ9MNjIa-VP0vXCgPY',
+//   authDomain: 'northstar-213d4.firebaseapp.com',
+//   projectId: 'northstar-213d4',
+//   storageBucket: 'northstar-213d4.appspot.com',
+//   messagingSenderId: '736872699713',
+//   appId: '1:736872699713:web:a29f9ae82161784b2033c0',
+// }
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyCXAbGsX3-J_8s_jTJ9MNjIa-VP0vXCgPY',
-  authDomain: 'northstar-213d4.firebaseapp.com',
-  projectId: 'northstar-213d4',
-  storageBucket: 'northstar-213d4.appspot.com',
-  messagingSenderId: '736872699713',
-  appId: '1:736872699713:web:a29f9ae82161784b2033c0',
+  apiKey: apikey,
+  authDomain: authDomain,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
 }
 
 //Initialize database
@@ -81,6 +98,8 @@ const initialState = {
 
 export const ProductProvider = ({ children }) => {
   const [state, dispath] = useReducer(productsReducer, initialState)
+
+ 
 
   useEffect(() => {
     dispath({ type: GET_DISCOUNTED_PRICE })
