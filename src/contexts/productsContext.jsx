@@ -36,15 +36,6 @@ const storageBucket=import.meta.env.VITE_APP_MESSENGE_SENDER_ID
 const messagingSenderId = import.meta.env.VITE_APP_STORAGE_BUCKET
 const appId = import.meta.env.VITE_APP_ID
 
-//console.log(apikey,authDomain,projectId,storageBucket,appId)
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyCXAbGsX3-J_8s_jTJ9MNjIa-VP0vXCgPY',
-//   authDomain: 'northstar-213d4.firebaseapp.com',
-//   projectId: 'northstar-213d4',
-//   storageBucket: 'northstar-213d4.appspot.com',
-//   messagingSenderId: '736872699713',
-//   appId: '1:736872699713:web:a29f9ae82161784b2033c0',
-// }
 
 const firebaseConfig = {
   apiKey: apikey,
