@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
-const Input = ({ type, name, placeholder, onblur, onchange, value, error }) => {
+const Input = ({ type, name, placeholder, onblur, onchange, value, error,id}) => {
   const [viewPass, setViewPass] = useState(false)
   if (type === 'password') {
     return (

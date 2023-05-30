@@ -55,6 +55,7 @@ const Login = () => {
                 type='text'
                 value={user.email}
                 placeholder={'Enter Your Email Address'}
+                
               />
               <Input
                 type={'password'}
