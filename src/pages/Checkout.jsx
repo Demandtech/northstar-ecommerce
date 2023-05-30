@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { NavLink, Link } from 'react-router-dom'
 import { useCartContext } from '../contexts/cartContext'
+import { useUserContext } from '../contexts/userContext'
 import { formatPrice } from '../utils/helpers'
+import { Input } from '../components/reusable'
+import { checkInput } from '../utils/helpers'
+import { BeatLoader } from 'react-spinners'
 
 const Checkout = () => {
   const { cart, total_amount } = useCartContext()
+  const { handleSubmitBillingAddress, isOrderComplete, btnLoading } =
+    useUserContext()
+  const [billing, setBilling] = useState({
+    fullName: '',
+    address: '',
+    email: '',
+    phone: '',
+    city: '',
+  })
+  const [inputError, setInputError] = useState({})
+
+  if (isOrderComplete) {
+    return <Wrapper>Proceed to Payment</Wrapper>
+  }
+  console.log(inputError)
   return (
     <Wrapper>
       <div className='container'>
@@ -21,17 +40,36 @@ const Checkout = () => {
                 Full Name
                 <sup>*</sup>
               </label>
-              <input type='text' id='full_name' placeholder='Enter full name' />
+
+              <Input
+                id='full_name'
+                placeholder='Enter full name'
+                onchange={(e) =>
+                  setBilling({ ...billing, fullName: e.target.value })
+                }
+                type='text'
+                value={billing.fullName}
+                name='full_name'
+                onblur={(event) => checkInput(event, inputError, setInputError)}
+                error={inputError.full_name}
+              />
             </div>
             <div className='input-control'>
               <label htmlFor='address'>
                 Street Address
                 <sup>*</sup>
               </label>
-              <input
-                type='text'
+              <Input
                 id='address'
-                placeholder='House number and street name'
+                placeholder='Enter Address'
+                onchange={(e) =>
+                  setBilling({ ...billing, address: e.target.value })
+                }
+                type='text'
+                value={billing.address}
+                name='address'
+                error={inputError.address}
+                onblur={(event) => checkInput(event, inputError, setInputError)}
               />
             </div>
             <div className='input-control'>
@@ -39,21 +77,58 @@ const Checkout = () => {
                 Town/City
                 <sup>*</sup>
               </label>
-              <input type='text' id='city' placeholder='Enter city' />
+
+              <Input
+                id='city'
+                placeholder='Enter city'
+                onchange={(e) =>
+                  setBilling({ ...billing, city: e.target.value })
+                }
+                type='text'
+                value={billing.city}
+                name='city'
+                error={inputError.city}
+                onblur={(event) => checkInput(event, inputError, setInputError)}
+              />
             </div>
             <div className='input-control'>
               <label htmlFor='full_name'>
                 Phone
                 <sup>*</sup>
               </label>
-              <input type='text' id='phone' placeholder='Enter Mobile Number' />
+              <Input
+                id='phone'
+                placeholder='Enter Mobile Number'
+                onchange={(e) =>
+                  setBilling({ ...billing, phone: e.target.value })
+                }
+                type='text'
+                value={billing.phone}
+                name='phone'
+                onblur={(event) => checkInput(event, inputError, setInputError)}
+                error={inputError.phone}
+              />
             </div>
             <div className='input-control'>
               <label htmlFor='email'>
                 Email Address
                 <sup>*</sup>
               </label>
-              <input type='text' id='email' placeholder='Enter Email Address' />
+              <Input
+                id='email'
+                placeholder='Enter Email Address'
+                onchange={(e) =>
+                  setBilling({ ...billing, email: e.target.value })
+                }
+                type='text'
+                value={billing.email}
+                onblur={(event) => {
+                  console.log(inputError)
+                  checkInput(event, inputError, setInputError)
+                }}
+                error={inputError.email}
+                name='email'
+              />
             </div>
           </form>
         </div>
@@ -94,7 +169,23 @@ const Checkout = () => {
             wish to make alternate arrangements.
           </p>
           <div className='btn-wrapper'>
-            <Link className='order-btn'>Place order</Link>
+            <button
+              disabled={
+                Object.values(inputError).some((error) => error !== '') ||
+                Object.keys(inputError).length < 1
+              }
+              onClick={(e) => {
+                e.preventDefault()
+                handleSubmitBillingAddress(billing, total_amount)
+              }}
+              className='order-btn'
+            >
+              {btnLoading ? (
+                <BeatLoader color='#ffffff' loading={btnLoading} size={10} />
+              ) : (
+                'Place order'
+              )}
+            </button>
           </div>
         </div>
       </div>
@@ -149,7 +240,7 @@ const Wrapper = styled.main`
         }
         input {
           width: 100%;
-          height: 48px;
+          //height: 48px;
           border: 1px solid #ebebeb;
           padding-left: 1rem;
         }
@@ -198,13 +289,21 @@ const Wrapper = styled.main`
     display: flex;
     justify-content: flex-end;
     padding-bottom: 1rem;
+
    .order-btn{
-    
+    all:unset;
     display: inline-block;
     background:#d6763c;
     color: #ffffff;
     padding: 1rem 2rem;
     text-decoration: none;
+    opacity: 1;
+    cursor:pointer;
+
+    &:disabled{
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
   }
 }
 }

@@ -17,6 +17,7 @@ const Input = ({ type, name, placeholder, onblur, onchange, value, error }) => {
             onChange={onchange}
             className={`${error ? 'error-input' : ''}`}
             onBlur={onblur}
+            id={id?.id}
           />
           <button
             className='password-setting'

@@ -107,6 +107,79 @@ export const checkInput = (event, inputsError, setInputsError, newUser) => {
       }
 
       break
+    case 'phone':
+      if (value == '') {
+        setInputsError({ ...inputsError, phone: 'Phone can not be black' })
+      } else if (!/^\d+$/.test(value)) {
+        setInputsError({
+          ...inputsError,
+          phone: 'Invalid input. Please enter only numbers.',
+        })
+      } else {
+        setInputsError({ ...inputsError, phone: '' })
+      }
+      break
+    case 'address':
+      if (value == '') {
+        setInputsError({ ...inputsError, address: 'Address can not be black' })
+      } else {
+        setInputsError({ ...inputsError, address: '' })
+      }
+      break
+    case 'city':
+      if (value == '') {
+        setInputsError({
+          ...inputsError,
+          city: 'City can not be blank',
+        })
+      } else if (/\d/.test(value)) {
+        setInputsError({
+          ...inputsError,
+          city: 'City can not contain number',
+        })
+      } else {
+        setInputsError({
+          ...inputsError,
+          city: '',
+        })
+      }
+      break
+    case 'full_name':
+      if (value == '') {
+        setInputsError({
+          ...inputsError,
+          full_name: 'Name can not be blank',
+        })
+      } else if (/\d/.test(value)) {
+        setInputsError({
+          ...inputsError,
+          full_name: 'Name can not contain number',
+        })
+      } else {
+        setInputsError({
+          ...inputsError,
+          full_name: '',
+        })
+      }
+      break
     default:
   }
+}
+
+const generatedNumbers = []
+
+export const generateRandomNumber = () => {
+  let randomNumber
+  do {
+    randomNumber = Math.floor(Math.random() * 100000)
+
+    const formattedNumber = String(randomNumber).padStart(7, '#1')
+    generatedNumbers.push(formattedNumber)
+    const numberExists = generatedNumbers.includes(formattedNumber)
+
+    if (!numberExists) {
+      break
+    }
+    return formattedNumber
+  } while (true)
 }

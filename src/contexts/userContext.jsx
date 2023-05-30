@@ -12,7 +12,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore'
+import { generateRandomNumber } from '../utils/helpers'
 
 const UserContext = createContext()
 
@@ -20,31 +27,32 @@ const initialState = {
   authenticated: !!localStorage.getItem('token'),
   user: JSON.parse(localStorage.getItem('user')) || {},
   error: { show: false, msg: '' },
-  btnLoading:false
+  btnLoading: false,
 }
 
 const auth = getAuth()
 const firestore = getFirestore()
 
 export const UserProvider = ({ children }) => {
-  const [state, dispath] = useReducer(userReducer, initialState)
+  const [state, dispatch] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
+  const [isOrderComplete, setIsOrderComplete] = useState(false)
 
   const getUser = (id) => {
-    
     const userRef = doc(firestore, 'users', id)
 
     getDoc(userRef).then((doc) => {
       if (doc.exists()) {
         localStorage.setItem('user', JSON.stringify(doc.data()))
-        dispath({ type: GET_USER, payload: doc.data() })
+        dispatch({ type: GET_USER, payload: doc.data() })
       }
     })
   }
 
+  console.log(generateRandomNumber())
   const emailLogin = (e, user) => {
     e.preventDefault()
-    dispath({type:'START_BTN_LOADING'})
+    dispatch({ type: 'START_BTN_LOADING' })
     let payload = {
       email: user.email,
       password: user.password,
@@ -55,24 +63,24 @@ export const UserProvider = ({ children }) => {
         if (cred.user.accessToken) {
           localStorage.setItem('token', cred.user.accessToken)
           getUser(userId)
-          dispath({ type: LOGIN_SUCCESS })
+          dispatch({ type: LOGIN_SUCCESS })
         }
-        dispath({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: 'STOP_BTN_LOADING' })
       })
       .catch((err) => {
-        dispath({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
-        dispath({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
+        dispatch({ type: 'STOP_BTN_LOADING' })
       })
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    dispath({ type: LOG_OUT })
+    dispatch({ type: LOG_OUT })
   }
 
   const handleRegister = (newUser) => {
-    dispath({ type: 'START_BTN_LOADING' })
+    dispatch({ type: 'START_BTN_LOADING' })
     let payload = {
       first_name: newUser.fName,
       last_name: newUser.lName,
@@ -86,7 +94,7 @@ export const UserProvider = ({ children }) => {
         if (cred.user.accessToken) {
           localStorage.setItem('token', cred.user.accessToken)
           getUser(userId)
-          dispath({ type: LOGIN_SUCCESS })
+          dispatch({ type: LOGIN_SUCCESS })
         }
 
         setDoc(doc(firestore, 'users', userId), {
@@ -96,13 +104,45 @@ export const UserProvider = ({ children }) => {
           id: userId,
           cart: [],
           order: [],
+          billing_address: {},
         })
-        dispath({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: 'STOP_BTN_LOADING' })
       })
       .catch((err) => {
-        dispath({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
-        dispath({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
+        dispatch({ type: 'STOP_BTN_LOADING' })
       })
+  }
+
+  const handleSubmitBillingAddress = (billing, total) => {
+    dispatch({ type: 'START_BTN_LOADING' })
+    const userId = state.user?.id
+    console.log(billing)
+    const userRef = doc(firestore, 'users', userId)
+
+    getDoc(userRef).then((snapshot) => {
+      const newOrder = snapshot.data().cart
+      console.log(newOrder)
+      updateDoc(userRef, {
+        billing_address: billing,
+        order: [
+          ...snapshot.data().order,
+          {
+            order_number: generateRandomNumber(),
+            amount: total,
+            item: newOrder,
+          },
+        ],
+      })
+        .then(() => {
+          dispatch({type:'STOP_BTN_LOADING'})
+          setIsOrderComplete(true)
+        })
+        .catch((err) => {
+          dispatch({ type: 'STOP_BTN_LOADING' })
+          console.log(err)
+        })
+    })
   }
 
   const handleOpenSetup = () => {
@@ -123,6 +163,8 @@ export const UserProvider = ({ children }) => {
         openSetup,
         handleLogout,
         handleNewsLetter,
+        handleSubmitBillingAddress,
+        isOrderComplete,
       }}
     >
       {children}
