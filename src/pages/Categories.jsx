@@ -5,20 +5,12 @@ import { useProductsContext } from '../contexts/productsContext'
 import { Loader, ProductCard } from '../components'
 
 const Categories = () => {
-  const {type}  = useParams()
+  const { type } = useParams()
   const { category, loading, getCategory } = useProductsContext()
 
-  console.log(type)
-  console.log(category)
-
-  useEffect(()=>{
+  useEffect(() => {
     getCategory(type)
   }, [type])
-
-  if (loading) {
-    return <Loader loading={loading}/>
-  }
-
 
   return (
     <Wrapper>
@@ -26,6 +18,7 @@ const Categories = () => {
         <NavLink to={'/'}>HOME</NavLink>/<NavLink to={'/about'}>About</NavLink>/
         <NavLink to={`/products/${type}`}>{type}</NavLink>
       </div>
+      {loading && <Loader loading={loading} />}
       <div className='products-wrapper'>
         {category.map((cat, index) => (
           <ProductCard key={index} {...cat} />

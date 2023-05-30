@@ -32,10 +32,9 @@ import {
 const apikey = import.meta.env.VITE_APP_API_KEY
 const authDomain = import.meta.env.VITE_APP_AUTH_DOMAIN
 const projectId = import.meta.env.VITE_APP_PROJECT_ID
-const storageBucket=import.meta.env.VITE_APP_MESSENGE_SENDER_ID
+const storageBucket = import.meta.env.VITE_APP_MESSENGE_SENDER_ID
 const messagingSenderId = import.meta.env.VITE_APP_STORAGE_BUCKET
 const appId = import.meta.env.VITE_APP_ID
-
 
 const firebaseConfig = {
   apiKey: apikey,
@@ -90,8 +89,6 @@ const initialState = {
 export const ProductProvider = ({ children }) => {
   const [state, dispath] = useReducer(productsReducer, initialState)
 
- 
-
   useEffect(() => {
     dispath({ type: GET_DISCOUNTED_PRICE })
   }, [])
@@ -119,17 +116,17 @@ export const ProductProvider = ({ children }) => {
   const getCategory = (querystr) => {
     dispath({ type: START_LOADING })
     const productsCol = collection(db, 'products')
-    getDocs(query(productsCol, where('type', '==', querystr))).then(
-      (snapshot) => {
+    getDocs(query(productsCol, where('type', '==', querystr)))
+      .then((snapshot) => {
         let result = snapshot.docs.map((doc) => {
-          return {...doc.data(), id:doc.id}
+          return { ...doc.data(), id: doc.id }
         })
-        console.log(result)
+        dispath({ type: STOP_LOADING })
         dispath({ type: GET_CATEGORY, payload: result })
-      }
-    )
-
-    dispath({ type: STOP_LOADING })
+      })
+      .catch(() => {
+        dispath({ type: STOP_LOADING })
+      })
   }
 
   const getSingleProduct = (id) => {
@@ -157,7 +154,7 @@ export const ProductProvider = ({ children }) => {
 
   return (
     <ProductContext.Provider
-      value={{ ...state, getCategory, getSingleProduct  }}
+      value={{ ...state, getCategory, getSingleProduct }}
     >
       {children}
     </ProductContext.Provider>

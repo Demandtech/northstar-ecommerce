@@ -11,7 +11,8 @@ const Loader = ({ loading }) => {
 }
 
 const Wrapper = styled.div`
-  width: 100vw;
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   padding: 2rem 0;

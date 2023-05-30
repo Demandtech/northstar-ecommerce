@@ -6,16 +6,13 @@ import { useProductsContext } from '../contexts/productsContext'
 const NewArrivals = () => {
   const { products, loading } = useProductsContext()
 
-  if(loading){
-    return <Loader />
-  }
-
   return (
     <Wrapper id='new_arrival'>
       <div className='newArrivals-header'>
         <h2>Discover NEW Arrivals</h2>
         <p>Recently added shirts!</p>
       </div>
+      {loading && <Loader loading={loading}/>}
       <div className='arrival-wrappers'>
         <div className='wrap'>
           {products
@@ -26,8 +23,7 @@ const NewArrivals = () => {
                 </div>
               )
             }).slice(0, 8)}
-        </div>
-        
+        </div>    
       </div>
     </Wrapper>
   )
