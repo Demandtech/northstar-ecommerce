@@ -12,10 +12,10 @@ const UserSetting = () => {
       <Link onClick={handleOpenSetup} className='link-btn' to={'/profile'}>
         {user.firstName}
       </Link>
-      <Link className={'link-btn'} onClick={handleOpenSetup} to={'cart'}>
+      <Link className='link-btn' onClick={handleOpenSetup} to={'cart'}>
         Cart
       </Link>
-      <Link className='link-btn' to={'/order'}>
+      <Link className='link-btn' onClick={handleOpenSetup} to={'/order'}>
         Order
       </Link>
       <button className='logout-btn' onClick={handleLogout}>
