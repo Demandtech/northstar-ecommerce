@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useCartContext } from '../contexts/cartContext'
 import { useUserContext } from '../contexts/userContext'
 import { formatPrice } from '../utils/helpers'
 import { Input } from '../components/reusable'
 import { checkInput } from '../utils/helpers'
 import { BeatLoader } from 'react-spinners'
+import { Navbar } from '../components'
 
 const Checkout = () => {
-  const { cart, total_amount } = useCartContext()
+  const { cart, total_amount,orders } = useCartContext()
   const { handleSubmitBillingAddress, isOrderComplete, btnLoading } =
     useUserContext()
+  const navigate = useNavigate()
   const [billing, setBilling] = useState({
     fullName: '',
     address: '',
@@ -21,10 +23,12 @@ const Checkout = () => {
   })
   const [inputError, setInputError] = useState({})
 
-  if (isOrderComplete) {
-    return <Wrapper>Proceed to Payment</Wrapper>
-  }
-  console.log(inputError)
+  useEffect(() => {
+    isOrderComplete && navigate('/order')
+  }, [isOrderComplete])
+
+ 
+
   return (
     <Wrapper>
       <div className='container'>
@@ -176,7 +180,9 @@ const Checkout = () => {
               }
               onClick={(e) => {
                 e.preventDefault()
-                handleSubmitBillingAddress(billing, total_amount)
+                if (cart.length > 0) {
+                  handleSubmitBillingAddress(billing, total_amount)
+                }
               }}
               className='order-btn'
             >

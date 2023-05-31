@@ -13,6 +13,7 @@ import {
   Login,
   Register,
   UserProfile,
+  Order,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
         path: '/profile',
         element: <UserProfile />,
       },
+      {
+        path:'/order',
+        element: <Order />
+      }
   ],
   },
   {

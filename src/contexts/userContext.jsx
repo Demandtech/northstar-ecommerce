@@ -6,7 +6,14 @@ import React, {
   useEffect,
 } from 'react'
 import userReducer from '../reducers/userReducer'
-import { LOGIN_SUCCESS, LOG_OUT, GET_USER, LOGIN_FAILURE } from '../actions'
+import {
+  LOGIN_SUCCESS,
+  LOG_OUT,
+  GET_USER,
+  LOGIN_FAILURE,
+  START_BTN_LOADING,
+  STOP_BTN_LOADING,
+} from '../actions'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -18,6 +25,7 @@ import {
   setDoc,
   getDoc,
   updateDoc,
+  serverTimestamp,
 } from 'firebase/firestore'
 import { generateRandomNumber } from '../utils/helpers'
 
@@ -49,10 +57,10 @@ export const UserProvider = ({ children }) => {
     })
   }
 
-  console.log(generateRandomNumber())
+ 
   const emailLogin = (e, user) => {
     e.preventDefault()
-    dispatch({ type: 'START_BTN_LOADING' })
+    dispatch({ type: START_BTN_LOADING })
     let payload = {
       email: user.email,
       password: user.password,
@@ -65,11 +73,14 @@ export const UserProvider = ({ children }) => {
           getUser(userId)
           dispatch({ type: LOGIN_SUCCESS })
         }
-        dispatch({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: STOP_BTN_LOADING })
       })
       .catch((err) => {
-        dispatch({ type: LOGIN_FAILURE, payload: 'Email or password incorrect' })
-        dispatch({ type: 'STOP_BTN_LOADING' })
+        dispatch({
+          type: LOGIN_FAILURE,
+          payload: 'Email or password incorrect',
+        })
+        dispatch({ type: STOP_BTN_LOADING })
       })
   }
 
@@ -80,7 +91,7 @@ export const UserProvider = ({ children }) => {
   }
 
   const handleRegister = (newUser) => {
-    dispatch({ type: 'START_BTN_LOADING' })
+    dispatch({ type: START_BTN_LOADING })
     let payload = {
       first_name: newUser.fName,
       last_name: newUser.lName,
@@ -106,23 +117,23 @@ export const UserProvider = ({ children }) => {
           order: [],
           billing_address: {},
         })
-        dispatch({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: STOP_BTN_LOADING })
       })
       .catch((err) => {
         dispatch({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
-        dispatch({ type: 'STOP_BTN_LOADING' })
+        dispatch({ type: STOP_BTN_LOADING })
       })
   }
 
   const handleSubmitBillingAddress = (billing, total) => {
-    dispatch({ type: 'START_BTN_LOADING' })
+    dispatch({ type: START_BTN_LOADING })
     const userId = state.user?.id
-    console.log(billing)
+
     const userRef = doc(firestore, 'users', userId)
 
     getDoc(userRef).then((snapshot) => {
       const newOrder = snapshot.data().cart
-      console.log(newOrder)
+
       updateDoc(userRef, {
         billing_address: billing,
         order: [
@@ -131,15 +142,18 @@ export const UserProvider = ({ children }) => {
             order_number: generateRandomNumber(),
             amount: total,
             item: newOrder,
+            createdAt: new Date().toISOString(),
+            status: 'Unpaid'
           },
         ],
+        cart: [],
       })
         .then(() => {
-          dispatch({type:'STOP_BTN_LOADING'})
+          dispatch({ type: STOP_BTN_LOADING })
           setIsOrderComplete(true)
         })
         .catch((err) => {
-          dispatch({ type: 'STOP_BTN_LOADING' })
+          dispatch({ type: STOP_BTN_LOADING })
           console.log(err)
         })
     })

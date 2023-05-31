@@ -109,13 +109,13 @@ const Wrapper = styled.nav`
   width: 100%;
   margin: 0 auto;
   height: 75px;
-  padding: 0 1rem;
+  padding: 0;
   position: fixed;
   background: #ffffff;
   z-index: 100;
   display: flex;
   align-items: center;
-  max-width: 100%;
+  width: 100%;
   overflow-z: hidden;
 
   .nav-wrapper {

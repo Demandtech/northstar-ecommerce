@@ -7,7 +7,7 @@ import { Quantity, CartTotal } from '../components'
 import { FaTimes } from 'react-icons/fa'
 
 const CartIems = () => {
-  const { cart, deleteCartItem } = useCartContext()
+  const { cart, deleteCartItem, loading } = useCartContext()
   if (cart.length < 1) {
     return (
       <Wrapper>
@@ -18,6 +18,11 @@ const CartIems = () => {
       </Wrapper>
     )
   }
+
+  if (loading) {
+    return <Loader loading={loading} />
+  }
+
   return (
     <Wrapper>
       <div className='container'>

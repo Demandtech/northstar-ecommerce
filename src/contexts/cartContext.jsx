@@ -2,12 +2,17 @@ import cartReducer from '../reducers/cartReducer'
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import { useProductsContext } from './productsContext'
 import { useUserContext } from './userContext'
+import { Loader } from '../components'
 import {
   GET_ALL_PRODUCTS,
   ADD_TO_CART,
   COUNT_CART_TOTALS,
   DELETE_CART_ITEM,
   HIDE_SNACKBAR,
+  START_LOADING,
+  STOP_LOADING,
+  GET_ORDER,
+  GET_CART,
 } from '../actions'
 import {
   getFirestore,
@@ -15,26 +20,29 @@ import {
   updateDoc,
   onSnapshot,
   getDoc,
+  connectFirestoreEmulator,
 } from 'firebase/firestore'
 
 const CartContext = createContext()
 
 const db = getFirestore()
 
-const getCartFromLocalStorage = ()=>{
+const getCartFromLocalStorage = () => {
   const cartData = localStorage.getItem('cart')
 
   return cartData ? JSON.parse(cartData) : []
 }
 
 const initialState = {
-  cart:getCartFromLocalStorage(),
+  cart: getCartFromLocalStorage(),
   newCartItem: {},
   total_items: 0,
   total_amount: 0,
   all_products: [],
   shipping: 0,
   showSnackbar: { show: false, msg: '' },
+  orders: [],
+  loading: false,
 }
 
 export const CartProvider = ({ children }) => {
@@ -48,19 +56,31 @@ export const CartProvider = ({ children }) => {
     if (userId) {
       const userRef = doc(db, 'users', userId)
       onSnapshot(userRef, (snapshot) => {
-       
         const cartData = snapshot.data().cart
-        dispatch({ type: 'GET_CART', payload: cartData })
+        dispatch({ type: GET_CART, payload: cartData })
       })
     }
   }, [userId])
+
+  
 
   const updateCartDb = () => {
     if (userId) {
       const userRef = doc(db, 'users', userId)
       const updatedCart = [...state.cart]
       updateDoc(userRef, { cart: updatedCart })
-     
+    }
+  }
+
+  const fetchOrders = () => {
+    dispatch({ type: START_LOADING })
+    if (userId) {
+      const userRef = doc(db, 'users', userId)
+      onSnapshot(userRef, (snapshot) => {
+        const orderData = snapshot.data().order
+        dispatch({ type: GET_ORDER, payload: orderData })
+        dispatch({ type: STOP_LOADING })
+      })
     }
   }
 
@@ -112,7 +132,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, dispatch, deleteCartItem }}
+      value={{ ...state, addToCart, dispatch, deleteCartItem, fetchOrders }}
     >
       {children}
     </CartContext.Provider>

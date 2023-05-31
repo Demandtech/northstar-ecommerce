@@ -6,9 +6,6 @@ import { useUserContext } from '../contexts/userContext'
 
 const UserSetting = () => {
   const { handleLogout, handleOpenSetup, user } = useUserContext()
- 
-
- 
 
   return (
     <Wrapper className='dropdown'>
@@ -17,6 +14,9 @@ const UserSetting = () => {
       </Link>
       <Link className={'link-btn'} onClick={handleOpenSetup} to={'cart'}>
         Cart
+      </Link>
+      <Link className='link-btn' to={'/order'}>
+        Order
       </Link>
       <button className='logout-btn' onClick={handleLogout}>
         <span>Sign Out</span>

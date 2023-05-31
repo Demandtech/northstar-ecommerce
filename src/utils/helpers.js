@@ -7,6 +7,18 @@ export const formatPrice = (num) => {
   return num?.toLocaleString('en-Us', options)
 }
 
+export const formatTime = (str) => {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  }
+
+  return new Date(str).toLocaleString('en-us', options)
+}
+
 export const checkInput = (event, inputsError, setInputsError, newUser) => {
   let name = event.target.name
   let value = event.target.value.trim()

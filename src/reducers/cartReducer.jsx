@@ -5,14 +5,18 @@ import {
   DELETE_CART_ITEM,
   COUNT_CART_TOTALS,
   HIDE_SNACKBAR,
+  GET_ORDER,
+  GET_CART,
+  START_LOADING,
+  STOP_LOADING,
 } from '../actions'
 
 const cartReducer = (state, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS:
       return { ...state, all_products: action.payload }
-    case 'GET_CART':
-      return { ...state, cart:action.payload}
+    case GET_CART:
+      return { ...state, cart: action.payload }
     case ADD_TO_CART:
       let itemExist = state.cart.some(
         (product) => product.id === action.payload.id
@@ -73,6 +77,13 @@ const cartReducer = (state, action) => {
         ...state,
         showSnackbar: { show: false, msg: '' },
       }
+
+    case GET_ORDER:
+      return { ...state, orders: action.payload }
+    case START_LOADING:
+      return { ...state, loading: true }
+    case STOP_LOADING:
+      return { ...state, loading: false }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }

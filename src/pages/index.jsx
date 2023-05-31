@@ -8,6 +8,7 @@ import Checkout from './Checkout'
 import Login from './Login'
 import Register from './Register'
 import UserProfile from './UserProfile'
+import Order from './Order'
 export {
   Home,
   Contact,
@@ -18,5 +19,6 @@ export {
   Checkout,
   Login,
   Register,
-  UserProfile
+  UserProfile,
+  Order
 }
