@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { useCartContext } from '../contexts/cartContext'
 import { NavLink, Link } from 'react-router-dom'

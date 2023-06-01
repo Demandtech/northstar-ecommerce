@@ -8,7 +8,6 @@ import {
   AncrButton,
   TopSellers,
 } from '../components'
-// import AncrButton from '../components/AncrButton'
 
 const Home = () => {
   

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useCartContext } from '../contexts/cartContext'
-import { useEffect } from 'react'
+
 const Snackbar = () => {
   const { showSnackbar } = useCartContext()
  

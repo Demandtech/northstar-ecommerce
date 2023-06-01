@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import {
@@ -6,7 +6,6 @@ import {
   SelectSize,
   Description,
   Loader,
-  ProductCard,
 } from '../components'
 import { formatPrice } from '../utils/helpers'
 import { useCartContext } from '../contexts/cartContext'

@@ -3,6 +3,7 @@ import { formatPrice } from '../utils/helpers'
 import { useCartContext } from '../contexts/cartContext'
 import { formatTime } from '../utils/helpers'
 import Loader from './Loader'
+import styled from 'styled-components'
 
 const OrderItem = ({ order }) => {
   const { loading } = useCartContext()
@@ -11,7 +12,7 @@ const OrderItem = ({ order }) => {
     return <Loader />
   }
   return (
-    <tr>
+    <Wrapper>
       <td>{order.order_number}</td>
       <td>
         {order.item.length === 1
@@ -24,8 +25,25 @@ const OrderItem = ({ order }) => {
       <td>
         <button>Select</button>
       </td>
-    </tr>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.tr`
+  td {
+    padding: .8rem 0.2rem;
+    font-size: 0.8rem;
+
+    button {
+      all: unset;
+    }
+  }
+  @media screen and (min-width: 780px) {
+    td {
+      padding: 0.8rem;
+      font-size: 1rem;
+    }
+  }
+`
 
 export default OrderItem

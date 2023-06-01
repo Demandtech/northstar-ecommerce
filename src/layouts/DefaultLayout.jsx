@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Navbar, Footer, Loader } from '../components'
+import React from 'react'
+import { Navbar, Footer } from '../components'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 

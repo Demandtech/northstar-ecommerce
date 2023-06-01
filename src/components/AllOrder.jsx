@@ -18,7 +18,7 @@ const AllOrder = ({ orders }) => {
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Status</th>
-                <th></th>
+                {/* <th></th> */}
               </tr>
             </thead>
 
@@ -60,9 +60,9 @@ const Wrapper = styled.section`
         tr {
           border-bottom: 1px solid #000000;
         }
-        th,
-        td {
-          padding: 0.8rem;
+        th {
+          padding: .8rem .2rem;
+          font-size: 0.8rem;
 
           button {
             all: unset;
@@ -78,6 +78,19 @@ const Wrapper = styled.section`
   @media screen and (min-width: 780px) {
     section {
       flex-direction: row;
+
+      .left {
+        table {
+          thead,
+          tr {
+            border-bottom: 1px solid #000000;
+          }
+          th {
+            padding: 0.8rem;
+            font-size: 1rem;
+          }
+        }
+      }
     }
   }
 `

@@ -2,19 +2,18 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-import { useProductsContext } from '../contexts/productsContext'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 
 const ProductCard = ({ id, name, img, price, index }) => {
-  const { getSingleProduct } = useProductsContext()
+  
   useEffect(() => {
     Aos.init({ duration: 1000 })
   }, [])
-  
+
   return (
     <Card data-aos='zoom-in'>
-      <Link to={`/product/${id}`} >
+      <Link to={`/product/${id}`}>
         <IMGDIV className='img-wrapper'>
           <img src={img} alt={name} loading='lazy' />
         </IMGDIV>

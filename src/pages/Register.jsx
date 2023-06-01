@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import img from '../assets/images/register-img.webp'
 import styled from 'styled-components'
 import { FaGoogle, FaFacebook } from 'react-icons/fa'

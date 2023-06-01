@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback } from 'react'
+import { useEffect} from 'react'
 import styled from 'styled-components'
-import { NavLink, Navigate, useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useProductsContext } from '../contexts/productsContext'
 import { Loader, ProductCard } from '../components'
 

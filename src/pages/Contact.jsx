@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import heroBg from '../assets/images/contact-hero-bg.webp'
 import { ContactForm } from '../components'

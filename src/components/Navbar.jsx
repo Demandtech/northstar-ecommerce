@@ -109,7 +109,7 @@ const Wrapper = styled.nav`
   width: 100%;
   margin: 0 auto;
   height: 75px;
-  padding: 0;
+  padding: 0 1rem;
   position: fixed;
   background: #ffffff;
   z-index: 100;
@@ -235,6 +235,7 @@ const Wrapper = styled.nav`
     }
   }
   @media screen and (min-width: 480px) {
+    padding: 0;
     .nav-wrapper {
       padding: 0 2rem;
       p {
