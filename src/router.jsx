@@ -14,6 +14,7 @@ import {
   Register,
   UserProfile,
   Order,
+  Error
 } from './pages'
 
 const router = createBrowserRouter([
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
         path: '/register',
         element: <Register />,
       },
+      {
+        path: '*',
+        element: <Error />
+      }
     ],
   },
 ])

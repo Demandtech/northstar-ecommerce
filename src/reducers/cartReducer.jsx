@@ -4,12 +4,12 @@ import {
   GET_QUANTITY,
   DELETE_CART_ITEM,
   COUNT_CART_TOTALS,
-  HIDE_SNACKBAR,
   GET_ORDER,
   GET_CART,
   START_LOADING,
   STOP_LOADING,
 } from '../actions'
+import { toast } from 'react-toastify'
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -22,10 +22,8 @@ const cartReducer = (state, action) => {
         (product) => product.id === action.payload.id
       )
       if (itemExist) {
-        return {
-          ...state,
-          showSnackbar: { show: true, msg: 'Item is in cart already' },
-        }
+        toast.warning('Item is in cart already')
+        return {...state}
       }
 
       let newItem = state.all_products.find(
@@ -38,10 +36,10 @@ const cartReducer = (state, action) => {
         sizes: action.payload.sizes,
         discountedPrice: (newItem.price * (100 - newItem.bonus)) / 100,
       }
+      toast.success('New item added to cart')
 
       return {
         ...state,
-        showSnackbar: { show: true, msg: 'New item added to cart' },
         cart: [...state.cart, item],
       }
     case GET_QUANTITY:
@@ -54,12 +52,12 @@ const cartReducer = (state, action) => {
       return { ...state, cart: state.cart }
     case DELETE_CART_ITEM:
       let newCart = state.cart.filter((ca) => ca.id !== action.payload)
-
+      toast.error('item deleted from cart')
       return {
         ...state,
         cart: newCart,
-        showSnackbar: { show: true, msg: 'item deleted from cart' },
       }
+
     case COUNT_CART_TOTALS:
       const { total_items, total_amount } = state.cart?.reduce(
         (total, cartItem) => {
@@ -72,11 +70,6 @@ const cartReducer = (state, action) => {
       )
 
       return { ...state, total_items, total_amount }
-    case HIDE_SNACKBAR:
-      return {
-        ...state,
-        showSnackbar: { show: false, msg: '' },
-      }
 
     case GET_ORDER:
       return { ...state, orders: action.payload }

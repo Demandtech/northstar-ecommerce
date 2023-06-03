@@ -29,6 +29,8 @@ import {
 } from 'firebase/firestore'
 import { generateRandomNumber } from '../utils/helpers'
 
+import { toast } from 'react-toastify'
+
 const UserContext = createContext()
 
 const initialState = {
@@ -57,7 +59,6 @@ export const UserProvider = ({ children }) => {
     })
   }
 
- 
   const emailLogin = (e, user) => {
     e.preventDefault()
     dispatch({ type: START_BTN_LOADING })
@@ -71,6 +72,7 @@ export const UserProvider = ({ children }) => {
         if (cred.user.accessToken) {
           localStorage.setItem('token', cred.user.accessToken)
           getUser(userId)
+          toast.success('Login Successfully')
           dispatch({ type: LOGIN_SUCCESS })
         }
         dispatch({ type: STOP_BTN_LOADING })
@@ -78,8 +80,9 @@ export const UserProvider = ({ children }) => {
       .catch((err) => {
         dispatch({
           type: LOGIN_FAILURE,
-          payload: 'Email or password incorrect',
+          payload: '',
         })
+        toast.error('Check Email and Password')
         dispatch({ type: STOP_BTN_LOADING })
       })
   }
@@ -106,6 +109,7 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('token', cred.user.accessToken)
           getUser(userId)
           dispatch({ type: LOGIN_SUCCESS })
+          toast.success('Registration successfull')
         }
 
         setDoc(doc(firestore, 'users', userId), {
@@ -120,8 +124,9 @@ export const UserProvider = ({ children }) => {
         dispatch({ type: STOP_BTN_LOADING })
       })
       .catch((err) => {
-        dispatch({ type: LOGIN_FAILURE, payload: 'Email is already taken' })
+        dispatch({ type: LOGIN_FAILURE, payload: '' })
         dispatch({ type: STOP_BTN_LOADING })
+        toast.error('Email is already taken')
       })
   }
 
@@ -143,7 +148,7 @@ export const UserProvider = ({ children }) => {
             amount: total,
             item: newOrder,
             createdAt: new Date().toISOString(),
-            status: 'Unpaid'
+            status: 'Unpaid',
           },
         ],
         cart: [],

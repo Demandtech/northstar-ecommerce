@@ -4,9 +4,10 @@ import {RouterProvider } from 'react-router-dom'
 import { ProductProvider } from './contexts/productsContext'
 import { CartProvider } from './contexts/cartContext'
 import { UserProvider } from './contexts/userContext'
-// import router from './router'
 import router from './router'
-import {GlobalStyle, Snackbar} from './components'
+import { GlobalStyle } from './components'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -16,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <CartProvider>
           <GlobalStyle />
           <RouterProvider router={router} />
-          <Snackbar />
+          <ToastContainer position='top-center' />
         </CartProvider>
       </ProductProvider>
     </UserProvider>

@@ -40,7 +40,6 @@ const initialState = {
   total_amount: 0,
   all_products: [],
   shipping: 0,
-  showSnackbar: { show: false, msg: '' },
   orders: [],
   loading: false,
 }
@@ -84,13 +83,7 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    const setTimeoutId = setTimeout(() => {
-      dispatch({ type: HIDE_SNACKBAR })
-    }, 3000)
-
-    return () => clearTimeout(setTimeoutId)
-  }, [state.showSnackbar.show])
+ 
 
   useEffect(() => {
     dispatch({ type: GET_ALL_PRODUCTS, payload: products })

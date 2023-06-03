@@ -9,6 +9,7 @@ import Login from './Login'
 import Register from './Register'
 import UserProfile from './UserProfile'
 import Order from './Order'
+import Error from './Error'
 export {
   Home,
   Contact,
@@ -20,5 +21,6 @@ export {
   Login,
   Register,
   UserProfile,
-  Order
+  Order,
+  Error
 }

@@ -17,7 +17,6 @@ import Quantity from './Quantity'
 import CartTotal from './CartTotal'
 import Loader from './Loader'
 import GlobalStyle from './GlobalStyle'
-import Snackbar from './Snackbar'
 import LatestOrder from './LatestOrder'
 import AllOrder from './AllOrder'
 import EmptyOrder from './EmptyOrder'
@@ -43,7 +42,6 @@ export {
   CartTotal,
   Loader,
   GlobalStyle,
-  Snackbar,
   LatestOrder,
   AllOrder,
   EmptyOrder,
