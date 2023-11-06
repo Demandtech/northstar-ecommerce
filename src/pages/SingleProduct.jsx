@@ -17,7 +17,6 @@ const SingleProduct = () => {
   const { single_product, loading, getSingleProduct } = useProductsContext()
   const { authenticated } = useUserContext()
 
-
   const {
     type,
     tags,
@@ -155,16 +154,17 @@ const Wrapper = styled.main`
       }
       .price {
         font-family: 'Lato', sans-serif;
-        font-weight: 400;
-        font-size: 24px;
+        font-size: 1.2rem;
         line-height: 29px;
         color: #818181;
-        margin-bottom: 1.5rem;
+        margin-bottom: 25px;
+        font-weight: bold;
+        line-height: 20px;
       }
       .desc {
         font-family: 'Lato', sans-serif;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 19px;
         color: #555555;
         margin-bottom: 3rem;
@@ -172,6 +172,8 @@ const Wrapper = styled.main`
       .bonus-price {
         color: #024e82;
         margin-left: 0.5rem;
+        font-weight: bold;
+        line-height: 20px;
       }
       h4 {
         font-family: 'Arimo', sans-serif;
@@ -183,30 +185,37 @@ const Wrapper = styled.main`
       }
       .add-cart-wrapper {
         display: flex;
-        gap: 2rem;
-        flex-direction: column;
-        margin-bottom: 1rem;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        gap: 15px;
+        width: 100%;
 
         .add-to-cart {
-          /* margin: 2.5rem 0; */
+          box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+          width: 100%;
+
           button {
             all: unset;
-            padding: 1rem 2rem;
             background: #024e82;
             color: #ffffff;
             cursor: pointer;
-            box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
-            border: 1px solid #024e82;
+
+            border: 1px solid #024e71;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            line-height: 24px;
+            height: 60px;
+            transition: 300ms;
 
             &:not(:disabled):hover {
               /* transform: translateY(-1px); */
-
-              background: #ffffff;
+              background: transparent;
               color: #024e82;
             }
 
             &:disabled {
-              background: #cccccc;
               cursor: not-allowed;
               opacity: 0.5;
               background: #024e82;
@@ -236,8 +245,16 @@ const Wrapper = styled.main`
     .content-wrapper {
       .right {
         .add-cart-wrapper {
+          width: 80%;
+          .add-to-cart {
+            /* width: 150px; */
+          }
           flex-direction: row;
           align-items: center;
+        }
+
+        .price {
+          font-size: 1.5rem;
         }
       }
     }
