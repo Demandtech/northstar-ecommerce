@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const ProductImages = ({ images, bonus }) => {
+const ProductImages = ({ images, bonus, main }) => {
   const [mainImg, setMainImg] = useState(images?.[0])
+
   return (
     <Wrapper>
       <div className='main-img'>
-        <img src={mainImg} alt=''/>
-        <div className='percent'>
-          <span>-{bonus}%</span>
-        </div>
+        <img src={mainImg} alt='Product image' height='100%' width='100%' />
+        <div className='percent'>{bonus > 0 && <span>-{bonus}%</span>}</div>
       </div>
       <div className='gallery'>
         {images?.map((thumb, index) => {
@@ -19,7 +18,7 @@ const ProductImages = ({ images, bonus }) => {
               onClick={() => setMainImg(images[index])}
               key={index}
             >
-              <img src={thumb} alt='' />
+              <img src={thumb} alt='product thumbnail' />
             </div>
           )
         })}
@@ -33,13 +32,13 @@ export default ProductImages
 const Wrapper = styled.div`
   .main-img {
     width: 100%;
-    height: 500px;
+    height: 250px;
     margin-bottom: 0.5rem;
     position: relative;
 
     img {
-      width: 100%;
       height: 100%;
+      width: 100%;
       object-fit: cover;
     }
     .percent {
@@ -60,19 +59,17 @@ const Wrapper = styled.div`
     }
   }
 
-  img {
-    width: 100%;
-    display: block;
-    border-radius: var(--radius);
-    object-fit: cover;
-  }
   .gallery {
     margin-top: 1rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 75px;
     column-gap: 1rem;
+
     img {
-      height: 100px;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
       cursor: pointer;
     }
   }
@@ -83,24 +80,17 @@ const Wrapper = styled.div`
   .active-pag {
     box-shadow: 0px 0px 0px 2px #024e82;
   }
-  @media (max-width: 576px) {
+  @media (min-width: 576px) {
     .main-img {
       height: 300px;
-    }
-    .gallery {
-      img {
-        height: 50px;
-      }
     }
   }
   @media (min-width: 992px) {
     .main-img {
-      height: 500px;
+      height: 350px;
     }
     .gallery {
-      img {
-        height: 75px;
-      }
+      grid-template-rows: 100px;
     }
   }
 `

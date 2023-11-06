@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import AncrButton from './AncrButton'
+import AncrButton from '../AncrButton'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 

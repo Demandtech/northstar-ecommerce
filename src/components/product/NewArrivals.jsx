@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Loader, ProductCard } from '../components'
-import { useProductsContext } from '../contexts/productsContext'
+import { Loader, ProductCard } from '../../components'
+import { useProductsContext } from '../../contexts/productsContext'
 
 const NewArrivals = () => {
   const { products, loading } = useProductsContext()

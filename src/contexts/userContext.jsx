@@ -6,6 +6,8 @@ import React, {
   useEffect,
 } from 'react'
 import userReducer from '../reducers/userReducer'
+import axios from 'axios'
+
 import {
   LOGIN_SUCCESS,
   LOG_OUT,
@@ -14,154 +16,179 @@ import {
   START_BTN_LOADING,
   STOP_BTN_LOADING,
 } from '../actions'
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'firebase/auth'
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  serverTimestamp,
-} from 'firebase/firestore'
-import { generateRandomNumber } from '../utils/helpers'
-
 import { toast } from 'react-toastify'
 
 const UserContext = createContext()
 
 const initialState = {
-  authenticated: !!localStorage.getItem('token'),
-  user: JSON.parse(localStorage.getItem('user')) || {},
+  user: {},
   error: { show: false, msg: '' },
   btnLoading: false,
+  authenticated: false,
 }
-
-const auth = getAuth()
-const firestore = getFirestore()
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState)
   const [openSetup, setOpenSetup] = useState(false)
   const [isOrderComplete, setIsOrderComplete] = useState(false)
+  const baseUrl = import.meta.env.VITE_APP_BASE_URL
+  const token = localStorage.getItem('token')
 
-  const getUser = (id) => {
-    const userRef = doc(firestore, 'users', id)
+  const getAuthUser = async () => {
+    if (token) {
+      try {
+        const { data, status } = await axios.get(`${baseUrl}/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-    getDoc(userRef).then((doc) => {
-      if (doc.exists()) {
-        localStorage.setItem('user', JSON.stringify(doc.data()))
-        dispatch({ type: GET_USER, payload: doc.data() })
+        if (status === 200) {
+          dispatch({ type: GET_USER, payload: data.user })
+        }
+      } catch (err) {
+        localStorage.removeItem('token')
+        console.log(err.response?.data?.detail)
       }
-    })
+    }
   }
 
-  const emailLogin = (e, user) => {
-    e.preventDefault()
+  useEffect(() => {
+    getAuthUser()
+  }, [token])
+
+  const handleEmailLogin = async (user) => {
     dispatch({ type: START_BTN_LOADING })
-    let payload = {
-      email: user.email,
-      password: user.password,
+
+    let isSuccess
+
+    try {
+      const form = new FormData()
+
+      form.append('username', user.email)
+      form.append('password', user.password)
+
+      const { status, data } = await axios.post(`${baseUrl}/login`, form)
+      if (status === 200) {
+        getAuthUser()
+        localStorage.setItem('token', data.access_token)
+      }
+      dispatch({ type: STOP_BTN_LOADING })
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data,
+      })
+
+      isSuccess = status === 200
+
+      return isSuccess
+    } catch (err) {
+      dispatch({ type: STOP_BTN_LOADING })
+      isSuccess = false
+      if (err.response.status === 403) {
+        toast.error(err.response?.data?.detail)
+      }
+      console.log(err)
+      return isSuccess
     }
-    signInWithEmailAndPassword(auth, payload.email, payload.password)
-      .then((cred) => {
-        const userId = cred.user.reloadUserInfo.localId
-        if (cred.user.accessToken) {
-          localStorage.setItem('token', cred.user.accessToken)
-          getUser(userId)
-          toast.success('Login Successfully')
-          dispatch({ type: LOGIN_SUCCESS })
-        }
-        dispatch({ type: STOP_BTN_LOADING })
-      })
-      .catch((err) => {
-        dispatch({
-          type: LOGIN_FAILURE,
-          payload: '',
-        })
-        toast.error('Check Email and Password')
-        dispatch({ type: STOP_BTN_LOADING })
-      })
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     dispatch({ type: LOG_OUT })
+    toast.info('Logout successfully')
   }
 
-  const handleRegister = (newUser) => {
+  const handleRegister = async (newUser) => {
     dispatch({ type: START_BTN_LOADING })
-    let payload = {
-      first_name: newUser.fName,
-      last_name: newUser.lName,
-      email: newUser.email,
-      password: newUser.pass2,
-    }
-    createUserWithEmailAndPassword(auth, payload.email, payload.password)
-      .then((cred) => {
-        const userId = cred.user.uid
+    let isSuccess
 
-        if (cred.user.accessToken) {
-          localStorage.setItem('token', cred.user.accessToken)
-          getUser(userId)
-          dispatch({ type: LOGIN_SUCCESS })
+    try {
+      if (newUser) {
+        const { status } = await axios.post(`${baseUrl}/users`, newUser)
+        if (status === 201) {
+          dispatch({ type: STOP_BTN_LOADING })
           toast.success('Registration successfull')
         }
+        isSuccess = status === 201
 
-        setDoc(doc(firestore, 'users', userId), {
-          firstName: payload.first_name,
-          lastName: payload.last_name,
-          email: payload.email,
-          id: userId,
-          cart: [],
-          order: [],
-          billing_address: {},
-        })
-        dispatch({ type: STOP_BTN_LOADING })
-      })
-      .catch((err) => {
-        dispatch({ type: LOGIN_FAILURE, payload: '' })
-        dispatch({ type: STOP_BTN_LOADING })
-        toast.error('Email is already taken')
-      })
+        return isSuccess
+      }
+    } catch (err) {
+      dispatch({ type: STOP_BTN_LOADING })
+
+      if (err.response.status == 400) {
+        toast.error(err.response.data.detail)
+      } else {
+        toast.error('An error occured! Please try again later')
+      }
+
+      isSuccess = false
+
+      return isSuccess
+    }
   }
 
-  const handleSubmitBillingAddress = (billing, total) => {
+  const handleVerifyUser = async (token) => {
     dispatch({ type: START_BTN_LOADING })
-    const userId = state.user?.id
-
-    const userRef = doc(firestore, 'users', userId)
-
-    getDoc(userRef).then((snapshot) => {
-      const newOrder = snapshot.data().cart
-
-      updateDoc(userRef, {
-        billing_address: billing,
-        order: [
-          ...snapshot.data().order,
-          {
-            order_number: generateRandomNumber(),
-            amount: total,
-            item: newOrder,
-            createdAt: new Date().toISOString(),
-            status: 'Unpaid',
-          },
-        ],
-        cart: [],
+    let isSuccess
+    try {
+      const { status } = await axios.post(`${baseUrl}/users/verify_user`, {
+        token: token,
       })
-        .then(() => {
-          dispatch({ type: STOP_BTN_LOADING })
-          setIsOrderComplete(true)
-        })
-        .catch((err) => {
-          dispatch({ type: STOP_BTN_LOADING })
-          console.log(err)
-        })
-    })
+      isSuccess = status === 202
+      dispatch({ type: STOP_BTN_LOADING })
+      return isSuccess
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: STOP_BTN_LOADING })
+      isSuccess = false
+      return isSuccess
+    }
+  }
+
+  const handleForgotPassword = async (email) => {
+    dispatch({ type: START_BTN_LOADING })
+    let isSuccess
+    try {
+      const { status, data } = await axios.post(
+        `${baseUrl}/users/forgot_password`,
+        {
+          email: email,
+        }
+      )
+      isSuccess = status === 200
+      dispatch({ type: STOP_BTN_LOADING })
+
+      return isSuccess
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: STOP_BTN_LOADING })
+      isSuccess = false
+      return isSuccess
+    }
+  }
+
+  const handleChangePassword = async (payload) => {
+    dispatch({ type: START_BTN_LOADING })
+    let isSuccess
+    try {
+      const { status, data } = await axios.post(
+        `${baseUrl}/users/change_password`,
+        payload
+      )
+      console.log(status, data)
+
+      isSuccess = status === 205
+      dispatch({ type: STOP_BTN_LOADING })
+
+      return isSuccess
+    } catch (err) {
+      isSuccess = false
+      dispatch({ type: STOP_BTN_LOADING })
+      return isSuccess
+    }
   }
 
   const handleOpenSetup = () => {
@@ -176,14 +203,16 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         ...state,
-        emailLogin,
+        handleEmailLogin,
+        handleChangePassword,
         handleRegister,
         handleOpenSetup,
         openSetup,
         handleLogout,
         handleNewsLetter,
-        handleSubmitBillingAddress,
         isOrderComplete,
+        handleForgotPassword,
+        handleVerifyUser,
       }}
     >
       {children}

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
+import { formatPrice } from '../../utils/helpers'
 import { Link } from 'react-router-dom'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 
 const ProductCard = ({ id, name, img, price, index }) => {
-  
   useEffect(() => {
-    Aos.init({ duration: 1000 })
+    Aos.init({ duration: 300 })
   }, [])
 
   return (
@@ -26,11 +25,15 @@ const ProductCard = ({ id, name, img, price, index }) => {
   )
 }
 
-const IMGDIV = styled.div``
+const IMGDIV = styled.div`
+  margin-bottom: 10px;
+  max-height: 300px;
+  height: 100%;
+`
 
 const Card = styled.article`
   overflow: hidden;
-  padding-bottom: 1rem;
+  padding-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   &:hover .img-wrapper {
     transform: scale(1.025);

@@ -1,4 +1,4 @@
-import { createBrowserRouter} from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import DefaultLayout from './layouts/DefaultLayout'
 import ProtectedLayout from './layouts/ProtectedLayout'
 import GuestLayout from './layouts/GuestLayout'
@@ -10,11 +10,14 @@ import {
   Categories,
   CartIems,
   Checkout,
-  Login,
-  Register,
+  SignUp,
   UserProfile,
   Order,
-  Error
+  Error,
+  ChangePassword,
+  ForgotPassword,
+  Login,
+  Verify,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -58,27 +61,39 @@ const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
-        path:'/order',
-        element: <Order />
-      }
-  ],
+        path: '/order',
+        element: <Order />,
+      },
+    ],
   },
   {
     path: '/',
     element: <GuestLayout />,
     children: [
       {
-        path: '/login',
+        path: '/auth/signup',
+        element: <SignUp />,
+      },
+      {
+        path: 'auth/login',
         element: <Login />,
       },
       {
-        path: '/register',
-        element: <Register />,
+        path: '*',
+        element: <Error />,
       },
       {
-        path: '*',
-        element: <Error />
-      }
+        path: '/forgot_password',
+        element: <ForgotPassword />,
+      },
+      {
+        path: '/change_password/:token',
+        element: <ChangePassword />,
+      },
+      {
+        path: '/verify/:token',
+        element: <Verify />,
+      },
     ],
   },
 ])

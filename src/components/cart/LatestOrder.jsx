@@ -1,5 +1,5 @@
 import React from 'react'
-import {useCartContext} from '../contexts/cartContext'
+import {useCartContext} from '../../contexts/cartContext'
 
 const LatestOrder = () => {
  const {} = useCartContext()

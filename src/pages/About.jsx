@@ -1,8 +1,17 @@
 import styled from 'styled-components'
 import heroBg from '../assets/images/about-hero-bg.webp'
 import { Category, Founders, Testimonials } from '../components'
+import { useProductsContext } from '../contexts/productsContext'
+import { useEffect } from 'react'
 
 const About = () => {
+  const { getFounders, getTestimonials } = useProductsContext()
+
+  useEffect(() => {
+    getFounders()
+    getTestimonials()
+  }, [])
+  
   return (
     <Wrapper>
       <div className='hero'>

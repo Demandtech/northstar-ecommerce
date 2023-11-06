@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useCartContext } from '../contexts/cartContext'
-import { GET_QUANTITY, COUNT_CART_TOTALS } from '../actions'
+import { useCartContext } from '../../contexts/cartContext'
+import { GET_QUANTITY } from '../../actions'
 
 const Quantity = ({ id, quantity }) => {
   const { dispatch, cart } = useCartContext()
@@ -10,10 +10,6 @@ const Quantity = ({ id, quantity }) => {
   const handleChange = (e) => {
     setInputVal(e.target.value)
   }
-
-  useEffect(() => {
-    dispatch({ type: COUNT_CART_TOTALS })
-  }, [quantity])
 
   useEffect(() => {
     dispatch({ type: GET_QUANTITY, payload: { inputVal, id } })

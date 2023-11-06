@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useProductsContext } from '../contexts/productsContext'
+import { useProductsContext } from '../../contexts/productsContext'
 import TestimonyCard from './TestimonyCard'
 
 const Testimonials = () => {
@@ -40,6 +40,6 @@ const Wrapper = styled.section`
       font-family: 'Arimo', sans-serif;
       color: #1d1d1d;
     }
- 
+  }
 `
 export default Testimonials

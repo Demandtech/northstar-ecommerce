@@ -1,17 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BeatLoader } from 'react-spinners'
-const Button = ({ inputsError, loading, text, onclick }) => {
+const Button = ({ loading, text, onclick, type }) => {
   return (
     <Wrapper>
       <button
-        disabled={
-          Object.values(inputsError).some((error) => error !== '') ||
-          loading ||
-          Object.keys(inputsError).length === 1
-        }
+        disabled={loading}
         className='submit-btn'
-        type='submit'
+        type={type}
         onClick={onclick}
       >
         {loading ? (
@@ -45,10 +41,10 @@ const Wrapper = styled.div`
     }
 
     &:disabled {
-      background: gray;
-      border: none;
+      cursor: not-allowed;
       color: #ffffff;
-      cursor: wait;
+      background: #024e82;
+      opacity: 0.8;
     }
   }
 `

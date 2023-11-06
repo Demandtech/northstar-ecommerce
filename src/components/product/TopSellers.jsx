@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import AncrButton from '../AncrButton'
+import { useProductsContext } from '../../contexts/productsContext'
 import ProductCard from './ProductCard'
-import AncrButton from './AncrButton'
-import { useProductsContext } from '../contexts/productsContext'
 
 const TopSellers = () => {
   const { topseller } = useProductsContext()

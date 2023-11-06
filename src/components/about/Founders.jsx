@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import FounderCard from './FounderCard'
-import { useProductsContext } from '../contexts/productsContext'
+import { useProductsContext } from '../../contexts/productsContext'
 
 const Founders = () => {
   const {founders}= useProductsContext()

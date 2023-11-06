@@ -17,7 +17,7 @@ const FounderCard = ({index, name, img }) => {
   }
 
    useEffect(() => {
-     Aos.init({ duration: 1000 })
+     Aos.init({ duration: 300 })
    }, [])
 
   return (

@@ -1,22 +1,22 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import quote from '../assets/svgs/quote.svg'
+import quote from '../../assets/svgs/quote.svg'
 
-const TestimonyCard = ({index, img, icon, text, name }) => {
-   let animation = ''
-   if (index == 0) {
-     animation = 'fade-right'
-   } else if (index == 1) {
-     animation = 'fade-left'
-   } else if (index == 2) {
-     animation = 'fade-right'
-   }
-  
-   useEffect(() => {
-     Aos.init({ duration: 1000 })
-   }, [])
+const TestimonyCard = ({ index, img, text, name }) => {
+  let animation = ''
+  if (index == 0) {
+    animation = 'fade-right'
+  } else if (index == 1) {
+    animation = 'fade-left'
+  } else if (index == 2) {
+    animation = 'fade-right'
+  }
+
+  useEffect(() => {
+    Aos.init({ duration: 300 })
+  }, [])
   return (
     <Wrapper data-aos={animation}>
       <div className='img-wrapper'>

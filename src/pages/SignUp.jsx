@@ -5,26 +5,49 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { checkInput } from '../utils/helpers'
-import {Input, Button} from '../components/reusable'
+import { Input, Button } from '../components/reusable'
+import { toast } from 'react-toastify'
 
-const Register = () => {
+const initialState = {
+  email: '',
+  first_name: '',
+  last_name: '',
+  password: '',
+  re_password: '',
+}
+
+const SignUp = () => {
   const navigate = useNavigate()
-  const { handleRegister, authenticated, error, btnLoading } = useUserContext()
+  const { handleRegister, error, btnLoading } = useUserContext()
   const [inputsError, setInputsError] = useState({})
 
-  const [newUser, setNewUser] = useState({
-    fName: '',
-    lName: '',
-    email: '',
-    pass1: '',
-    pass2: '',
-  })
+  const [values, setValues] = useState(initialState)
 
-  if (authenticated) {
-    return navigate('/login')
+  function handleChange(e) {
+    const name = e.target.name
+    const value = e.target.value
+
+    setValues({ ...values, [name]: value })
   }
 
- 
+  async function onsubmit(e) {
+    e.preventDefault()
+    if (
+      !values.email ||
+      !values.first_name ||
+      !values.last_name ||
+      !values.password ||
+      !values.re_password
+    ) {
+      toast.error('All Inputs are compulsory!')
+    } else {
+      const isSuccess = await handleRegister(values)
+      if (isSuccess) {
+        setValues(initialState)
+        navigate('/auth/login')
+      }
+    }
+  }
 
   return (
     <Wrapper>
@@ -43,93 +66,83 @@ const Register = () => {
                 </div>
                 <div className='facebook'>
                   <FaFacebook className='icon' />
-                  <p>Sign up with facebook</p>
+                  <p>Sign up with Facebook</p>
                 </div>
               </div>
             </div>
             <div className='divider'>
               <b>- OR -</b>
             </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleRegister(newUser)
-              }}
-            >
-              <div className='error'>
-                {error.show && <span>{error.msg}</span>}
-              </div>
+            <form onSubmit={onsubmit}>
               <Input
-                name='fname'
-                value={newUser.fName}
+                name='first_name'
+                value={values.first_name}
                 type='text'
                 placeholder='Enter Your First Name'
-                error={inputsError.fname}
-                onchange={(e) =>
-                  setNewUser({ ...newUser, fName: e.target.value })
-                }
+                error={inputsError.first_name}
+                onchange={handleChange}
                 onblur={(event) =>
                   checkInput(event, inputsError, setInputsError)
                 }
               />
+
               <Input
-                name='lname'
-                value={newUser.lName}
+                name='last_name'
+                value={values.last_name}
                 type='text'
                 placeholder='Enter Your Last Name'
-                error={inputsError.lname}
-                onchange={(e) =>
-                  setNewUser({ ...newUser, lName: e.target.value })
-                }
+                error={inputsError.last_name}
+                onchange={handleChange}
                 onblur={(event) =>
                   checkInput(event, inputsError, setInputsError)
                 }
               />
+
               <Input
                 name='email'
-                value={newUser.email}
+                value={values.email}
                 type='text'
                 placeholder='Enter Your Email Address'
-                onchange={(e) =>
-                  setNewUser({ ...newUser, email: e.target.value })
-                }
+                onchange={handleChange}
                 error={inputsError.email}
                 onblur={(event) =>
                   checkInput(event, inputsError, setInputsError)
                 }
               />
               <Input
-                name='pass1'
-                value={newUser.pass1}
+                name='password'
+                value={values.password}
                 type='password'
                 placeholder='Enter Password'
-                onchange={(e) =>
-                  setNewUser({ ...newUser, pass1: e.target.value })
-                }
-                error={inputsError.pass1}
+                onchange={handleChange}
+                error={inputsError.password}
                 onblur={(event) =>
-                  checkInput(event, inputsError, setInputsError, newUser)
-                }
-              />
-              <Input
-                name='pass2'
-                value={newUser.pass2}
-                type='password'
-                placeholder='Comfirm Password'
-                onchange={(e) =>
-                  setNewUser({ ...newUser, pass2: e.target.value })
-                }
-                error={inputsError.pass2}
-                onblur={(event) =>
-                  checkInput(event, inputsError, setInputsError, newUser)
+                  checkInput(event, inputsError, setInputsError, values)
                 }
               />
 
-              <Button inputsError={inputsError} loading={btnLoading} text={'Create Account'}/>
-              <div className='login-link'>
-                <span>
-                  Already have an account ? <Link to={'/login'}>Login</Link>
-                </span>
+              <Input
+                name='re_password'
+                value={values.re_password}
+                type='password'
+                placeholder='Comfirm Password'
+                onchange={handleChange}
+                error={inputsError.re_password}
+                onblur={(event) =>
+                  checkInput(event, inputsError, setInputsError, values)
+                }
+              />
+
+              <Button
+                inputsError={inputsError}
+                loading={btnLoading}
+                text={`Create Account`}
+              />
+              <div className='link'>
+                <p>
+                  Already a member
+                  <Link to={'/auth/login'}>Login</Link>
+                </p>
               </div>
             </form>
           </div>
@@ -235,6 +248,7 @@ const Wrapper = styled.main`
           font-weight: 800;
           font-size: 1.5rem;
           line-height: 29px;
+          padding-bottom: 2rem;
         }
         form {
           .error {
@@ -246,15 +260,16 @@ const Wrapper = styled.main`
             }
           }
 
-          
-
-          .login-link {
+          .link {
             margin-top: 1.5rem;
             color: rgba(0, 0, 0, 0.12);
 
             a {
+              all: unset;
               text-decoration: none;
               color: #024e82;
+              margin-left: 1rem;
+              cursor: pointer;
             }
           }
         }
@@ -294,4 +309,4 @@ const Wrapper = styled.main`
     }
   }
 `
-export default Register
+export default SignUp

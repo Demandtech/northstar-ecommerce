@@ -7,6 +7,7 @@ import { FaTimes } from 'react-icons/fa'
 
 const CartIems = () => {
   const { cart, deleteCartItem, loading } = useCartContext()
+  
   if (cart.length < 1) {
     return (
       <Wrapper>
@@ -43,7 +44,6 @@ const CartIems = () => {
             </thead>
             <tbody>
               {cart.map((item, index) => {
-                let total = item.discountedPrice * item.quantity
                 return (
                   <tr key={index}>
                     <td>
@@ -55,18 +55,18 @@ const CartIems = () => {
                       <img
                         width={'48px'}
                         height={'48px'}
-                        src={item.img}
+                        src={item.product.img}
                         alt=''
                       />
                     </td>
                     <td>
-                      <strong>{item.name}</strong>
+                      <strong>{item.product.name}</strong>
                     </td>
-                    <td>{formatPrice(item.discountedPrice)}</td>
+                    <td>{formatPrice(item.product.price)}</td>
                     <td>
                       <Quantity id={item.id} quantity={item.quantity} />
                     </td>
-                    <td>{formatPrice(total)}</td>
+                    <td>{formatPrice(item.amount)}</td>
                   </tr>
                 )
               })}

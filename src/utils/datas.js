@@ -49,7 +49,7 @@ export  const sizes = [
     short: 'L',
   },
   {
-    text: 'Extra Large',
+    text: 'X-Large',
     short: 'XL',
   },
 ]

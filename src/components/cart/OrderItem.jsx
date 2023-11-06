@@ -1,12 +1,11 @@
 import React from 'react'
-import { formatPrice } from '../utils/helpers'
-import { useCartContext } from '../contexts/cartContext'
-import { formatTime } from '../utils/helpers'
-import Loader from './Loader'
+import { formatPrice, formatTime } from '../../utils/helpers'
+import { useCartContext } from '../../contexts/cartContext'
+import { Loader } from '../../components'
 import styled from 'styled-components'
 
 const OrderItem = ({ order }) => {
-  const { loading } = useCartContext()
+  const { loading, cart } = useCartContext()
 
   if (loading) {
     return <Loader />
@@ -31,7 +30,7 @@ const OrderItem = ({ order }) => {
 
 const Wrapper = styled.tr`
   td {
-    padding: .8rem 0.2rem;
+    padding: 0.8rem 0.2rem;
     font-size: 0.8rem;
 
     button {

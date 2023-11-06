@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { OrderItem } from '../components'
+import { OrderItem } from '../../components'
 
 const AllOrder = ({ orders }) => {
   return (

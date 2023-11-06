@@ -1,23 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import img from '../assets/images/login-img.webp'
 import styled from 'styled-components'
-import { FaGoogle, FaFacebook} from 'react-icons/fa'
+import { FaGoogle, FaFacebook } from 'react-icons/fa'
 import { useUserContext } from '../contexts/userContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Input } from '../components/reusable'
+import { toast } from 'react-toastify'
 
 const Login = () => {
- 
   const navigate = useNavigate()
   const [user, setUser] = useState({ email: '', password: '' })
-  const { emailLogin, authenticated, error, btnLoading } = useUserContext()
-  const [inputsError, setInputsError] = useState({})
+  const { error, btnLoading, handleEmailLogin } = useUserContext()
 
-  useEffect(() => {
-    if (authenticated) {
+  async function handleForm(e) {
+    e.preventDefault()
+    const isSuccess = await handleEmailLogin(user)
+    if (isSuccess) {
+      setUser({ email: '', password: '' })
+      toast.success('Login Successfully!')
       navigate('/')
     }
-  }, [authenticated])
+  }
+
   return (
     <Wrapper>
       <div className='container'>
@@ -29,50 +33,47 @@ const Login = () => {
             <div className='right-header'>
               <h2>Sigin Account</h2>
               <div className='social'>
-                <div className='google'>
+                <button className='google'>
                   <FaGoogle className='icon' />
-                  <p>Sign in with Google</p>
-                </div>
-                <div className='facebook'>
+                  <span>Sign in with Google</span>
+                </button>
+                <button className='facebook'>
                   <FaFacebook className='icon' />
-                  <p>Sign in with facebook</p>
-                </div>
+                  <span>Sign in with facebook</span>
+                </button>
               </div>
             </div>
             <div className='divider'>
               <b>- OR -</b>
             </div>
-            <form
-              onSubmit={() => {
-                emailLogin(user)
-              }}
-            >
+            <form onSubmit={handleForm}>
               <div className='error'>
                 {error.show && <span>{error.msg}</span>}
-              </div>          
+              </div>
               <Input
                 onchange={(e) => setUser({ ...user, email: e.target.value })}
                 type='text'
                 value={user.email}
                 placeholder={'Enter Your Email Address'}
-                
               />
               <Input
                 type={'password'}
                 placeholder={'Enter Your Password'}
                 value={user.password}
-                onchange={(e)=>setUser({ ...user, password: e.target.value })}
+                onchange={(e) => setUser({ ...user, password: e.target.value })}
               />
-
+              <p className='forgot-password'>
+                <Link to={'/forgot_password'}>Forgot password?</Link>
+              </p>
               <Button
-                onclick={(e) => emailLogin(e, user)}
+                type='submit'
                 loading={btnLoading}
                 text='Login'
                 inputsError={{}}
               />
               <div className='login-link'>
                 <span>
-                  No account yet ? <Link to={'/register'}>Register</Link>
+                  No account yet ? <Link to={'/auth/signup'}>Register</Link>
                 </span>
               </div>
             </form>
@@ -107,7 +108,7 @@ const Wrapper = styled.main`
       }
     }
     .right {
-       flex: 2;
+      flex: 2;
       background: #ffffff;
       border-top-left-radius: 1rem;
       border-top-right-radius: 1rem;
@@ -115,7 +116,7 @@ const Wrapper = styled.main`
       justify-content: center;
       padding-bottom: 2rem;
 
-       .right-wrapper {
+      .right-wrapper {
         width: 100%;
         padding: 0 2rem;
 
@@ -137,8 +138,8 @@ const Wrapper = styled.main`
               border-radius: 0.5rem;
               align-items: center;
               cursor: pointer;
-              transition: .3s;
-              &:hover{
+              transition: 0.3s;
+              &:hover {
                 background: lightgray;
               }
               .icon {
@@ -155,8 +156,8 @@ const Wrapper = styled.main`
               align-items: center;
               border-radius: 0.5rem;
               cursor: pointer;
-               transition: .3s;
-              &:hover{
+              transition: 0.3s;
+              &:hover {
                 background: lightgray;
               }
               .icon {
@@ -175,36 +176,41 @@ const Wrapper = styled.main`
           line-height: 29px;
         }
         form {
-          .error{
-            color:red;
+          .error {
+            color: red;
             padding-bottom: 1rem;
-            text-align:center;
-            span{
-              font-size: .8rem;
+            text-align: center;
+            span {
+              font-size: 0.8rem;
             }
           }
-          .input-control{
+          .forgot-password {
+            margin-top: -20px;
+            text-align: right;
+            color: #0077b5;
+            font-size: 0.9rem;
+          }
+          .input-control {
             margin-bottom: 1.5rem;
             position: relative;
 
             input {
               width: 100%;
-              padding: .5rem 0;
+              padding: 0.5rem 0;
               font-size: 1rem;
               border: none;
               border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-              color: color: rgba(26, 23, 23, 0.38);
+              color: rgba(26, 23, 23, 0.38);
               line-height: 29px;
               background: #ffffff;
-              
 
-              &:focus{
+              &:focus {
                 outline: none;
                 border-bottom-color: #024e82;
               }
             }
 
-            .password-setting{
+            .password-setting {
               all: unset;
               position: absolute;
               right: 0;
@@ -212,23 +218,21 @@ const Wrapper = styled.main`
               transform: translateY(50%);
               cursor: pointer;
 
-              .icon{
-               color:rgba(26, 23, 23, 0.38);
+              .icon {
+                color: rgba(26, 23, 23, 0.38);
               }
             }
-         }
-
-         
-
-         .login-link{
-          margin-top: 1.5rem;
-          color: rgba(0, 0, 0, 0.12);
-
-          a{
-            text-decoration: none;
-            color: #024e82;
           }
-         }
+
+          .login-link {
+            margin-top: 1.5rem;
+            color: rgba(0, 0, 0, 0.12);
+
+            a {
+              text-decoration: none;
+              color: #024e82;
+            }
+          }
         }
       }
     }
@@ -252,7 +256,7 @@ const Wrapper = styled.main`
         padding: 4rem 0 2rem 0;
 
         .right-wrapper {
-           max-width: 500px;
+          max-width: 500px;
 
           .right-header {
             .social {
@@ -264,5 +268,4 @@ const Wrapper = styled.main`
     }
   }
 `
-
 export default Login

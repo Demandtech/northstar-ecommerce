@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { NavLink, Link } from 'react-router-dom'
-import { FaBars, FaRegUser, FaTimes } from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
 import { useCartContext } from '../contexts/cartContext'
 import { useUserContext } from '../contexts/userContext'
@@ -66,17 +66,16 @@ const Navbar = () => {
           <div>
             {authenticated ? (
               <div className='user-container'>
-                <div className='display-btn' onClick={handleOpenSetup}>
+                <div className='display-btn'>
                   {user.photos ? (
                     <img src={user.photos[0].value} alt='avatar' />
                   ) : (
-                    <FaRegUser />
+                    <UserSetting />
                   )}
                 </div>
-                {openSetup && <UserSetting />}
               </div>
             ) : (
-              <Link className='login-link' to={'login'}>
+              <Link className='login-link' to={'/auth/login'}>
                 Login
               </Link>
             )}
@@ -104,19 +103,17 @@ const Navbar = () => {
 }
 
 const Wrapper = styled.nav`
-  position: relative;
+  position: fixed;
   top: 0;
   width: 100%;
   margin: 0 auto;
   height: 75px;
   padding: 0 1rem;
-  position: fixed;
   background: #ffffff;
   z-index: 100;
   display: flex;
   align-items: center;
-  width: 100%;
-  overflow-z: hidden;
+  border-bottom: 1px solid #f5f5f9;
 
   .nav-wrapper {
     display: flex;
@@ -181,8 +178,8 @@ const Wrapper = styled.nav`
         position: relative;
 
         .display-btn {
-          width: 25px;
-          height: 25px;
+          //min-width: 25px;
+          //height: 25px;
           cursor: pointer;
 
           img {
@@ -214,7 +211,7 @@ const Wrapper = styled.nav`
           font-family: 'Source Sans Pro', sans-serif;
           font-weight: 700;
           font-size: 0.7rem;
-          lineheight: 12.57px;
+          line-height: 12.57px;
           width: 20px;
           height: 20px;
           display: grid;

@@ -1,40 +1,19 @@
+import axios from 'axios'
 import cartReducer from '../reducers/cartReducer'
 import { createContext, useContext, useEffect, useReducer } from 'react'
-import { useProductsContext } from './productsContext'
 import { useUserContext } from './userContext'
-import { Loader } from '../components'
 import {
-  GET_ALL_PRODUCTS,
   ADD_TO_CART,
-  COUNT_CART_TOTALS,
   DELETE_CART_ITEM,
-  HIDE_SNACKBAR,
   START_LOADING,
   STOP_LOADING,
-  GET_ORDER,
   GET_CART,
 } from '../actions'
-import {
-  getFirestore,
-  doc,
-  updateDoc,
-  onSnapshot,
-  getDoc,
-  connectFirestoreEmulator,
-} from 'firebase/firestore'
 
 const CartContext = createContext()
 
-const db = getFirestore()
-
-const getCartFromLocalStorage = () => {
-  const cartData = localStorage.getItem('cart')
-
-  return cartData ? JSON.parse(cartData) : []
-}
-
 const initialState = {
-  cart: getCartFromLocalStorage(),
+  cart: [],
   newCartItem: {},
   total_items: 0,
   total_amount: 0,
@@ -46,86 +25,76 @@ const initialState = {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState)
-  const { products } = useProductsContext()
   const { user } = useUserContext()
 
-  const userId = user?.id
+  const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/users/me/cart`
+  const token = localStorage.getItem('token')
 
-  useEffect(() => {
-    if (userId) {
-      const userRef = doc(db, 'users', userId)
-      onSnapshot(userRef, (snapshot) => {
-        const cartData = snapshot.data().cart
-        dispatch({ type: GET_CART, payload: cartData })
-      })
-    }
-  }, [userId])
-
-  
-
-  const updateCartDb = () => {
-    if (userId) {
-      const userRef = doc(db, 'users', userId)
-      const updatedCart = [...state.cart]
-      updateDoc(userRef, { cart: updatedCart })
+  const getAllCart = async () => {
+    if (token) {
+      try {
+        const { data, status } = await axios.get(`${baseUrl}/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        
+        if (status === 200) {
+          dispatch({ type: GET_CART, payload: data })
+        }
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
-  const fetchOrders = () => {
+  const addToCart = async (payload) => {
     dispatch({ type: START_LOADING })
-    if (userId) {
-      const userRef = doc(db, 'users', userId)
-      onSnapshot(userRef, (snapshot) => {
-        const orderData = snapshot.data().order
-        dispatch({ type: GET_ORDER, payload: orderData })
+
+    if (token) {
+      try {
+        const { data, status } = await axios.post(`${baseUrl}/`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        if (status === 201) {
+          dispatch({ type: ADD_TO_CART, payload: data })
+          dispatch({ type: STOP_LOADING })
+          getAllCart()
+        }
+      } catch (err) {
+        console.log(err)
         dispatch({ type: STOP_LOADING })
+      }
+    }
+  }
+
+  const deleteCartItem = async (id) => {
+    try {
+      const { status } = await axios.delete(`${baseUrl}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
+
+      if (status === 204) {
+        dispatch({ type: DELETE_CART_ITEM })
+        getAllCart()
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
- 
-
   useEffect(() => {
-    dispatch({ type: GET_ALL_PRODUCTS, payload: products })
-  }, [products])
-
-  const addToCart = (id, sizes, quantity) => {
-    updateCartDb()
-
-    dispatch({ type: ADD_TO_CART, payload: { id, sizes, quantity } })
-  }
-
-  useEffect(() => {
-    dispatch({ type: COUNT_CART_TOTALS })
-  }, [state.cart])
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(state.cart))
-  }, [state.cart])
-
-  const deleteCartItem = (id) => {
-    if (userId) {
-      const userRef = doc(db, 'users', userId)
-      getDoc(userRef).then((snapshot) => {
-        const userData = snapshot.data()
-
-        const updatedCart = userData.cart.filter((item) => item.id !== id)
-
-        updateDoc(userRef, { cart: updatedCart })
-      })
-    }
-    dispatch({ type: DELETE_CART_ITEM, payload: id })
-  }
-
-  useEffect(() => {
-    if (state.cart.length > 0) {
-      updateCartDb()
-    }
-  }, [state.cart])
+    getAllCart()
+  }, [user])
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, dispatch, deleteCartItem, fetchOrders }}
+      value={{ ...state, addToCart, dispatch, deleteCartItem }}
     >
       {children}
     </CartContext.Provider>

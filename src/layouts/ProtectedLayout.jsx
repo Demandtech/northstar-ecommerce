@@ -1,13 +1,14 @@
 import { Outlet, Navigate } from 'react-router-dom'
-import { Navbar, Footer } from '../components'
 import styled from 'styled-components'
 import { useUserContext } from '../contexts/userContext'
+import Navbar from './Navbar'
+import Footer from './Footer'
 
 const ProtectedLayout = () => {
   const { authenticated } = useUserContext()
 
   if (!authenticated) {
-    return <Navigate to={'/login'} />
+    return <Navigate to={'/auth'} />
   }
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { useCartContext } from '../contexts/cartContext'
-import { formatPrice } from '../utils/helpers'
+import { useCartContext } from '../../contexts/cartContext'
+import { formatPrice } from '../../utils/helpers'
 
 const CartTotal = () => {
   const { total_amount, shipping } = useCartContext()

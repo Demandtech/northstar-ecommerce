@@ -23,40 +23,41 @@ export const checkInput = (event, inputsError, setInputsError, newUser) => {
   let name = event.target.name
   let value = event.target.value.trim()
 
+
   switch (name) {
-    case 'fname':
+    case 'first_name':
       if (value == '') {
         setInputsError({
           ...inputsError,
-          fname: 'Fist name can not be blank',
+          first_name: 'Fist name can not be blank',
         })
       } else if (/\d/.test(value)) {
         setInputsError({
           ...inputsError,
-          fname: 'First name can not contain number',
+          first_name: 'First name can not contain number',
         })
       } else {
         setInputsError({
           ...inputsError,
-          fname: '',
+          first_name: '',
         })
       }
       break
-    case 'lname':
+    case 'last_name':
       if (value == '') {
         setInputsError({
           ...inputsError,
-          lname: 'Last name can not be blank',
+          last_name: 'Last name can not be blank',
         })
       } else if (/\d/.test(value)) {
         setInputsError({
           ...inputsError,
-          lname: 'Last name can not contain number',
+          last_name: 'Last name can not contain number',
         })
       } else {
         setInputsError({
           ...inputsError,
-          lname: '',
+          last_name: '',
         })
       }
       break
@@ -79,42 +80,43 @@ export const checkInput = (event, inputsError, setInputsError, newUser) => {
         })
       }
       break
-    case 'pass1':
+    case 'password':
       const passwordRegex =
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
 
       if (value == '') {
         setInputsError({
           ...inputsError,
-          pass1: 'Password can not be blank',
+          password: 'Password can not be blank',
         })
-      } else if (!passwordRegex.test(value)) {
+      }
+      else if (!passwordRegex.test(value)) {
         setInputsError({
           ...inputsError,
-          pass1: 'Choose strong password',
-        })
-      } else {
+          password: 'Choose strong password',
+        })}
+      else {
         setInputsError({
           ...inputsError,
-          pass1: '',
+          password: '',
         })
       }
       break
-    case 'pass2':
+    case 're_password':
       if (value == '') {
         setInputsError({
           ...inputsError,
-          pass2: 'Password can not be blank',
+          re_password: 'Confirm password can not be blank',
         })
-      } else if (newUser.pass1 !== value) {
+      } else if (newUser.password !== value) {
         setInputsError({
           ...inputsError,
-          pass2: 'Passwords does not match',
+          re_password: 'Passwords does not match',
         })
       } else {
         setInputsError({
           ...inputsError,
-          pass2: '',
+          re_password: '',
         })
       }
 

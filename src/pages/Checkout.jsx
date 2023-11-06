@@ -9,7 +9,7 @@ import { checkInput } from '../utils/helpers'
 import { BeatLoader } from 'react-spinners'
 
 const Checkout = () => {
-  const { cart, total_amount} = useCartContext()
+  const { cart, total_amount } = useCartContext()
   const { handleSubmitBillingAddress, isOrderComplete, btnLoading } =
     useUserContext()
   const navigate = useNavigate()
@@ -26,13 +26,12 @@ const Checkout = () => {
     isOrderComplete && navigate('/order')
   }, [isOrderComplete])
 
- 
-
   return (
     <Wrapper>
       <div className='container'>
         <div className='links'>
           <NavLink to={'/'}>Home</NavLink> /
+          <NavLink to={'/cart'}>SHOPPING CART</NavLink> /
           <NavLink to={'/checkout'}>checkout</NavLink>
         </div>
         <div className='billing'>
@@ -148,8 +147,8 @@ const Checkout = () => {
               {cart.map((ca, ind) => {
                 return (
                   <tr key={ind}>
-                    <td>{ca.name}</td>
-                    <td>{formatPrice(ca.discountedPrice)}</td>
+                    <td>{ca.product.name}</td>
+                    <td>{formatPrice(ca.amount)}</td>
                   </tr>
                 )
               })}
@@ -158,7 +157,9 @@ const Checkout = () => {
                 <td>{formatPrice(total_amount)}</td>
               </tr>
               <tr>
-                <td></td>
+                <td>
+                  <strong>Total</strong>
+                </td>
                 <td>
                   <strong>{formatPrice(total_amount)}</strong>
                 </td>
@@ -254,7 +255,7 @@ const Wrapper = styled.main`
   }
 
   .order {
-    padding-top 4rem ;
+    padding-top: 4rem;
     margin-bottom: 2rem;
     h3 {
       font-family: 'Arimo', sans-serif;
@@ -276,47 +277,47 @@ const Wrapper = styled.main`
 
       th {
         text-align: left;
-        padding: 1rem ;
+        padding: 1rem;
         border-bottom: 1px solid #ebebeb;
       }
     }
   }
-  .btn-container{
+  .btn-container {
     border: 1px solid #ebebeb;
     padding: 1rem;
-    p{
-      background: #FBFBFB;
+    p {
+      background: #fbfbfb;
       padding: 1rem;
-      border: 1px solid #EBEBEB;
+      border: 1px solid #ebebeb;
       margin-bottom: 2rem;
     }
-   .btn-wrapper{
-    display: flex;
-    justify-content: flex-end;
-    padding-bottom: 1rem;
+    .btn-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 1rem;
 
-   .order-btn{
-    all:unset;
-    display: inline-block;
-    background:#d6763c;
-    color: #ffffff;
-    padding: 1rem 2rem;
-    text-decoration: none;
-    opacity: 1;
-    cursor:pointer;
+      .order-btn {
+        all: unset;
+        display: inline-block;
+        background: #d6763c;
+        color: #ffffff;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        opacity: 1;
+        cursor: pointer;
 
-    &:disabled{
-      cursor: not-allowed;
-      opacity: 0.5;
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+      }
     }
   }
-}
-}
 
   @media screen and (min-width: 480px) {
     padding: 2rem;
 
-    form{
+    form {
       max-width: 500px;
     }
   }
