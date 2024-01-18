@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Loader, ProductCard } from '../../components'
-import { useProductsContext } from '../../contexts/productsContext'
+import React from 'react';
+import styled from 'styled-components';
+import { Loader, ProductCard } from '../../components';
+import { useProductsContext } from '../../contexts/productsContext';
 
 const NewArrivals = () => {
-  const { products, loading } = useProductsContext()
+  const { products, loading } = useProductsContext();
 
   return (
     <Wrapper id='new_arrival'>
@@ -12,22 +12,25 @@ const NewArrivals = () => {
         <h2>Discover NEW Arrivals</h2>
         <p>Recently added shirts!</p>
       </div>
-      {loading && <Loader loading={loading}/>}
+      {loading && <Loader loading={loading} />}
       <div className='arrival-wrappers'>
         <div className='wrap'>
-          {products
-            .map((product, i) => {
-              return (
-                <div key={i}>
-                  <ProductCard index = {i} {...product} />
-                </div>
-              )
-            }).slice(0, 8)}
-        </div>    
+          {products &&
+            products?.length > 0 &&
+            products
+              ?.map((product, i) => {
+                return (
+                  <div key={i}>
+                    <ProductCard index={i} {...product} />
+                  </div>
+                );
+              })
+              .slice(0, 8)}
+        </div>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   .newArrivals-header {
@@ -57,7 +60,7 @@ const Wrapper = styled.section`
       margin-bottom: 2rem;
     }
   }
-  @media screen and (min-width: 480px) { 
+  @media screen and (min-width: 480px) {
     .arrival-wrappers {
       padding-top: 4rem;
 
@@ -77,6 +80,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default NewArrivals
+export default NewArrivals;

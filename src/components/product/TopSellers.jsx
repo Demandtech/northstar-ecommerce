@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import AncrButton from '../AncrButton'
-import { useProductsContext } from '../../contexts/productsContext'
-import ProductCard from './ProductCard'
+import React from 'react';
+import styled from 'styled-components';
+import AncrButton from '../AncrButton';
+import { useProductsContext } from '../../contexts/productsContext';
+import ProductCard from './ProductCard';
 
 const TopSellers = () => {
-  const { topseller } = useProductsContext()
+  const { topseller } = useProductsContext();
   return (
     <Wrapper>
       <div className='topseller-header'>
@@ -13,20 +13,22 @@ const TopSellers = () => {
         <p>Browse our top-selling products</p>
       </div>
       <div className='content-wrap'>
-        {topseller.map((seller, index) => {
-          return (
-            <div key={index}>
-              <ProductCard index={index} {...seller} />
-            </div>
-          )
-        })}
+        {topseller &&
+          topseller?.length > 0 &&
+          topseller?.map((seller, index) => {
+            return (
+              <div key={index}>
+                <ProductCard index={index} {...seller} />
+              </div>
+            );
+          })}
       </div>
       <div className='btn-wrap'>
         <AncrButton href='#new_arrival' label='shop now' type='primary' />
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 const Wrapper = styled.section`
   .topseller-header {
     text-align: center;
@@ -53,6 +55,6 @@ const Wrapper = styled.section`
   .btn-wrap {
     text-align: center;
   }
-`
+`;
 
-export default TopSellers
+export default TopSellers;
