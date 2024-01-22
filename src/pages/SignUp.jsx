@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import img from '../assets/images/register-img.webp'
-import styled from 'styled-components'
-import { FaGoogle, FaFacebook } from 'react-icons/fa'
-import { useUserContext } from '../contexts/userContext'
-import { Link, useNavigate } from 'react-router-dom'
-import { checkInput } from '../utils/helpers'
-import { Input, Button } from '../components/reusable'
-import { toast } from 'react-toastify'
+import { useState } from 'react';
+import img from '../assets/images/register-img.webp';
+import styled from 'styled-components';
+import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { useUserContext } from '../contexts/userContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { checkInput } from '../utils/helpers';
+import { Input, Button } from '../components/reusable';
+import { toast } from 'react-toastify';
 
 const initialState = {
   email: '',
@@ -14,24 +14,24 @@ const initialState = {
   last_name: '',
   password: '',
   re_password: '',
-}
+};
 
 const SignUp = () => {
-  const navigate = useNavigate()
-  const { handleRegister, error, btnLoading } = useUserContext()
-  const [inputsError, setInputsError] = useState({})
+  const navigate = useNavigate();
+  const { handleRegister, error, btnLoading } = useUserContext();
+  const [inputsError, setInputsError] = useState({});
 
-  const [values, setValues] = useState(initialState)
+  const [values, setValues] = useState(initialState);
 
   function handleChange(e) {
-    const name = e.target.name
-    const value = e.target.value
+    const name = e.target.name;
+    const value = e.target.value;
 
-    setValues({ ...values, [name]: value })
+    setValues({ ...values, [name]: value });
   }
 
   async function onsubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (
       !values.email ||
       !values.first_name ||
@@ -39,12 +39,12 @@ const SignUp = () => {
       !values.password ||
       !values.re_password
     ) {
-      toast.error('All Inputs are compulsory!')
+      toast.error('All Inputs are compulsory!');
     } else {
-      const isSuccess = await handleRegister(values)
+      const isSuccess = await handleRegister(values);
       if (isSuccess) {
-        setValues(initialState)
-        navigate('/auth/login')
+        setValues(initialState);
+        navigate('/auth/login');
       }
     }
   }
@@ -53,7 +53,9 @@ const SignUp = () => {
     <Wrapper>
       <div className='container'>
         <div className='left'>
-          <p>NORTHSTAR</p>
+          <p>
+            <Link to={-1}>NORTHSTAR</Link>
+          </p>
         </div>
         <div className='right'>
           <div className='right-wrapper'>
@@ -149,8 +151,8 @@ const SignUp = () => {
         </div>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 const Wrapper = styled.main`
   font-family: 'Inter', sans-serif;
 
@@ -308,5 +310,5 @@ const Wrapper = styled.main`
       }
     }
   }
-`
-export default SignUp
+`;
+export default SignUp;

@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import img from '../assets/images/login-img.webp'
-import styled from 'styled-components'
-import { FaGoogle, FaFacebook } from 'react-icons/fa'
-import { useUserContext } from '../contexts/userContext'
-import { Link, useNavigate } from 'react-router-dom'
-import { Button, Input } from '../components/reusable'
-import { toast } from 'react-toastify'
+import { useState } from 'react';
+import img from '../assets/images/login-img.webp';
+import styled from 'styled-components';
+import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { useUserContext } from '../contexts/userContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Input } from '../components/reusable';
+import { toast } from 'react-toastify';
 
 const Login = () => {
-  const navigate = useNavigate()
-  const [user, setUser] = useState({ email: '', password: '' })
-  const { error, btnLoading, handleEmailLogin } = useUserContext()
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ email: '', password: '' });
+  const { error, btnLoading, handleEmailLogin } = useUserContext();
 
   async function handleForm(e) {
-    e.preventDefault()
-    const isSuccess = await handleEmailLogin(user)
+    e.preventDefault();
+    const isSuccess = await handleEmailLogin(user);
     if (isSuccess) {
-      setUser({ email: '', password: '' })
-      toast.success('Login Successfully!')
-      navigate('/')
+      setUser({ email: '', password: '' });
+      toast.success('Login Successfully!');
+      navigate('/');
     }
   }
 
@@ -26,7 +26,9 @@ const Login = () => {
     <Wrapper>
       <div className='container'>
         <div className='left'>
-          <p>NORTHSTAR</p>
+          <p>
+            <Link to={-1}>NORTHSTAR</Link>
+          </p>
         </div>
         <div className='right'>
           <div className='right-wrapper'>
@@ -81,8 +83,8 @@ const Login = () => {
         </div>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.main`
   .container {
@@ -267,5 +269,5 @@ const Wrapper = styled.main`
       }
     }
   }
-`
-export default Login
+`;
+export default Login;
